@@ -71,5 +71,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Projects Version
+# Projects Version and Packages
 /ProjectSettings/ProjectVersion.txt
