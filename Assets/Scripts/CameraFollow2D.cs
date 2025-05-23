@@ -30,7 +30,7 @@ public class CameraFollow2D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     void LateUpdate()
     {
