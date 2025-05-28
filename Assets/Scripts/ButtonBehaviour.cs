@@ -6,12 +6,11 @@ public class ButtonBehaviour : MonoBehaviour, IPointerEnterHandler
 {
     public AudioClip hoverClip;
     public AudioClip clickSound;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private Button button;
 
     void Awake()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
 
         button = GetComponent<Button>();
