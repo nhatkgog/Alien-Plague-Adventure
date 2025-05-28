@@ -10,7 +10,7 @@ public class MainMenuMusic : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); 
+            //DontDestroyOnLoad(gameObject); 
 
             audioSource = GetComponent<AudioSource>();
             if (audioSource != null && !audioSource.isPlaying)
