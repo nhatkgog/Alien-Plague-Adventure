@@ -22,7 +22,7 @@ public class CutSceneController : MonoBehaviour
         else
         {
             Debug.Log("Cutscene complete!");
-            SceneManager.LoadScene("Scene1");
+            SceneManager.LoadScene("SelectCharacter");
         }
     }
 
