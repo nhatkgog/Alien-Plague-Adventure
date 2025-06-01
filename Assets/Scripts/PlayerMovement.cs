@@ -5,6 +5,8 @@ using TMPro;
 
 public class InputSystemMovement : MonoBehaviour
 {
+ 
+
     private InputAction moveAction;
     private InputAction sprintAction;
     private InputAction jumpAction;
@@ -13,6 +15,14 @@ public class InputSystemMovement : MonoBehaviour
     public Transform firePoint;
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
+
+
+ public Transform groundCheck;
+    public float groundCheckDistance;
+    public Transform wallCheck;
+    public float wallCheckDistance;
+    public LayerMask whatIsGround;
+    public int facingDir { get; private set; } = 1;
 
     //Player Status
     private float speed;
@@ -86,6 +96,8 @@ public class InputSystemMovement : MonoBehaviour
         PlayerRecharge();
         //PlayerHurt();
         //PlayerDead();
+        IsGroundDetected();
+        IsWallDetected();
 
         FixedUpdate();
         #endregion
@@ -222,4 +234,19 @@ public class InputSystemMovement : MonoBehaviour
             }
         }
     }
+    #region Collision
+    public virtual bool IsGroundDetected()
+        => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+
+    public virtual bool IsWallDetected()
+        => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
+
+    public virtual void OnDrawGizmos()
+    {
+        if (groundCheck != null)
+            Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance, 0));
+        if (wallCheck != null)
+            Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y, 0));
+    }
+    #endregion
 }
