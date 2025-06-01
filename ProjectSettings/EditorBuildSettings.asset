@@ -12,12 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SelectCharater.unity
     guid: e542ffb3a14bf53408fae3e0cf6b986b
   - enabled: 1
+    path: Assets/Scenes/Scence1.unity
+    guid: 46913b04a4eb0914caf8e29af584e423
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 8cf1ddddb2a533946aca5f1ea9651634
-  - enabled: 1
-    path: Assets/Scenes/StoryLine.unity
-    guid: 857f02bb19a16764ab44a16770d2391a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: c4a6366f99a00864cb82ae6f7535a4d2
   m_configObjects:
