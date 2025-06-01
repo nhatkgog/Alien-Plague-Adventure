@@ -5,7 +5,7 @@ using TMPro;
 
 public class InputSystemMovement : MonoBehaviour
 {
- 
+
 
     private InputAction moveAction;
     private InputAction sprintAction;
@@ -17,12 +17,14 @@ public class InputSystemMovement : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ammoText;
 
 
- public Transform groundCheck;
+    public Transform groundCheck;
     public float groundCheckDistance;
     public Transform wallCheck;
     public float wallCheckDistance;
     public LayerMask whatIsGround;
     public int facingDir { get; private set; } = 1;
+
+    public EntityFX fx { get; private set; }
 
     //Player Status
     private float speed;
@@ -52,6 +54,7 @@ public class InputSystemMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        fx = GetComponent<EntityFX>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -127,7 +130,7 @@ public class InputSystemMovement : MonoBehaviour
     }
     void PlayerShooting()
     {
-        if (Input.GetKeyDown(KeyCode.J)&&currentBullet>0&&Time.time > nextshoot)
+        if (Input.GetKeyDown(KeyCode.J) && currentBullet > 0 && Time.time > nextshoot)
         {
             nextshoot = Time.time + shootDelay;
             animator.SetTrigger("Shooting");
@@ -177,7 +180,7 @@ public class InputSystemMovement : MonoBehaviour
         animator.SetTrigger("Hurt");
 
         updateHPBar();
-        if (currentHealth < 0) 
+        if (currentHealth < 0)
         {
             PlayerDead();
         }
