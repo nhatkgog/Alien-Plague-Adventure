@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public EntityFX entityFX;
     [SerializeField] protected LayerMask whatIsPlayer;
     [Header("Move info")]
     public float moveSpeed;
@@ -15,6 +16,7 @@ public class Enemy : Entity
 
     public EnemyStateMachine stateMachine { get; private set; }
 
+    public int health = 50;
     protected override void Awake()
     {
         base.Awake();
@@ -29,6 +31,22 @@ public class Enemy : Entity
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
 
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+
+        if (entityFX != null)
+            entityFX.PlayHitFX();
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    protected virtual void Die()
+    {
+        stateMachine.ChangeState(new Enemy1DieState(this, stateMachine, "dead", this as Enemy1));
+    }
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
