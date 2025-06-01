@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 0d2208be972f9124caa5d383aeafee86
+guid: eac35089626bf6c49acf3b00d7ca248e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9114789695211296444
-    second: mainmenu_0
+      213: -1644766687331648308
+    second: Attacck_0
+  - first:
+      213: -1024785220864122208
+    second: Attacck_1
+  - first:
+      213: -5527191270125052350
+    second: Attacck_2
+  - first:
+      213: -1307603423992327606
+    second: Attacck_3
+  - first:
+      213: -4465122190030719144
+    second: Attacck_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,30 +108,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mainmenu_0
+      name: Attacck_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 33
         y: 0
-        width: 1344
-        height: 768
+        width: 54
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +127,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4492a8e7013c18180800000000000000
-      internalID: -9114789695211296444
+      spriteID: ccc7337896d9c29e0800000000000000
+      internalID: -1644766687331648308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attacck_1
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 0
+        width: 52
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a2e25b654b37c1f0800000000000000
+      internalID: -1024785220864122208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attacck_2
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 59
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e5e8af2d87b43b0800000000000000
+      internalID: -5527191270125052350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attacck_3
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 0
+        width: 77
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a425ad52d957adde0800000000000000
+      internalID: -1307603423992327606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attacck_4
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 0
+        width: 78
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85731808603b802c0800000000000000
+      internalID: -4465122190030719144
       vertices: []
       indices: 
       edges: []
@@ -148,7 +235,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mainmenu_0: -9114789695211296444
+      Attacck_0: -1644766687331648308
+      Attacck_1: -1024785220864122208
+      Attacck_2: -5527191270125052350
+      Attacck_3: -1307603423992327606
+      Attacck_4: -4465122190030719144
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

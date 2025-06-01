@@ -4,9 +4,11 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
+    public float damage;
 
     void Start()
     {
+        damage = InputSystemMovement.damage;
         Destroy(gameObject, lifeTime);
     }
 
@@ -18,6 +20,10 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Handle collision (e.g., damage enemies)
-        Destroy(gameObject);
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+
+        }
     }
 }
