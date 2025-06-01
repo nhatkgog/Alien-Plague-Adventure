@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour
     }
     public void OnClickNewGame()
     {
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene("StoryLine");
     }
 
     public void OnClickSettings()
