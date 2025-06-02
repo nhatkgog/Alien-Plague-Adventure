@@ -119,7 +119,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  entityFX: {fileID: 0}
+  entityFX: {fileID: 9180391029173386048}
+  enemy: {fileID: 294767771986363231}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy : Entity
 {
     public EntityFX entityFX;
+    public Enemy1 enemy;
     [SerializeField] protected LayerMask whatIsPlayer;
     [Header("Move info")]
     public float moveSpeed;
@@ -45,8 +46,24 @@ public class Enemy : Entity
     }
     protected virtual void Die()
     {
-        stateMachine.ChangeState(new Enemy1DieState(this, stateMachine, "dead", this as Enemy1));
+        stateMachine.ChangeState(enemy.dieState);
+
+        // Disable Collider so player & bullets can pass through
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        // Stop Rigidbody movement and make it non-interactive
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.isKinematic = true; // Stop physics simulation
+        }
+
+        // Finally, destroy after a delay (to let animation finish)
+        GameObject.Destroy(this.gameObject, 2f);
     }
+
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
