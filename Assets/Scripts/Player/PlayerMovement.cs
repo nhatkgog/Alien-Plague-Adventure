@@ -97,8 +97,8 @@ public class InputSystemMovement : MonoBehaviour
         PlayerReset();
         PlayerLevelUp();
         PlayerRecharge();
-        //PlayerHurt();
-        //PlayerDead();
+        // PlayerHurt(10f);
+        // PlayerDead();
         IsGroundDetected();
         IsWallDetected();
 
@@ -151,9 +151,16 @@ public class InputSystemMovement : MonoBehaviour
     }
     void PlayerDead()
     {
+        rb.isKinematic = true; // Disable physics
+        rb.linearVelocity = Vector2.zero; // Stop movement
         animator.SetTrigger("Dead");
+        Invoke(nameof(DestroyPlayer), 2f); // Delay before destroying the player object
+    }
+    public void DestroyPlayer()
+    {
         Destroy(gameObject);
     }
+
     void PlayerReset()
     {
 
@@ -172,20 +179,24 @@ public class InputSystemMovement : MonoBehaviour
         }
 
     }
-    void PlayerHurt(float takeDamage)
+    public void PlayerHurt(float takeDamage)
     {
         currentHealth -= takeDamage;
         currentHealth = Mathf.Max(currentHealth, 0);
 
-        animator.SetTrigger("Hurt");
-
-        updateHPBar();
-        if (currentHealth < 0)
+        if (currentHealth > 0)
         {
+            animator.SetTrigger("Hurt");
+            updateHPBar();
+        }
+        else if (currentHealth <= 0)
+        {
+            currentHealth = 0;
             PlayerDead();
         }
 
     }
+
     void FixedUpdate()
     {
         bool isSprinting = sprintAction.ReadValue<float>() > 0;

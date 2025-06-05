@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HpBar
       objectReference: {fileID: 0}
+    - target: {fileID: 7023631855932432627, guid: c0058ff1580c9cc438fb778763ad84c4, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7149405485467161316, guid: c0058ff1580c9cc438fb778763ad84c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2641,8 +2645,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dae531f062dfb444aa6d7269efc25fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7306163602846125562}
-  numberOfEnemies: 10
+  enemyPrefab: {fileID: 8590354311136759329, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
+  numberOfEnemies: 5
   spawnRange: 10
   spawnDelay: 2
 --- !u!4 &936542333
@@ -2691,6 +2695,37 @@ Transform:
   m_Children:
   - {fileID: 730834518}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1992177102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1992177103}
+  m_Layer: 7
+  m_Name: AttackCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1992177103
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992177102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.09, y: -0.03, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7306163602846125566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2018898590
 GameObject:
@@ -3176,6 +3211,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7306163602846125565}
     - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      propertyPath: hpBar
+      value: 
+      objectReference: {fileID: 76226547}
+    - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
       propertyPath: entityFX
       value: 
       objectReference: {fileID: 7306163602846125564}
@@ -3184,6 +3223,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 76226547}
     - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      propertyPath: attackCheck
+      value: 
+      objectReference: {fileID: 1992177103}
+    - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
       propertyPath: hpBarOffset
       value: 
       objectReference: {fileID: 76226549}
@@ -3191,12 +3234,27 @@ PrefabInstance:
       propertyPath: hpBarPrefab
       value: 
       objectReference: {fileID: 76226548}
+    - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      propertyPath: attackDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      propertyPath: attackDistance
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376879955754699091, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      propertyPath: attckCheckRadius
+      value: 1.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5587165857397908019, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
       insertIndex: -1
       addedObject: {fileID: 76226546}
+    - targetCorrespondingSourceObject: {fileID: 5587165857397908019, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1992177103}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4292846553045225757, guid: 9986d1aab2ac867479b7c1e90c8fd172, type: 3}
       insertIndex: -1
