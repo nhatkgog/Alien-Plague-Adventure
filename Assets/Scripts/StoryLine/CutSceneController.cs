@@ -5,7 +5,6 @@ public class CutSceneController : MonoBehaviour
 {
     public GameObject[] canvasScenes;
     private int currentIndex = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ShowScene(currentIndex);
@@ -22,7 +21,7 @@ public class CutSceneController : MonoBehaviour
         else
         {
             Debug.Log("Cutscene complete!");
-            SceneManager.LoadScene("SelectCharacter");
+            SceneManager.LoadScene("GameLobby");
         }
     }
 
