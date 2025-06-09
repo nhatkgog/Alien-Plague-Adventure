@@ -17,12 +17,13 @@ public class MainMenuMusic : MonoBehaviour
             {
                 audioSource.loop = true;
                 audioSource.playOnAwake = false;
-                audioSource.Play(); 
+                audioSource.Play();
             }
         }
         else
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
     }
+
 }

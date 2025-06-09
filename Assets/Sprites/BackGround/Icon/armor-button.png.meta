@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3e823773272639d4291dbb6d344c3e36
+guid: 9216a294a8fdde642ad3d37d4d7d749f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3476728046899638286
-    second: story1_0
+      213: -5409473340747898131
+    second: armor-button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: story1_0
+      name: armor-button_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 736
-        height: 552
+        width: 1195
+        height: 422
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e003718fcb1df3030800000000000000
-      internalID: 3476728046899638286
+      spriteID: de2a6ce38a0bde4b0800000000000000
+      internalID: -5409473340747898131
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      story1_0: 3476728046899638286
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
@@ -9,12 +10,14 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
+
     }
 
-    // Update is called once per frame
     void Update()
     {
+
     }
+
     public void OnClickNewGame()
     {
         SceneManager.LoadScene("StoryLine");
@@ -44,10 +47,11 @@ public class MenuController : MonoBehaviour
     public void OnClickExit()
     {
         Debug.Log("Game is exiting...");
-        #if UNITY_EDITOR
-             UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
              Application.Quit();
-        #endif
+#endif
     }
+
 }
