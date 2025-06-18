@@ -7,6 +7,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] public GameObject mainMenuCanvas;
     [SerializeField] public GameObject loadGameCanvas;
     [SerializeField] public GameObject settingsCanvas;
+    [SerializeField] private FadeController fadeController;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class MenuController : MonoBehaviour
 
     public void OnClickNewGame()
     {
-        SceneManager.LoadScene("StoryLine");
+        fadeController.FadeToScene("StoryLine");
     }
 
     public void OnClickSettings()
