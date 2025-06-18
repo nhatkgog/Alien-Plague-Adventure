@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d843c85be30f606438568801313c0a90
+guid: a28c1597e12537f49831bfa3cfc85859
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8102333758389539916
-    second: lobby2_0
+      213: 3488274405274176428
+    second: exit-icon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lobby2_0
+      name: exit-icon_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1536
-        height: 1024
+        x: 30
+        y: 30
+        width: 439
+        height: 439
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4bb298fef5abe8f80800000000000000
-      internalID: -8102333758389539916
+      spriteID: cab44750717d86030800000000000000
+      internalID: 3488274405274176428
       vertices: []
       indices: 
       edges: []
