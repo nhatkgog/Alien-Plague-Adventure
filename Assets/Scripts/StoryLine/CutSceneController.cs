@@ -12,17 +12,16 @@ public class CutSceneController : MonoBehaviour
 
     public void NextScene()
     {
+        if (currentIndex + 1 >= canvasScenes.Length)
+        {
+            SceneManager.LoadScene("GameLobby");
+            Debug.Log("Moving to Game Lobby....");
+            return;
+        }
+
         canvasScenes[currentIndex].SetActive(false);
         currentIndex++;
-        if (currentIndex < canvasScenes.Length) 
-        {
-            ShowScene(currentIndex);
-        }
-        else
-        {
-            Debug.Log("Cutscene complete!");
-            SceneManager.LoadScene("GameLobby");
-        }
+        ShowScene(currentIndex);
     }
 
     void ShowScene(int index)
