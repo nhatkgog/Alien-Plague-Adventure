@@ -74,11 +74,17 @@ public class PlayerManager : MonoBehaviour
         PlayerPrefs.SetInt("selectOption", selectOption);
     }
 
+    public void ConfirmSelection()
+    {
+        PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
+        PlayerSelector.Instance.SetSelectedPlayer(selected);
+    }
+
+
     public void changeScene()
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
-
         SceneManager.LoadScene("Scence1"); // hoặc tên scene bạn chơi
     }
 
