@@ -16,9 +16,17 @@ MonoBehaviour:
   characterIcon: {fileID: 4723107735738678597, guid: 36de4bfb4bd3a7047bf84390c0ead638, type: 3}
   moveSpeed: 3
   maxHealth: 100
-  damage: 20
+  def: 0
+  endurance: 0
   level: 1
   exp: 0
+  money: 0
+  damage: 20
   maxBulletQuantity: 20
   shootDelay: 0.1
+  damageBoom: 20
+  explosionRadius: 3
+  maxBoomQuatity: 5
+  knockbackForce: 3
+  boomanimation: {fileID: 9100000, guid: 424004b68360b58419166c4a7546170b, type: 2}
   animatorController: {fileID: 9100000, guid: 3227a9b098df8304a9debf781f32b95e, type: 2}

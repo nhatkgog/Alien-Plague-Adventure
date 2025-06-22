@@ -2,21 +2,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class InputSystemMovement : MonoBehaviour
 {
-
-
     private InputAction moveAction;
     private InputAction sprintAction;
     private InputAction jumpAction;
 
-    public GameObject bulletPrefab;
-    public Transform firePoint;
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
 
-
+    //ground
     public Transform groundCheck;
     public float groundCheckDistance;
     public Transform wallCheck;
@@ -29,18 +26,36 @@ public class InputSystemMovement : MonoBehaviour
     //Player Status
     private float speed;
     private float maxHealth;
-    private int maxBullet;
-    public static float damage;
+    private float def;
+    private float endurance;
     private float exp;
     private int level;
+    private float money;
+
+    //bullet
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    private int maxBullet;
+    public static float damage;
     private float shootDelay;
+
+    //boom
+    public GameObject bombPrefab;
+    public Transform boomFirePoint;
+    public float bombThrowHeight = 5f;
+    public float bombCooldown = 2f;
+    private float nextBombTime;
+    public static float damageBoom;
+    public static float explosionRadius;
+    private int maxBoomQuatity;
+    public static float knockbackForce;
 
     //reduce
     private float currentHealth;
     private int currentBullet;
     private int currentExp;
+    private int currentBoom;
     private float nextshoot;
-
 
     public float jumpForce;
     public float sprintMultiplier;
@@ -65,11 +80,24 @@ public class InputSystemMovement : MonoBehaviour
                 animator.runtimeAnimatorController = data.animatorController;
             speed = data.moveSpeed;
             maxHealth = data.maxHealth;
-            maxBullet = data.maxBulletQuantity;
-            damage = data.damage;
+            def = data.def;
+            endurance = data.endurance;
+
             exp = data.exp;
             level = data.level;
+
+            money = data.money;
+
+            //bullet
+            maxBullet = data.maxBulletQuantity;
+            damage = data.damage;
             shootDelay = data.shootDelay;
+            //boom
+            damageBoom = data.damageBoom;
+            explosionRadius = data.explosionRadius;
+            maxBoomQuatity = data.maxBoomQuatity;
+            knockbackForce = data.knockbackForce;
+
         }
         else
         {
@@ -77,6 +105,8 @@ public class InputSystemMovement : MonoBehaviour
         }
         currentBullet = maxBullet;
         currentHealth = maxHealth;
+        currentBoom = maxBoomQuatity;
+        
         updateHPBar();
         updateAmmoText();
 
@@ -94,6 +124,7 @@ public class InputSystemMovement : MonoBehaviour
         PlayerMove();
         PlayerJump();
         PlayerShooting();
+        PlayerExplosion();
         PlayerReset();
         PlayerLevelUp();
         PlayerRecharge();
@@ -147,6 +178,39 @@ public class InputSystemMovement : MonoBehaviour
             {
                 Physics2D.IgnoreCollision(bulletCollider, playerCollider);
             }
+        }
+    }
+
+    void PlayerExplosion() 
+    {
+        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
+        {
+            Debug.Log("🔹 Bắt đầu tạo boom...");
+
+            nextBombTime = Time.time + bombCooldown;
+
+            Transform nearestEnemy = FindNearestEnemy();
+            if (nearestEnemy != null)
+            {
+                Vector3 start = boomFirePoint.position;
+                Vector3 end = nearestEnemy.position;
+
+                // Tạo quả boom
+                GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
+
+                currentBoom--;
+                Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
+                    rb.linearVelocity = velocity;
+                }
+
+                // Gọi animation ném (nếu có)
+                //animator.SetTrigger("Throw");
+            }
+            Debug.Log("✅ Boom đã được tạo!");
+
         }
     }
     void PlayerDead()
@@ -248,6 +312,43 @@ public class InputSystemMovement : MonoBehaviour
             }
         }
     }
+
+    Transform FindNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        float minDist = Mathf.Infinity;
+        Transform nearest = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float dist = Vector2.Distance(transform.position, enemy.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearest = enemy.transform;
+            }
+        }
+
+        return nearest;
+    }
+
+    Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
+    {
+        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float displacementY = end.y - start.y;
+        Vector2 displacementX = new Vector2(end.x - start.x, 0f);
+
+        float timeUp = Mathf.Sqrt(2 * height / gravity);
+        float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
+        float totalTime = timeUp + timeDown;
+
+        float velocityY = Mathf.Sqrt(2 * gravity * height);
+        float velocityX = displacementX.x / totalTime;
+
+        return new Vector2(velocityX, velocityY);
+    }
+
+
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;

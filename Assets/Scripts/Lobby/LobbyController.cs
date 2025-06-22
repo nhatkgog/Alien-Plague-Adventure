@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,15 +8,27 @@ public class LobbyController : MonoBehaviour
     [SerializeField] public GameObject armorCanvas;
     [SerializeField] public GameObject weaponCanvas;
     [SerializeField] public GameObject missionCanvas;
+    [SerializeField] public GameObject enterNameCanvas;
+
+    [SerializeField] private TMP_Text playerName;
 
     void Start()
     {
-        
+        string name = PlayerPrefs.GetString("PlayerName", "Player");
+        if (PlayerPrefs.GetString("PlayerName") == null)
+        {
+            enterNameCanvas.SetActive(true);
+        }
+        else 
+        {
+            playerName.text = name; 
+        }
+
     }
 
     void Update()
     {
-        
+
     }
 
     public void OnClickBack()
