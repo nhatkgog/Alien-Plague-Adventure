@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 
 public class InputSystemMovement : MonoBehaviour
 {
@@ -248,6 +248,13 @@ public class InputSystemMovement : MonoBehaviour
             }
         }
     }
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+        updateHPBar();
+    }
+
     #region Collision
     public virtual bool IsGroundDetected()
         => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
