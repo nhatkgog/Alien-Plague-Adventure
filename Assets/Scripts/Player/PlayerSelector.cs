@@ -24,6 +24,20 @@ public class PlayerSelector : MonoBehaviour
         selectedPlayer = player;
     }
 
+    public void SetUpdateLevel(int level, float exp)
+    {
+        selectedPlayer.level = level;
+        selectedPlayer.exp = exp;
+    }
+
+    public void SetPlayerStatus(float def, float endurance,float damage, float damageBoom)
+    {
+        selectedPlayer.def = def;
+        selectedPlayer.endurance = endurance;
+        selectedPlayer.damage = damage;
+        selectedPlayer.damageBoom = damageBoom;
+    }
+
     public PlayerStatus GetSelectedPlayer()
     {
         return selectedPlayer;
