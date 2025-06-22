@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
@@ -348,6 +349,12 @@ public class InputSystemMovement : MonoBehaviour
         return new Vector2(velocityX, velocityY);
     }
 
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+        updateHPBar();
+    }
 
     #region Collision
     public virtual bool IsGroundDetected()

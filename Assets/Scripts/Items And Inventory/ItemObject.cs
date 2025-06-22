@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
-    private SpriteRenderer sr;
+
     [SerializeField] private ItemData itemData;
-    private void Start()
+
+    private void OnValidate()
     {
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = itemData.itemIcon;
+        GetComponent<SpriteRenderer>().sprite = itemData.itemIcon;
+        gameObject.name = "Item object -" + itemData.itemName;
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player") != null)
+        if (collider.CompareTag("Player") && collider.GetComponent<InputSystemMovement>() != null != null)
         {
             Inventory.instance.AddItem(itemData);
             Destroy(gameObject);
