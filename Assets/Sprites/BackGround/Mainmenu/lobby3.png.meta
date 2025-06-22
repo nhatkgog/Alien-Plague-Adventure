@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f240c0fc91e664c468906e8dd564af47
+guid: 065a3064b3df17b499a1eb90f687cdc4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3904241081201969333
-    second: gamelobby_0
+      213: -3752298667434732938
+    second: lobby3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gamelobby_0
+      name: lobby3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 591
-        height: 384
+        width: 1536
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b8c78ae396ae2630800000000000000
-      internalID: 3904241081201969333
+      spriteID: 67291641e382debc0800000000000000
+      internalID: -3752298667434732938
       vertices: []
       indices: 
       edges: []
