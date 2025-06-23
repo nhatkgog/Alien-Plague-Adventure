@@ -10,10 +10,8 @@ namespace Assets.Scripts.UI
         }
         public override void OnPointerDown(PointerEventData eventData)
         {
-            if (item?.itemData is ItemData_Equiment craft_data && craft_data.crafting != null)
-            {
-                Inventory.instance.CanCraft(craft_data, craft_data.crafting);
-            }
+            ItemData_Equiment craftData = item.itemData as ItemData_Equiment;
+            Inventory.instance.CanCraft(craftData, craftData.crafting);
         }
 
 
