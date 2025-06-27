@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 using Unity.VisualScripting;
 
 public class InputSystemMovement : MonoBehaviour
@@ -13,6 +12,17 @@ public class InputSystemMovement : MonoBehaviour
 
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
+
+
+    [SerializeField] private float chargePower = 0f;
+    [SerializeField] private float maxCharge = 2f;
+    [SerializeField] private float chargeSpeed = 1f;
+    [SerializeField] private float baseThrowSpeed = 6f;
+    private bool isChargingBoom = false;
+    private int chargeDirection = 1; // 1: tăng, -1: giảm
+
+    [SerializeField] private Image chargeBar;
+    [SerializeField] private GameObject charging;
 
     //ground
     public Transform groundCheck;
@@ -43,7 +53,7 @@ public class InputSystemMovement : MonoBehaviour
     //boom
     public GameObject bombPrefab;
     public Transform boomFirePoint;
-    public float bombThrowHeight = 5f;
+    //public float bombThrowHeight = 5f;
     public float bombCooldown = 2f;
     private float nextBombTime;
     public static float damageBoom;
@@ -64,6 +74,7 @@ public class InputSystemMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveInput;
+    private PlayerStatus data;
 
     private bool isGrounded = false;
     private bool isFacingRight = true;
@@ -74,7 +85,7 @@ public class InputSystemMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        PlayerStatus data = PlayerSelector.Instance.GetSelectedPlayer();
+        data = PlayerSelector.Instance.GetSelectedPlayer();
         if (data != null)
         {
             if (animator != null)
@@ -107,7 +118,7 @@ public class InputSystemMovement : MonoBehaviour
         currentBullet = maxBullet;
         currentHealth = maxHealth;
         currentBoom = maxBoomQuatity;
-        
+
         updateHPBar();
         updateAmmoText();
 
@@ -125,7 +136,7 @@ public class InputSystemMovement : MonoBehaviour
         PlayerMove();
         PlayerJump();
         PlayerShooting();
-        PlayerExplosion();
+        //PlayerExplosion();
         PlayerReset();
         PlayerLevelUp();
         PlayerRecharge();
@@ -133,6 +144,8 @@ public class InputSystemMovement : MonoBehaviour
         // PlayerDead();
         IsGroundDetected();
         IsWallDetected();
+
+        HandleBoomCharging();
 
         FixedUpdate();
         #endregion
@@ -182,38 +195,35 @@ public class InputSystemMovement : MonoBehaviour
         }
     }
 
-    void PlayerExplosion() 
-    {
-        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
-        {
-            Debug.Log("🔹 Bắt đầu tạo boom...");
+    //void PlayerExplosion() 
+    //{
+    //    if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
+    //    {
+    //        nextBombTime = Time.time + bombCooldown;
 
-            nextBombTime = Time.time + bombCooldown;
+    //        Transform nearestEnemy = FindNearestEnemy();
+    //        if (nearestEnemy != null)
+    //        {
+    //            Vector3 start = boomFirePoint.position;
+    //            Vector3 end = nearestEnemy.position;
 
-            Transform nearestEnemy = FindNearestEnemy();
-            if (nearestEnemy != null)
-            {
-                Vector3 start = boomFirePoint.position;
-                Vector3 end = nearestEnemy.position;
+    //            // Tạo quả boom
+    //            GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
 
-                // Tạo quả boom
-                GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
+    //            currentBoom--;
+    //            Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+    //            if (rb != null)
+    //            {
+    //                Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
+    //                rb.linearVelocity = velocity;
+    //            }
 
-                currentBoom--;
-                Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
-                    rb.linearVelocity = velocity;
-                }
+    //            // Gọi animation ném (nếu có)
+    //            //animator.SetTrigger("Throw");
+    //        }
 
-                // Gọi animation ném (nếu có)
-                //animator.SetTrigger("Throw");
-            }
-            Debug.Log("✅ Boom đã được tạo!");
-
-        }
-    }
+    //    }
+    //}
     void PlayerDead()
     {
         rb.isKinematic = true; // Disable physics
@@ -264,7 +274,11 @@ public class InputSystemMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool isSprinting = sprintAction.ReadValue<float>() > 0;
+        float enduranceRecoveryRate = 2f; // tốc độ hồi
+        float enduranceDrainRate = 8f;   // tốc độ tụt
+        float minEnduranceToSprint = 1f;  // cần ít nhất 1 để chạy nhanh
+
+        bool isSprinting = sprintAction.ReadValue<float>() > 0 && endurance > minEnduranceToSprint;
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
         if (isSprinting)
@@ -281,6 +295,21 @@ public class InputSystemMovement : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
+
+        if (isSprinting && moveInput.x != 0)
+        {
+            endurance -= enduranceDrainRate * Time.fixedDeltaTime;
+            endurance = Mathf.Max(0f, endurance);
+        }
+        else
+        {
+            endurance += enduranceRecoveryRate * Time.fixedDeltaTime;
+            endurance = Mathf.Min(data.endurance, endurance); 
+        }
+        //charging.gameObject.SetActive(true);
+
+        //chargeBar.fillAmount = endurance / data.endurance;
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -314,40 +343,40 @@ public class InputSystemMovement : MonoBehaviour
         }
     }
 
-    Transform FindNearestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float minDist = Mathf.Infinity;
-        Transform nearest = null;
+    //Transform FindNearestEnemy()
+    //{
+    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //    float minDist = Mathf.Infinity;
+    //    Transform nearest = null;
 
-        foreach (GameObject enemy in enemies)
-        {
-            float dist = Vector2.Distance(transform.position, enemy.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                nearest = enemy.transform;
-            }
-        }
+    //    foreach (GameObject enemy in enemies)
+    //    {
+    //        float dist = Vector2.Distance(transform.position, enemy.transform.position);
+    //        if (dist < minDist)
+    //        {
+    //            minDist = dist;
+    //            nearest = enemy.transform;
+    //        }
+    //    }
 
-        return nearest;
-    }
+    //    return nearest;
+    //}
 
-    Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
-    {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
-        float displacementY = end.y - start.y;
-        Vector2 displacementX = new Vector2(end.x - start.x, 0f);
+    //Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
+    //{
+    //    float gravity = Mathf.Abs(Physics2D.gravity.y);
+    //    float displacementY = end.y - start.y;
+    //    Vector2 displacementX = new Vector2(end.x - start.x, 0f);
 
-        float timeUp = Mathf.Sqrt(2 * height / gravity);
-        float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
-        float totalTime = timeUp + timeDown;
+    //    float timeUp = Mathf.Sqrt(2 * height / gravity);
+    //    float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
+    //    float totalTime = timeUp + timeDown;
 
-        float velocityY = Mathf.Sqrt(2 * gravity * height);
-        float velocityX = displacementX.x / totalTime;
+    //    float velocityY = Mathf.Sqrt(2 * gravity * height);
+    //    float velocityX = displacementX.x / totalTime;
 
-        return new Vector2(velocityX, velocityY);
-    }
+    //    return new Vector2(velocityX, velocityY);
+    //}
 
     public void IncreaseMaxHealth(float amount)
     {
@@ -371,4 +400,61 @@ public class InputSystemMovement : MonoBehaviour
             Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y, 0));
     }
     #endregion
+
+    void HandleBoomCharging()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
+        {
+            isChargingBoom = true;
+            chargePower = 0f;
+            chargeDirection = 1;
+
+            charging.gameObject.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.K) && isChargingBoom)
+        {
+            chargePower += chargeSpeed * Time.deltaTime * chargeDirection;
+
+            if (chargePower >= maxCharge)
+            {
+                chargePower = maxCharge;
+                chargeDirection = -1;
+            }
+            else if (chargePower <= 0f)
+            {
+                chargePower = 0f;
+                chargeDirection = 1;
+            }
+
+            chargeBar.fillAmount = chargePower / maxCharge;
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.K) && isChargingBoom)
+        {
+            isChargingBoom = false;
+            nextBombTime = Time.time + bombCooldown;
+            charging.gameObject.SetActive(false);
+            ThrowBoom();
+        }
+    }
+    void ThrowBoom()
+    {
+        Vector3 start = boomFirePoint.position;
+        GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
+        currentBoom--;
+
+        Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            float direction = isFacingRight ? 1f : -1f;
+            Vector2 force = new Vector2(direction * chargePower * baseThrowSpeed, chargePower * baseThrowSpeed);
+            rb.linearVelocity = force;
+        }
+
+        //animator.SetTrigger("Throw");
+    }
+
+
 }

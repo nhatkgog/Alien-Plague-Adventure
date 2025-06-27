@@ -11,14 +11,17 @@ public class Boom : MonoBehaviour
     private Animator animator;
     private bool hasExploded = false;
 
+    private Rigidbody2D r;
     void Start()
     {
 
         Debug.Log("Boom created at " + transform.position);
-        GetComponent<SpriteRenderer>().color = Color.red;
 
         animator = GetComponent<Animator>();
+
         animator.runtimeAnimatorController = PlayerSelector.Instance.GetSelectedPlayer().boomanimation;
+
+        r = GetComponent<Rigidbody2D>();
 
         explosionRadius = InputSystemMovement.explosionRadius;
         damage = InputSystemMovement.damageBoom;
@@ -29,6 +32,11 @@ public class Boom : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & damageLayer) != 0 && !hasExploded)
         {
+            if (r != null)
+            {
+                r.linearVelocity = Vector2.zero;
+                r.isKinematic = true; 
+            }
             Explode();
         }
     }
@@ -77,12 +85,7 @@ public class Boom : MonoBehaviour
         }
 
         // Hủy bom sau 0.5–1s để animation nổ được hiển thị
-        Destroy(gameObject, 0.7f);
+        Destroy(gameObject, 0.5f);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
-    }
 }

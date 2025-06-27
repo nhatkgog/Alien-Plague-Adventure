@@ -4,14 +4,18 @@ public class PlayerSelector : MonoBehaviour
 {
     public static PlayerSelector Instance;
 
-    public PlayerStatus selectedPlayer;
+    [Header("Gán ScriptableObject gốc ở đây")]
+    public PlayerStatus selectedPlayerOriginal;
+
+    private PlayerStatus runtimePlayer;
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject); // giữ lại qua các scene
+            //DontDestroyOnLoad(gameObject);
+            runtimePlayer = Instantiate(selectedPlayerOriginal);
         }
         else
         {
@@ -19,27 +23,49 @@ public class PlayerSelector : MonoBehaviour
         }
     }
 
-    public void SetSelectedPlayer(PlayerStatus player)
+    public PlayerStatus GetSelectedPlayer()
     {
-        selectedPlayer = player;
+        return runtimePlayer;
+    }
+
+    public void ResetPlayerToOriginal()
+    {
+        runtimePlayer = Instantiate(selectedPlayerOriginal);
+    }
+
+    public void PartialResetPlayer()
+    {
+        int savedLevel = runtimePlayer.level;
+        float savedExp = runtimePlayer.exp;
+
+        runtimePlayer = Instantiate(selectedPlayerOriginal);
+        runtimePlayer.level = savedLevel;
+        runtimePlayer.exp = savedExp;
+        runtimePlayer.statPoints = (savedLevel - 1) * 10;
+    }
+
+    public void SetPlayerStatus(float def, float endurance, float damage, float damageBoom)
+    {
+        runtimePlayer.def = def;
+        runtimePlayer.endurance = endurance;
+        runtimePlayer.damage = damage;
+        runtimePlayer.damageBoom = damageBoom;
     }
 
     public void SetUpdateLevel(int level, float exp)
     {
-        selectedPlayer.level = level;
-        selectedPlayer.exp = exp;
+        runtimePlayer.level = level;
+        runtimePlayer.exp = exp;
     }
 
-    public void SetPlayerStatus(float def, float endurance,float damage, float damageBoom)
+    public void SetStatPoint(int statpoint)
     {
-        selectedPlayer.def = def;
-        selectedPlayer.endurance = endurance;
-        selectedPlayer.damage = damage;
-        selectedPlayer.damageBoom = damageBoom;
+        runtimePlayer.statPoints = statpoint;
     }
 
-    public PlayerStatus GetSelectedPlayer()
+    public void SetSelectedPlayer(PlayerStatus player)
     {
-        return selectedPlayer;
+        selectedPlayerOriginal = player;
+        runtimePlayer = Instantiate(selectedPlayerOriginal);
     }
 }
