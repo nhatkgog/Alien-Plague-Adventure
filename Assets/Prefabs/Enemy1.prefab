@@ -166,6 +166,8 @@ MonoBehaviour:
   attckCheckRadius: 1.01
   attackDamage: 10
   lastTimeAttacked: 0
+  coinPrefab: {fileID: 3319084786358014660, guid: 5c6f0cf85d4d9f6499c7d7e47150386c, type: 3}
+  missionCoinText: {fileID: 0}
   hpBar: {fileID: 6585777503498774780}
   health: 50
 --- !u!50 &1466740882743781203
@@ -323,7 +325,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1413464153
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 4723107735738678597, guid: a80bffe0522dbc64c927821525f4cb74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

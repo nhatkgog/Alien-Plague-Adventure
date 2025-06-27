@@ -3,7 +3,6 @@
 public class PlayerSelector : MonoBehaviour
 {
     public static PlayerSelector Instance;
-
     public PlayerStatus selectedPlayer;
 
     void Awake()

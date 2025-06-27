@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,8 @@ public class Enemy : Entity
     [HideInInspector] public float lastTimeAttacked;
 
     public EnemyStateMachine stateMachine { get; private set; }
+
+    [SerializeField] public GameObject coinPrefab;
 
     [SerializeField] private Image hpBar;
     public int health = 50;
@@ -61,23 +64,44 @@ public class Enemy : Entity
             Die();
         }
     }
-
     protected virtual void Die()
     {
         stateMachine.ChangeState(enemy.dieState);
 
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (TryGetComponent(out Collider2D col)) col.enabled = false;
+        if (TryGetComponent(out Rigidbody2D rb))
         {
             rb.linearVelocity = Vector2.zero;
             rb.isKinematic = true;
         }
 
+        if (coinPrefab != null)
+        {
+            GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+
+            TMP_Text missionText = GameObject.Find("CoinValue")?.GetComponent<TMP_Text>();
+            Coin coinScript = coin.GetComponent<Coin>();
+            if (coinScript != null && missionText != null)
+            {
+                coinScript.missionCoinText = missionText;
+                Debug.Log($"Coin spawned with text assigned.");
+            }
+            else
+            {
+                Debug.LogWarning("Coin script or coin text not found.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("coinPrefab is null!");
+        }
+
         Destroy(gameObject, 2f);
     }
+
+
+
+
 
     protected void UpdateHealthBar()
     {

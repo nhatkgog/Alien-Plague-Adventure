@@ -4,6 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public GameObject coinPrefab;
     [SerializeField] public int numberOfEnemies;
     [SerializeField] public float spawnRange;
     [SerializeField] public float spawnDelay;
@@ -23,7 +24,9 @@ public class Spawner : MonoBehaviour
                 Random.Range(-spawnRange, spawnRange)
             );
 
-            Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+            GameObject enemyObj = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+
+            enemyObj.GetComponent<Enemy>().coinPrefab = coinPrefab;
 
             yield return new WaitForSeconds(spawnDelay);
         }
