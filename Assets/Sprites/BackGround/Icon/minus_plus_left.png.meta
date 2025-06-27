@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 974588c9f53d81141ae413321f66d2c6
+guid: 387a66ad17bdc7940ab2cca006c58314
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1183092449890394454
-    second: BUtton_0
-  - first:
-      213: -2522093367412170251
-    second: BUtton_1
+      213: 6413129206891408051
+    second: minus_plus_left_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,35 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BUtton_0
+      name: minus_plus_left_0
       rect:
         serializedVersion: 2
         x: 26
-        y: 283
-        width: 487
-        height: 459
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 651e92c90503b6010800000000000000
-      internalID: 1183092449890394454
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BUtton_1
-      rect:
-        serializedVersion: 2
-        x: 537
-        y: 284
-        width: 459
-        height: 456
+        y: 285
+        width: 486
+        height: 457
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5f16709e179bffcd0800000000000000
-      internalID: -2522093367412170251
+      spriteID: 3bae1731903000950800000000000000
+      internalID: 6413129206891408051
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a250c60feea656c4889d3e11f12481e6
+    spriteID: 3e8d39ae3e9554d4ab7fb4e308a0cebe
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BUtton_0: 1183092449890394454
-      BUtton_1: -2522093367412170251
+      minus_plus_left_0: 6413129206891408051
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

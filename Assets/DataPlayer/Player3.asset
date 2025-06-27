@@ -12,13 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8e9518ba8635948bd826b15d6c168e, type: 3}
   m_Name: Player3
   m_EditorClassIdentifier: 
-  characterName: Player3
+  characterName: Sniper
   characterIcon: {fileID: 4723107735738678597, guid: 874854c101fa4d44aaf44e0c83df92f1, type: 3}
-  moveSpeed: 3
-  maxHealth: 100
-  damage: 20
+  moveSpeed: 2.5
+  maxHealth: 120
+  def: 4
+  endurance: 60
   level: 1
   exp: 0
-  maxBulletQuantity: 20
-  shootDelay: 0.5
+  statPoints: 0
+  money: 0
+  damage: 45
+  maxBulletQuantity: 10
+  shootDelay: 0.35
+  damageBoom: 30
+  explosionRadius: 3.5
+  maxBoomQuatity: 3
+  knockbackForce: 4
+  boomanimation: {fileID: 9100000, guid: 424004b68360b58419166c4a7546170b, type: 2}
   animatorController: {fileID: 9100000, guid: 688492c3cac08774984a5aeb83cd7cda, type: 2}

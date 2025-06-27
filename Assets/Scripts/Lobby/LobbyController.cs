@@ -50,8 +50,8 @@ public class LobbyController : MonoBehaviour
     public void OnClickWeapon()
     {
         lobbyCanvas.SetActive(false);
-        armorCanvas.SetActive(true);
-        weaponCanvas.SetActive(false);
+        armorCanvas.SetActive(false);
+        weaponCanvas.SetActive(true);
         missionCanvas.SetActive(false);
     }
 
