@@ -1,10 +1,10 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Save_and_Load;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
-public class InputSystemMovement : MonoBehaviour
+public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
     private InputAction moveAction;
     private InputAction sprintAction;
@@ -304,7 +304,7 @@ public class InputSystemMovement : MonoBehaviour
         else
         {
             endurance += enduranceRecoveryRate * Time.fixedDeltaTime;
-            endurance = Mathf.Min(data.endurance, endurance); 
+            endurance = Mathf.Min(data.endurance, endurance);
         }
         //charging.gameObject.SetActive(true);
 
@@ -456,5 +456,23 @@ public class InputSystemMovement : MonoBehaviour
         //animator.SetTrigger("Throw");
     }
 
+    public void LoadData(GameData _data)
+    {
+        currentHealth = _data.health > 0 ? _data.health : maxHealth;
+        currentBullet = _data.bulletCount;
+        currentBoom = _data.boomCount;
+        money = _data.currency;
+
+        updateHPBar();
+    }
+
+
+    public void SaveData(GameData _data)
+    {
+        _data.health = currentHealth;
+        _data.bulletCount = currentBullet;
+        _data.boomCount = currentBoom;
+        _data.currency = money;
+    }
 
 }
