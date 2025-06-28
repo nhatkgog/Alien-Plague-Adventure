@@ -18,6 +18,7 @@ public class NameInputManager : MonoBehaviour
     void Start()
     {
         warningText.text = "";
+        nameInputField.Select();
     }
 
     void Update()
@@ -35,9 +36,10 @@ public class NameInputManager : MonoBehaviour
 
     void SubmitName()
     {
-        string yourName = nameInputField.text;
+        string yourName = nameInputField.text.Trim();
         warningText.text = "";
-        if (!string.IsNullOrEmpty(yourName))
+
+        if (!string.IsNullOrEmpty(yourName) && yourName != "Player")
         {
             playerName.text = yourName;
             PlayerPrefs.SetString("PlayerName", yourName);
@@ -53,9 +55,10 @@ public class NameInputManager : MonoBehaviour
                 StopCoroutine(warningCoroutine);
             }
 
-            warningCoroutine = StartCoroutine(ShowWarningTemporarily("Please enter your name!"));
+            warningCoroutine = StartCoroutine(ShowWarningTemporarily("Please enter a valid name!"));
         }
     }
+
 
     IEnumerator ShowWarningTemporarily(string message)
     {

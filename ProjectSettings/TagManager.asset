@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Bullet
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,7 @@ TagManager:
   - UI
   - Player
   - Enemy
+  - Coin
   - Button
   - 
   - 
