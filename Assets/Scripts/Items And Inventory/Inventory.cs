@@ -18,8 +18,11 @@ public class Inventory : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
+    [SerializeField] private Transform equiqmentSlotParent;
+
     private UI_ItemSlot[] itemSlots;
     private UI_ItemSlot[] stashSlots;
+    private UI_EquiqmentSlot[] equiqmentSlots;
     private void Awake()
     {
         if (instance == null)
@@ -44,6 +47,7 @@ public class Inventory : MonoBehaviour
 
         equiqment = new List<InventoryItem>();
         equiqmentDictionary = new Dictionary<ItemData_Equiment, InventoryItem>();
+        equiqmentSlots = equiqmentSlotParent.GetComponentsInChildren<UI_EquiqmentSlot>();
     }
     public void EquipItem(ItemData _item)
     {
@@ -53,6 +57,7 @@ public class Inventory : MonoBehaviour
         ItemData_Equiment oldEquipment = null;
         foreach (KeyValuePair<ItemData_Equiment, InventoryItem> item in equiqmentDictionary)
         {
+
             if (item.Key.itemType == newEquipment.itemType)
             {
                 oldEquipment = item.Key;
@@ -78,6 +83,33 @@ public class Inventory : MonoBehaviour
 
     public void UpdateSlotUI()
     {
+        for (int i = 0; i < equiqmentSlots.Length; i++)
+        {
+            equiqmentSlots[i].CleanUpSlot();
+        }
+
+        // Track which items have already been assigned
+        HashSet<ItemData_Equiment> assignedItems = new HashSet<ItemData_Equiment>();
+
+        // Assign each equipped item to only one matching slot
+        for (int i = 0; i < equiqmentSlots.Length; i++)
+        {
+            foreach (KeyValuePair<ItemData_Equiment, InventoryItem> item in equiqmentDictionary)
+            {
+                if (assignedItems.Contains(item.Key)) continue; // Already used this item
+
+                Debug.Log($"Checking slot: {equiqmentSlots[i].equimentType}, Item: {item.Key.equimentType}");
+
+                if (item.Key.equimentType == equiqmentSlots[i].equimentType &&
+                  equiqmentSlots[i].item == null)
+                {
+                    equiqmentSlots[i].UpdateSlot(item.Value);
+                    assignedItems.Add(item.Key);
+                    break;
+                }
+            }
+        }
+
         for (int i = 0; i < itemSlots.Length; i++)
         {
             itemSlots[i].CleanUpSlot();
@@ -184,34 +216,60 @@ public class Inventory : MonoBehaviour
             ItemData item = inventoryItems[inventoryItems.Count - 1].itemData;
             RemoveItem(item);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            TryTriggerSlot(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            TryTriggerSlot(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            TryTriggerSlot(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            TryTriggerSlot(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            TryTriggerSlot(4);
+        }
     }
-    public bool CanCraft(ItemData_Equiment itemToCraft, List<CraftMaterial> requiredMaterials)
+    private void TryTriggerSlot(int index)
     {
-        foreach (CraftMaterial mat in requiredMaterials)
+        if (index >= 0 && index < itemSlots.Length && itemSlots[index].item != null)
         {
-            if (!stashDictionary.TryGetValue(mat.material, out InventoryItem stashItem))
+            itemSlots[index].TriggerClick();
+        }
+    }
+    public bool CanCraft(ItemData_Equiment itemToCraft, List<InventoryItem> requiredMaterials)
+    {
+        List<InventoryItem> materials = new List<InventoryItem>();
+        for (int i = 0; i < requiredMaterials.Count; i++)
+        {
+            if (stashDictionary.TryGetValue(requiredMaterials[i].itemData, out InventoryItem existingItem))
             {
-                Debug.LogWarning($"Missing: {mat.material.itemName}");
-                return false;
-            }
+                if (existingItem.stackSize < requiredMaterials[i].stackSize)
+                {
+                    return false; // Not enough materials
+                }
+                else
+                {
+                    materials.Add(existingItem);
 
-            if (stashItem.stackSize < mat.requiredAmount)
+                }
+            }
+            else
             {
-                Debug.LogWarning($"Not enough {mat.material.itemName}. Need {mat.requiredAmount}, have {stashItem.stackSize}");
-                return false;
+                return false; // Material not found in inventory
             }
         }
-
-        // If all materials available, remove them
-        foreach (CraftMaterial mat in requiredMaterials)
+        for (int i = 0; i < materials.Count; i++)
         {
-            for (int i = 0; i < mat.requiredAmount; i++)
-            {
-                RemoveItem(mat.material);
-            }
+            RemoveItem(materials[i].itemData);
         }
-
-        // Add the crafted equipment
         AddItem(itemToCraft);
         Debug.Log($"Crafted {itemToCraft.itemName}!");
         return true;

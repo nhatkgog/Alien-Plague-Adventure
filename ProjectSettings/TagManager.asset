@@ -17,6 +17,7 @@ TagManager:
   - Player
   - Enemy
   - Coin
+  - Button
   - 
   - 
   - 
@@ -61,6 +62,9 @@ TagManager:
     locked: 0
   - name: HpBar
     uniqueID: 1962185761
+    locked: 0
+  - name: 
+    uniqueID: 2239875735
     locked: 0
   m_RenderingLayers:
   - Default
