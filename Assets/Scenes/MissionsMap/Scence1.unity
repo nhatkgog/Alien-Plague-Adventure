@@ -1419,6 +1419,7 @@ GameObject:
   - component: {fileID: 443743896}
   - component: {fileID: 443743895}
   - component: {fileID: 443743894}
+  - component: {fileID: 443743898}
   m_Layer: 5
   m_Name: Game Over
   m_TagString: Untagged
@@ -1510,6 +1511,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &443743898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443743893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789935d084e43e34e939f256cd38a069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: a7fa774d7ccfb914caef5a9c4811fc6a, type: 3}
+  clickSound: {fileID: 8300000, guid: ed697d5ae8d60c94aa26bba652a84e67, type: 3}
 --- !u!1001 &503273098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2640,6 +2655,22 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: hurtClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ee115e4cd0ac17b419e9b12d43311092, type: 3}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: shotClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a45cf920fd01a7c46b9509deb879ebd3, type: 3}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: walkClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a84f39cdd44f76c4b8ce55806306ba3d, type: 3}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 429db2abefdd19645a5f28dc1172418f, type: 3}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: jumpForce
       value: 10
       objectReference: {fileID: 0}
@@ -2652,9 +2683,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4913878203690833108, guid: ae924e04b63b0a04491c275d175adf98, type: 3}
     - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: reloadClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5814e501ff1289e449893d17e19ed315, type: 3}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 768255207}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: runningClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 70ffdc584d3ba744681f112e4bfd27eb, type: 3}
     - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: boomFirePoint
       value: 
@@ -2793,7 +2832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7202327468575270832, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7202327468575270832, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: m_CollisionDetection
@@ -17868,6 +17907,7 @@ GameObject:
   - component: {fileID: 988819897}
   - component: {fileID: 988819896}
   - component: {fileID: 988819895}
+  - component: {fileID: 988819899}
   m_Layer: 5
   m_Name: Victory
   m_TagString: Untagged
@@ -17959,6 +17999,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &988819899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988819894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789935d084e43e34e939f256cd38a069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: a7fa774d7ccfb914caef5a9c4811fc6a, type: 3}
+  clickSound: {fileID: 8300000, guid: ed697d5ae8d60c94aa26bba652a84e67, type: 3}
 --- !u!1 &1081937887
 GameObject:
   m_ObjectHideFlags: 0
@@ -19222,6 +19276,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 294767771986363231, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
+      propertyPath: howlClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 72d72f8d1f76c874b98d280370bc1175, type: 3}
     - target: {fileID: 294767771986363231, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
       propertyPath: coinPrefab
       value: 
@@ -21435,6 +21493,7 @@ GameObject:
   - component: {fileID: 2029970045}
   - component: {fileID: 2029970044}
   - component: {fileID: 2029970043}
+  - component: {fileID: 2029970047}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -21527,6 +21586,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2029970047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029970042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789935d084e43e34e939f256cd38a069, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverClip: {fileID: 8300000, guid: a7fa774d7ccfb914caef5a9c4811fc6a, type: 3}
+  clickSound: {fileID: 8300000, guid: ed697d5ae8d60c94aa26bba652a84e67, type: 3}
 --- !u!1 &2030690460
 GameObject:
   m_ObjectHideFlags: 0

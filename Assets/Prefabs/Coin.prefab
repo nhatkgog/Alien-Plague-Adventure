@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5956681626753882011}
   - component: {fileID: 9009112709445370069}
   - component: {fileID: 2317504377119259623}
-  - component: {fileID: 1976408555841796133}
+  - component: {fileID: 2916962245199073211}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 3319084786358014660}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.925, y: -3.59, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: -46.925, y: -3.5959, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.71189994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 990758956164873999}
@@ -133,7 +133,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  totalCoinText: {fileID: 0}
+  missionCoinText: {fileID: 0}
 --- !u!50 &2317504377119259623
 Rigidbody2D:
   serializedVersion: 5
@@ -161,8 +161,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &1976408555841796133
-CircleCollider2D:
+--- !u!61 &2916962245199073211
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -195,8 +195,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.49999997
+  m_Offset: {x: 0, y: -0.035193324}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.99}
+    newSize: {x: 1, y: 0.99}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1.0603863}
+  m_EdgeRadius: 0
 --- !u!1 &7082490547185672829
 GameObject:
   m_ObjectHideFlags: 0

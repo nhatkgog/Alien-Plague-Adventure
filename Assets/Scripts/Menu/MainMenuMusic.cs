@@ -1,29 +1,43 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuMusic : MonoBehaviour
 {
-    public static MainMenuMusic instance;
+    public static MainMenuMusic Instance;
+
     private AudioSource audioSource;
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            //DontDestroyOnLoad(gameObject);
-
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource != null && !audioSource.isPlaying)
-            {
-                audioSource.loop = true;
-                audioSource.playOnAwake = false;
-                audioSource.Play();
-            }
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Scence1")
+        {
+            audioSource.Stop(); 
         }
     }
 
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 }

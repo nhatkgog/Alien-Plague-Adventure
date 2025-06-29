@@ -14,10 +14,13 @@ public class LobbyController : MonoBehaviour
 
     [SerializeField] private TMP_Text playerName;
     [SerializeField] private TMP_Text playerMoney;
+    [SerializeField] private TMP_Text playerChoose;
 
     void Awake()
     {
         topBarCanvas.SetActive(true);
+        textBubbleCanvas.SetActive(true);
+        playerChoose.text = "Hello";
     }
     void Start()
     {
@@ -55,13 +58,12 @@ public class LobbyController : MonoBehaviour
             OnClickBack();
         }
 
-        UpdateTextBubbleVisibility();
     }
 
 
     void Update()
     {
-
+        UpdateTextBubbleVisibility();
     }
 
     public void OnClickBack()
@@ -96,13 +98,20 @@ public class LobbyController : MonoBehaviour
 
     public void OnClickMission()
     {
-        textBubbleCanvas.SetActive(false);
+        if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayer == null)
+        {
+            Debug.Log("You must select a character before entering missions.");
+            return;
+        }
+
+        textBubbleCanvas.SetActive(true); 
         topBarCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
         armorCanvas.SetActive(false);
         weaponCanvas.SetActive(false);
         missionCanvas.SetActive(true);
     }
+
 
     private void UpdateTextBubbleVisibility()
     {
@@ -113,7 +122,8 @@ public class LobbyController : MonoBehaviour
         }
         else
         {
-            textBubbleCanvas.SetActive(false);
+            textBubbleCanvas.SetActive(true);
+            playerChoose.text = "Select first!";
         }
     }
 

@@ -16,6 +16,8 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(0.5f);
+
         for (int i = 0; i < numberOfEnemies; i++)
         {
             Vector3 randomPosition = transform.position + new Vector3(
@@ -25,10 +27,10 @@ public class Spawner : MonoBehaviour
             );
 
             GameObject enemyObj = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
-
             enemyObj.GetComponent<Enemy>().coinPrefab = coinPrefab;
 
             yield return new WaitForSeconds(spawnDelay);
         }
     }
+
 }

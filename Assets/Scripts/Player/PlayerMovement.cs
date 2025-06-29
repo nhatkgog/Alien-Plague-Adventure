@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 public class InputSystemMovement : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class InputSystemMovement : MonoBehaviour
 
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
+
+    [SerializeField] private AudioClip deathClip; 
+    [SerializeField] private AudioClip hurtClip; 
+    [SerializeField] private AudioClip reloadClip; 
+    [SerializeField] private AudioClip shotClip; 
+    [SerializeField] private AudioClip walkClip; 
+    [SerializeField] private AudioClip runningClip;
+    private AudioClip lastClip;
+    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -67,6 +77,7 @@ public class InputSystemMovement : MonoBehaviour
 
     private bool isGrounded = false;
     private bool isFacingRight = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -166,7 +177,7 @@ public class InputSystemMovement : MonoBehaviour
         {
             nextshoot = Time.time + shootDelay;
             animator.SetTrigger("Shooting");
-
+            SFXManager.Instance.PlayOneShot(shotClip);
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
             // Ignore collision between player and bullet
@@ -210,7 +221,7 @@ public class InputSystemMovement : MonoBehaviour
                 // Gọi animation ném (nếu có)
                 //animator.SetTrigger("Throw");
             }
-            Debug.Log("✅ Boom đã được tạo!");
+            Debug.Log("Boom đã được tạo!");
 
         }
     }
@@ -219,6 +230,7 @@ public class InputSystemMovement : MonoBehaviour
         rb.isKinematic = true; // Disable physics
         rb.linearVelocity = Vector2.zero; // Stop movement
         animator.SetTrigger("Dead");
+        SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f); // Delay before destroying the player object
     }
     public void DestroyPlayer()
@@ -239,6 +251,7 @@ public class InputSystemMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet)
         {
             animator.SetTrigger("Recharge");
+            SFXManager.Instance.PlayOneShot(reloadClip);
             currentBullet = maxBullet;
             updateAmmoText();
         }
@@ -252,6 +265,7 @@ public class InputSystemMovement : MonoBehaviour
         if (currentHealth > 0)
         {
             animator.SetTrigger("Hurt");
+            SFXManager.Instance.PlayOneShot(hurtClip);
             updateHPBar();
         }
         else if (currentHealth <= 0)
@@ -261,27 +275,29 @@ public class InputSystemMovement : MonoBehaviour
         }
 
     }
-
     void FixedUpdate()
     {
         bool isSprinting = sprintAction.ReadValue<float>() > 0;
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
-        if (isSprinting)
+        if (moveInput.x != 0)
         {
-            animator.SetFloat("Speed", 1);
+            animator.SetFloat("Speed", isSprinting ? 1f : 0.5f);
+
+            if (isSprinting)
+                SFXManager.Instance.PlayLoop(runningClip);
+            else
+                SFXManager.Instance.PlayLoop(walkClip);
         }
         else
         {
-            animator.SetFloat("Speed", 0.5f);
-        }
-        if (moveInput.x == 0)
-        {
             animator.SetFloat("Speed", 0);
+            SFXManager.Instance.StopLoop();
         }
 
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         isGrounded = true;
