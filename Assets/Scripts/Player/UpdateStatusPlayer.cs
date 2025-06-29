@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class UpdateStatusPlayer : MonoBehaviour
 {
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI expText;
+    //public TextMeshProUGUI levelText;
+    //public TextMeshProUGUI expText;
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI defText;
     public TextMeshProUGUI enduranceText;
@@ -22,11 +22,23 @@ public class UpdateStatusPlayer : MonoBehaviour
     public Button enduranceDownBtn;
     public Button damageBoomDownBtn;
 
+    public Button resetBtn;
+    public Button saveBtn;
+
     private PlayerStatus player;
+
+    private float tempDamage, tempDef, tempEndurance, tempDamageBoom;
+    private int tempStatPoints;
 
     void Start()
     {
         player = PlayerSelector.Instance.GetSelectedPlayer();
+
+        tempDamage = player.damage;
+        tempDef = player.def;
+        tempEndurance = player.endurance;
+        tempDamageBoom = player.damageBoom;
+        tempStatPoints = player.statPoints;
 
         damageUpBtn.onClick.AddListener(() => UpgradeStat("damage", +1));
         defUpBtn.onClick.AddListener(() => UpgradeStat("def", +1));
@@ -38,52 +50,65 @@ public class UpdateStatusPlayer : MonoBehaviour
         enduranceDownBtn.onClick.AddListener(() => UpgradeStat("endurance", -1));
         damageBoomDownBtn.onClick.AddListener(() => UpgradeStat("damageBoom", -1));
 
+        resetBtn.onClick.AddListener(ResetStats);
+        saveBtn.onClick.AddListener(SaveStats);
+
         UpdateUI();
     }
 
     void UpgradeStat(string stat, int amount)
     {
-        // Nếu nâng cấp và hết điểm thì không cho nâng
-        if (amount > 0 && player.statPoints <= 0)
-            return;
+        if (amount > 0 && tempStatPoints <= 0) return;
 
         switch (stat)
         {
             case "damage":
-                if (amount < 0 && player.damage + amount < 0) return;
-                player.damage += amount;
+                if (amount < 0 && tempDamage + amount < player.damage) return;
+                tempDamage += amount;
                 break;
-
             case "def":
-                if (amount < 0 && player.def + amount < 0) return;
-                player.def += amount;
+                if (amount < 0 && tempDef + amount < player.def) return;
+                tempDef += amount;
                 break;
-
             case "endurance":
-                if (amount < 0 && player.endurance + amount < 0) return;
-                player.endurance += amount;
+                if (amount < 0 && tempEndurance + amount < player.endurance) return;
+                tempEndurance += amount;
                 break;
-
             case "damageBoom":
-                if (amount < 0 && player.damageBoom + amount < 0) return;
-                player.damageBoom += amount;
+                if (amount < 0 && tempDamageBoom + amount < player.damageBoom) return;
+                tempDamageBoom += amount;
                 break;
         }
 
-        // Cập nhật điểm stat
-        player.statPoints -= amount;
-
+        tempStatPoints -= amount;
         UpdateUI();
+    }
+
+    void ResetStats()
+    {
+        PlayerSelector.Instance.PartialResetPlayer();
+        player = PlayerSelector.Instance.GetSelectedPlayer();
+        tempDamage = player.damage;
+        tempDef = player.def;
+        tempEndurance = player.endurance;
+        tempDamageBoom = player.damageBoom;
+        tempStatPoints = player.statPoints;
+        UpdateUI();
+    }
+    void SaveStats()
+    {
+        PlayerSelector.Instance.SetPlayerStatus(tempDef, tempEndurance, tempDamage, tempDamageBoom);
+        PlayerSelector.Instance.SetStatPoint(tempStatPoints);
+        Debug.Log("✅ Stats saved.");
     }
 
     void UpdateUI()
     {
-        levelText.text = "Level: " + player.level;
-        expText.text = "EXP: " + player.exp;
-        damageText.text = "Damage: " + player.damage;
-        defText.text = "Defense: " + player.def;
-        enduranceText.text = "Endurance: " + player.endurance;
-        damageBoomText.text = "Boom Damage: " + player.damageBoom;
-        statPointsText.text = "Stat Points: " + player.statPoints;
+        damageText.text = tempDamage.ToString();
+        defText.text = tempDef.ToString();
+        enduranceText.text = tempEndurance.ToString();
+        damageBoomText.text = tempDamageBoom.ToString();
+        statPointsText.text = tempStatPoints.ToString();
     }
+
 }

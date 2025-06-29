@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Save_and_Load;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 
-public class InputSystemMovement : MonoBehaviour
+public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
     private InputAction moveAction;
     private InputAction sprintAction;
@@ -14,6 +15,20 @@ public class InputSystemMovement : MonoBehaviour
 
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private TextMeshProUGUI boomText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private Image expBar;
+
+    [SerializeField] private float chargePower = 0f;
+    [SerializeField] private float maxCharge = 2f;
+    [SerializeField] private float chargeSpeed = 1f;
+    [SerializeField] private float baseThrowSpeed = 6f;
+    private bool isChargingBoom = false;
+    private int chargeDirection = 1; // 1: tăng, -1: giảm
+
+    [SerializeField] private Image chargeBar;
+    [SerializeField] private GameObject charging;
 
     [SerializeField] private AudioClip deathClip; 
     [SerializeField] private AudioClip hurtClip; 
@@ -74,6 +89,7 @@ public class InputSystemMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveInput;
+    private PlayerStatus data;
 
     private bool isGrounded = false;
     private bool isFacingRight = true;
@@ -85,7 +101,7 @@ public class InputSystemMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        PlayerStatus data = PlayerSelector.Instance.GetSelectedPlayer();
+        data = PlayerSelector.Instance.GetSelectedPlayer();
         if (data != null)
         {
             if (animator != null)
@@ -118,9 +134,11 @@ public class InputSystemMovement : MonoBehaviour
         currentBullet = maxBullet;
         currentHealth = maxHealth;
         currentBoom = maxBoomQuatity;
-        
+
         updateHPBar();
         updateAmmoText();
+        updateBoomText();
+        UpdateLevelExpUI();
 
         moveAction = InputSystem.actions.FindAction("Move");
         sprintAction = InputSystem.actions.FindAction("Sprint");
@@ -132,19 +150,15 @@ public class InputSystemMovement : MonoBehaviour
     {
 
         #region Jump
-        // Jump
         PlayerMove();
         PlayerJump();
         PlayerShooting();
-        PlayerExplosion();
-        PlayerReset();
-        PlayerLevelUp();
         PlayerRecharge();
-        // PlayerHurt(10f);
-        // PlayerDead();
         IsGroundDetected();
         IsWallDetected();
 
+        HandleBoomCharging();
+        UpdateLevelExpUI();
         FixedUpdate();
         #endregion
     }
@@ -237,15 +251,6 @@ public class InputSystemMovement : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    void PlayerReset()
-    {
-
-    }
-    void PlayerLevelUp()
-    {
-
-    }
     void PlayerRecharge()
     {
         if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet)
@@ -277,7 +282,11 @@ public class InputSystemMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        bool isSprinting = sprintAction.ReadValue<float>() > 0;
+        float enduranceRecoveryRate = 2f; // tốc độ hồi
+        float enduranceDrainRate = 8f;   // tốc độ tụt
+        float minEnduranceToSprint = 1f;  // cần ít nhất 1 để chạy nhanh
+
+        bool isSprinting = sprintAction.ReadValue<float>() > 0 && endurance > minEnduranceToSprint;
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
         if (moveInput.x != 0)
@@ -296,6 +305,21 @@ public class InputSystemMovement : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
+
+        if (isSprinting && moveInput.x != 0)
+        {
+            endurance -= enduranceDrainRate * Time.fixedDeltaTime;
+            endurance = Mathf.Max(0f, endurance);
+        }
+        else
+        {
+            endurance += enduranceRecoveryRate * Time.fixedDeltaTime;
+            endurance = Mathf.Min(data.endurance, endurance);
+        }
+        //charging.gameObject.SetActive(true);
+
+        //chargeBar.fillAmount = endurance / data.endurance;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -321,11 +345,25 @@ public class InputSystemMovement : MonoBehaviour
         {
             if (currentBullet > 0)
             {
-                ammoText.text = currentBullet.ToString();
+                ammoText.text = "Bullets: " + currentBullet.ToString();
             }
             else
             {
-                ammoText.text = "EMPTY";
+                ammoText.text = "Bullets: EMPTY";
+            }
+        }
+    }
+    private void updateBoomText()
+    {
+        if (boomText != null)
+        {
+            if (currentBoom > 0)
+            {
+                boomText.text = "Booms: " + currentBoom.ToString();
+            }
+            else
+            {
+                boomText.text = "Booms: EMPTY";
             }
         }
     }
@@ -387,4 +425,102 @@ public class InputSystemMovement : MonoBehaviour
             Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y, 0));
     }
     #endregion
+
+    void HandleBoomCharging()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
+        {
+            isChargingBoom = true;
+            chargePower = 0f;
+            chargeDirection = 1;
+
+            charging.gameObject.SetActive(true);
+        }
+
+        if (Input.GetKey(KeyCode.K) && isChargingBoom)
+        {
+            chargePower += chargeSpeed * Time.deltaTime * chargeDirection;
+
+            if (chargePower >= maxCharge)
+            {
+                chargePower = maxCharge;
+                chargeDirection = -1;
+            }
+            else if (chargePower <= 0f)
+            {
+                chargePower = 0f;
+                chargeDirection = 1;
+            }
+
+            chargeBar.fillAmount = chargePower / maxCharge;
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.K) && isChargingBoom)
+        {
+            isChargingBoom = false;
+            nextBombTime = Time.time + bombCooldown;
+            charging.gameObject.SetActive(false);
+            ThrowBoom();
+        }
+    }
+    void ThrowBoom()
+    {
+        Vector3 start = boomFirePoint.position;
+        GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
+        currentBoom--;
+        updateBoomText();
+
+        Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            float direction = isFacingRight ? 1f : -1f;
+            Vector2 force = new Vector2(direction * chargePower * baseThrowSpeed, chargePower * baseThrowSpeed);
+            rb.linearVelocity = force;
+        }
+
+        //animator.SetTrigger("Throw");
+    }
+
+    public void LoadData(GameData _data)
+    {
+        currentHealth = _data.health > 0 ? _data.health : currentHealth;
+        currentBullet = _data.bulletCount > 0 ? _data.bulletCount : currentBullet;
+        currentBoom = _data.boomCount > 0 ? _data.boomCount : currentBoom;
+        money = _data.currency > 0 ? _data.currency : money;
+
+        updateHPBar();
+    }
+
+    public void SaveData(GameData _data)
+    {
+        _data.health = currentHealth;
+        _data.bulletCount = currentBullet;
+        _data.boomCount = currentBoom;
+        _data.currency = money;
+    }
+    void UpdateLevelExpUI()
+    {
+        float currentExp = data.exp;
+        float expNeeded = Mathf.Pow(10, data.level);
+
+        if (levelText != null)
+            levelText.text = "Level " + data.level;
+
+        if (expText != null)
+            expText.text = Mathf.RoundToInt(data.exp) + " / " + expNeeded;
+
+        if (expBar != null)
+        {
+            float targetFill = currentExp / expNeeded;
+            expBar.fillAmount = Mathf.Lerp(expBar.fillAmount, targetFill, Time.deltaTime * 10f);
+        }
+    }
+    public void HealToFull()
+    {
+        currentHealth = maxHealth;
+        updateHPBar();
+    }
+
+
 }

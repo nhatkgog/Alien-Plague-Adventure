@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8e9518ba8635948bd826b15d6c168e, type: 3}
   m_Name: Player2
   m_EditorClassIdentifier: 
-  characterName: Player2
+  characterName: Thamas
   characterIcon: {fileID: 4723107735738678597, guid: 44877df3ede1ba445a14424de9f86a87, type: 3}
-  moveSpeed: 3
-  maxHealth: 100
-  damage: 50
-  def: 0
-  endurance: 0
+  moveSpeed: 4
+  maxHealth: 90
+  def: 1
+  endurance: 80
   level: 1
   exp: 0
+  statPoints: 0
   money: 0
-  maxBulletQuantity: 20
-  shootDelay: 0.5
+  damage: 17
+  maxBulletQuantity: 30
+  shootDelay: 0.07
+  damageBoom: 15
+  explosionRadius: 2.2
+  maxBoomQuatity: 7
+  knockbackForce: 2.5
+  boomanimation: {fileID: 9100000, guid: 424004b68360b58419166c4a7546170b, type: 2}
   animatorController: {fileID: 9100000, guid: ea1fd66b7242cae4b88e4f172c46049c, type: 2}

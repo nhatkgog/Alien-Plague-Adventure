@@ -5,14 +5,10 @@ public enum EquimentType
 {
     Weapon,
     Armor,
+    Shield,
+    StaminaBoost
 }
 
-[System.Serializable]
-public class CraftMaterial
-{
-    public ItemData material;
-    public int requiredAmount;
-}
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "Data/Equipment")]
 public class ItemData_Equiment : ItemData
@@ -22,5 +18,5 @@ public class ItemData_Equiment : ItemData
     public float bonusHP = 30;
 
     [Header("Crafting Requirements")]
-    public List<CraftMaterial> crafting;
+    public List<InventoryItem> crafting;
 }

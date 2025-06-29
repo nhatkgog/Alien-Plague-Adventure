@@ -91,8 +91,8 @@ public class LobbyController : MonoBehaviour
         textBubbleCanvas.SetActive(false);
         topBarCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
-        armorCanvas.SetActive(true);
-        weaponCanvas.SetActive(false);
+        armorCanvas.SetActive(false);
+        weaponCanvas.SetActive(true);
         missionCanvas.SetActive(false);
     }
 

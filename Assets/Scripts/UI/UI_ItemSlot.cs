@@ -57,15 +57,23 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
             case EquimentType.Armor:
                 playerScript.IncreaseMaxHealth(equipment.bonusHP);
                 break;
+
         }
 
-        Inventory.instance.RemoveItem(item.itemData);
+        // Equip once — this will internally remove it from inventory
+        Inventory.instance.EquipItem(equipment);
 
-        CleanUpSlot();
-
-        // Refresh all slots to clean ghost UI
         Inventory.instance.UpdateSlotUI();
     }
+
+    public void TriggerClick()
+    {
+        OnPointerDown(null);
+    }
+
+
+
+
 
 
 

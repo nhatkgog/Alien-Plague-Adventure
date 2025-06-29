@@ -105,6 +105,9 @@ MonoBehaviour:
   speed: 25
   lifeTime: 1
   damage: 0
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!50 &-4349659766468167122
 Rigidbody2D:
   serializedVersion: 5

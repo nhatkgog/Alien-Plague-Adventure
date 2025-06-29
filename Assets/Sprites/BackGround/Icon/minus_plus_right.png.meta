@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7933a67c541125143854bcea6883c2aa
+guid: d2db79d7a4477c14cb40c1b756b8ce70
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1258879124242894070
-    second: tb_0
+      213: -5228373583076665402
+    second: minus_plus_right_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,40 +96,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tb_0
+      name: minus_plus_right_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 30
-        width: 630
-        height: 309
+        x: 26
+        y: 283
+        width: 460
+        height: 457
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a03f8583b10978ee0800000000000000
-      internalID: -1258879124242894070
+      spriteID: 6c7dda36de51177b0800000000000000
+      internalID: -5228373583076665402
       vertices: []
       indices: 
       edges: []
@@ -138,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 562596dda162e4944940a2e546aa6712
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tb_0: -1258879124242894070
+      minus_plus_right_0: -5228373583076665402
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

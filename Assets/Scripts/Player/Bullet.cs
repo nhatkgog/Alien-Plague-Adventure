@@ -5,10 +5,13 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public float lifeTime = 2f;
     public float damage;
+    public LayerMask damageLayer;
 
+    private Rigidbody2D rb;
     void Start()
     {
         damage = InputSystemMovement.damage;
+        rb = GetComponent<Rigidbody2D>();
         Destroy(gameObject, lifeTime);
     }
 
@@ -19,14 +22,23 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (((1 << other.gameObject.layer) & damageLayer) != 0)
         {
-            // Call enemy's damage method
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            if (other.CompareTag("Enemy"))
             {
-                enemy.TakeDamage(Mathf.RoundToInt(damage));
+                Enemy enemy = other.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(Mathf.RoundToInt(damage));
+                }
             }
+
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.isKinematic = true;
+            }
+
             Destroy(gameObject);
         }
     }
