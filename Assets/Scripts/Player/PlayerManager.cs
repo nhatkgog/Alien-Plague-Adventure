@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerDatabase PlayerDB;
 
-    public Text namePlayer;
+    public TMP_Text namePlayer;
     public SpriteRenderer artworkSprite;
 
     private int selectOption = 0;
@@ -85,8 +86,7 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
-        SceneManager.LoadScene("Scence1"); // hoặc tên scene bạn chơi
+        SceneManager.LoadScene("Scence1"); 
     }
-
 
 }

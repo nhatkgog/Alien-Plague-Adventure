@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Coin : Entity
@@ -17,15 +18,12 @@ public class Coin : Entity
         rb = GetComponent<Rigidbody2D>();
         coinValue = Random.Range(100, 201);
 
-        //Debug.Log($"Coin spawned with value: {coinValue}");
+        if (rb != null)
+            rb.gravityScale = 1f;
 
-        //if (missionCoinText == null)
-        //{
-        //    GameObject textObj = GameObject.Find("CoinValue");
-        //    if (textObj != null)
-        //        missionCoinText = textObj.GetComponent<TMP_Text>();
-        //}
+        Debug.Log($"[Coin] Spawned with value: {coinValue}");
     }
+
 
 
     void Update()

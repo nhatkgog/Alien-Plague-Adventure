@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +29,7 @@ public class Enemy : Entity
     [SerializeField] private Image hpBar;
     public int health = 50;
     private float maxHP;
+
 
     protected override void Awake()
     {
@@ -83,26 +84,20 @@ public class Enemy : Entity
 
             TMP_Text missionText = GameObject.Find("CoinValue")?.GetComponent<TMP_Text>();
             Coin coinScript = coin.GetComponent<Coin>();
-            if (coinScript != null && missionText != null)
+
+            if (coinScript != null)
             {
                 coinScript.missionCoinText = missionText;
-                Debug.Log($"Coin spawned with text assigned.");
+                Debug.Log($"Coin prefab assigned with text: {missionText?.name}");
             }
             else
             {
-                Debug.LogWarning("Coin script or coin text not found.");
+                Debug.LogWarning("Coin script not found on coin prefab!");
             }
-        }
-        else
-        {
-            Debug.LogWarning("coinPrefab is null!");
         }
 
         Destroy(gameObject, 2f);
     }
-
-
-
 
 
     protected void UpdateHealthBar()
@@ -120,4 +115,5 @@ public class Enemy : Entity
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDir, transform.position.y));
         Gizmos.DrawWireSphere(attackCheck.position, attckCheckRadius);
     }
+
 }

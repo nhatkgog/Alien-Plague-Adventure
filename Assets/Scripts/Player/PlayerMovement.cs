@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
@@ -26,6 +29,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     [SerializeField] private Image chargeBar;
     [SerializeField] private GameObject charging;
+
+    [SerializeField] private AudioClip deathClip; 
+    [SerializeField] private AudioClip hurtClip; 
+    [SerializeField] private AudioClip reloadClip; 
+    [SerializeField] private AudioClip shotClip; 
+    [SerializeField] private AudioClip walkClip; 
+    [SerializeField] private AudioClip runningClip;
+    private AudioClip lastClip;
+    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -56,7 +68,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     //boom
     public GameObject bombPrefab;
     public Transform boomFirePoint;
-    //public float bombThrowHeight = 5f;
+    public float bombThrowHeight = 5f;
     public float bombCooldown = 2f;
     private float nextBombTime;
     public static float damageBoom;
@@ -81,6 +93,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     private bool isGrounded = false;
     private bool isFacingRight = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -178,7 +191,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         {
             nextshoot = Time.time + shootDelay;
             animator.SetTrigger("Shooting");
-
+            SFXManager.Instance.PlayOneShot(shotClip);
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
             // Ignore collision between player and bullet
@@ -194,11 +207,44 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
+    void PlayerExplosion() 
+    {
+        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
+        {
+            Debug.Log("🔹 Bắt đầu tạo boom...");
+
+            nextBombTime = Time.time + bombCooldown;
+
+            Transform nearestEnemy = FindNearestEnemy();
+            if (nearestEnemy != null)
+            {
+                Vector3 start = boomFirePoint.position;
+                Vector3 end = nearestEnemy.position;
+
+                // Tạo quả boom
+                GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
+
+                currentBoom--;
+                Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
+                    rb.linearVelocity = velocity;
+                }
+
+                // Gọi animation ném (nếu có)
+                //animator.SetTrigger("Throw");
+            }
+            Debug.Log("Boom đã được tạo!");
+
+        }
+    }
     void PlayerDead()
     {
         rb.isKinematic = true; // Disable physics
         rb.linearVelocity = Vector2.zero; // Stop movement
         animator.SetTrigger("Dead");
+        SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f); // Delay before destroying the player object
     }
     public void DestroyPlayer()
@@ -210,6 +256,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet)
         {
             animator.SetTrigger("Recharge");
+            SFXManager.Instance.PlayOneShot(reloadClip);
             currentBullet = maxBullet;
             updateAmmoText();
         }
@@ -223,6 +270,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         if (currentHealth > 0)
         {
             animator.SetTrigger("Hurt");
+            SFXManager.Instance.PlayOneShot(hurtClip);
             updateHPBar();
         }
         else if (currentHealth <= 0)
@@ -232,7 +280,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
-
     void FixedUpdate()
     {
         float enduranceRecoveryRate = 2f; // tốc độ hồi
@@ -242,17 +289,19 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         bool isSprinting = sprintAction.ReadValue<float>() > 0 && endurance > minEnduranceToSprint;
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
-        if (isSprinting)
+        if (moveInput.x != 0)
         {
-            animator.SetFloat("Speed", 1);
+            animator.SetFloat("Speed", isSprinting ? 1f : 0.5f);
+
+            if (isSprinting)
+                SFXManager.Instance.PlayLoop(runningClip);
+            else
+                SFXManager.Instance.PlayLoop(walkClip);
         }
         else
         {
-            animator.SetFloat("Speed", 0.5f);
-        }
-        if (moveInput.x == 0)
-        {
             animator.SetFloat("Speed", 0);
+            SFXManager.Instance.StopLoop();
         }
 
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
@@ -272,6 +321,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         //chargeBar.fillAmount = endurance / data.endurance;
 
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         isGrounded = true;
@@ -316,6 +366,41 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
                 boomText.text = "Booms: EMPTY";
             }
         }
+    }
+
+    Transform FindNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        float minDist = Mathf.Infinity;
+        Transform nearest = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float dist = Vector2.Distance(transform.position, enemy.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearest = enemy.transform;
+            }
+        }
+
+        return nearest;
+    }
+
+    Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
+    {
+        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float displacementY = end.y - start.y;
+        Vector2 displacementX = new Vector2(end.x - start.x, 0f);
+
+        float timeUp = Mathf.Sqrt(2 * height / gravity);
+        float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
+        float totalTime = timeUp + timeDown;
+
+        float velocityY = Mathf.Sqrt(2 * gravity * height);
+        float velocityX = displacementX.x / totalTime;
+
+        return new Vector2(velocityX, velocityY);
     }
 
     public void IncreaseMaxHealth(float amount)

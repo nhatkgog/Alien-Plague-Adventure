@@ -6,13 +6,10 @@ public class ButtonBehaviour : MonoBehaviour, IPointerEnterHandler
 {
     public AudioClip hoverClip;
     public AudioClip clickSound;
-    public AudioSource audioSource;
     private Button button;
 
     void Awake()
     {
-        audioSource.playOnAwake = false;
-
         button = GetComponent<Button>();
         if (button != null)
         {
@@ -24,16 +21,15 @@ public class ButtonBehaviour : MonoBehaviour, IPointerEnterHandler
     {
         if (hoverClip != null)
         {
-            audioSource.PlayOneShot(hoverClip);
+            SFXManager.Instance.PlayOneShot(hoverClip);
         }
-        
     }
 
     private void PlayClickSound()
     {
         if (clickSound != null)
         {
-            audioSource.PlayOneShot(clickSound);
+            SFXManager.Instance.PlayOneShot(clickSound);
         }
     }
 }
