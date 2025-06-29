@@ -5,8 +5,7 @@ public class Boom : MonoBehaviour
     private float explosionRadius;
     private float damage;
     private float knockbackForce;
-    //public GameObject explosionEffect;
-    public LayerMask damageLayer; // Layer chứa enemy
+    public LayerMask damageLayer; 
 
     private Animator animator;
     private bool hasExploded = false;
@@ -54,13 +53,6 @@ public class Boom : MonoBehaviour
             Debug.Log("co animation");
         }
 
-        // Hiệu ứng nổ (tuỳ chọn)
-        //if (explosionEffect != null)
-        //{
-        //    Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        //}
-
-        // Xử lý sát thương + đẩy enemy
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageLayer);
 
         foreach (Collider2D hit in hits)
@@ -84,7 +76,6 @@ public class Boom : MonoBehaviour
             }
         }
 
-        // Hủy bom sau 0.5–1s để animation nổ được hiển thị
         Destroy(gameObject, 0.5f);
     }
 
