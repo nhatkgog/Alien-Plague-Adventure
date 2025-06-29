@@ -62,6 +62,8 @@ public class Enemy : Entity
         if (health <= 0)
         {
             Die();
+            float expEnemy = Random.Range(10,101);
+            PlayerSelector.Instance.SetLevelUp(expEnemy);
         }
     }
     protected virtual void Die()

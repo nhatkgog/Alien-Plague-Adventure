@@ -15,8 +15,6 @@ public class PlayerSelector : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
-            runtimePlayer = Instantiate(selectedPlayerOriginal);
         }
         else
         {
@@ -69,4 +67,34 @@ public class PlayerSelector : MonoBehaviour
         selectedPlayerOriginal = player;
         runtimePlayer = Instantiate(selectedPlayerOriginal);
     }
+    public void SetLevelUp(float gainedExp)
+    {
+        runtimePlayer.exp += gainedExp;
+
+        while (true)
+        {
+            float expNeeded = Mathf.Pow(10, runtimePlayer.level);
+
+            if (runtimePlayer.exp >= expNeeded)
+            {
+                runtimePlayer.exp -= expNeeded;
+                runtimePlayer.level++;
+
+                runtimePlayer.statPoints += 10;
+
+                var playerScript = GameObject.FindWithTag("Player")?.GetComponent<InputSystemMovement>();
+                if (playerScript != null)
+                {
+                    playerScript.HealToFull();
+                }
+
+                Debug.Log($"Level Up! New level: {runtimePlayer.level}");
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
 }

@@ -12,7 +12,10 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI ammoText;
-
+    [SerializeField] private TextMeshProUGUI boomText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private Image expBar;
 
     [SerializeField] private float chargePower = 0f;
     [SerializeField] private float maxCharge = 2f;
@@ -121,6 +124,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
         updateHPBar();
         updateAmmoText();
+        updateBoomText();
+        UpdateLevelExpUI();
 
         moveAction = InputSystem.actions.FindAction("Move");
         sprintAction = InputSystem.actions.FindAction("Sprint");
@@ -132,21 +137,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     {
 
         #region Jump
-        // Jump
         PlayerMove();
         PlayerJump();
         PlayerShooting();
-        //PlayerExplosion();
-        PlayerReset();
-        PlayerLevelUp();
         PlayerRecharge();
-        // PlayerHurt(10f);
-        // PlayerDead();
         IsGroundDetected();
         IsWallDetected();
 
         HandleBoomCharging();
-
+        UpdateLevelExpUI();
         FixedUpdate();
         #endregion
     }
@@ -195,35 +194,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
-    //void PlayerExplosion() 
-    //{
-    //    if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
-    //    {
-    //        nextBombTime = Time.time + bombCooldown;
-
-    //        Transform nearestEnemy = FindNearestEnemy();
-    //        if (nearestEnemy != null)
-    //        {
-    //            Vector3 start = boomFirePoint.position;
-    //            Vector3 end = nearestEnemy.position;
-
-    //            // Tạo quả boom
-    //            GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
-
-    //            currentBoom--;
-    //            Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-    //            if (rb != null)
-    //            {
-    //                Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
-    //                rb.linearVelocity = velocity;
-    //            }
-
-    //            // Gọi animation ném (nếu có)
-    //            //animator.SetTrigger("Throw");
-    //        }
-
-    //    }
-    //}
     void PlayerDead()
     {
         rb.isKinematic = true; // Disable physics
@@ -234,15 +204,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     public void DestroyPlayer()
     {
         Destroy(gameObject);
-    }
-
-    void PlayerReset()
-    {
-
-    }
-    void PlayerLevelUp()
-    {
-
     }
     void PlayerRecharge()
     {
@@ -334,49 +295,28 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         {
             if (currentBullet > 0)
             {
-                ammoText.text = currentBullet.ToString();
+                ammoText.text = "Bullets: " + currentBullet.ToString();
             }
             else
             {
-                ammoText.text = "EMPTY";
+                ammoText.text = "Bullets: EMPTY";
             }
         }
     }
-
-    //Transform FindNearestEnemy()
-    //{
-    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-    //    float minDist = Mathf.Infinity;
-    //    Transform nearest = null;
-
-    //    foreach (GameObject enemy in enemies)
-    //    {
-    //        float dist = Vector2.Distance(transform.position, enemy.transform.position);
-    //        if (dist < minDist)
-    //        {
-    //            minDist = dist;
-    //            nearest = enemy.transform;
-    //        }
-    //    }
-
-    //    return nearest;
-    //}
-
-    //Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
-    //{
-    //    float gravity = Mathf.Abs(Physics2D.gravity.y);
-    //    float displacementY = end.y - start.y;
-    //    Vector2 displacementX = new Vector2(end.x - start.x, 0f);
-
-    //    float timeUp = Mathf.Sqrt(2 * height / gravity);
-    //    float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
-    //    float totalTime = timeUp + timeDown;
-
-    //    float velocityY = Mathf.Sqrt(2 * gravity * height);
-    //    float velocityX = displacementX.x / totalTime;
-
-    //    return new Vector2(velocityX, velocityY);
-    //}
+    private void updateBoomText()
+    {
+        if (boomText != null)
+        {
+            if (currentBoom > 0)
+            {
+                boomText.text = "Booms: " + currentBoom.ToString();
+            }
+            else
+            {
+                boomText.text = "Booms: EMPTY";
+            }
+        }
+    }
 
     public void IncreaseMaxHealth(float amount)
     {
@@ -444,6 +384,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         Vector3 start = boomFirePoint.position;
         GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
         currentBoom--;
+        updateBoomText();
 
         Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -458,14 +399,13 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     public void LoadData(GameData _data)
     {
-        currentHealth = _data.health > 0 ? _data.health : maxHealth;
-        currentBullet = _data.bulletCount;
-        currentBoom = _data.boomCount;
-        money = _data.currency;
+        currentHealth = _data.health > 0 ? _data.health : currentHealth;
+        currentBullet = _data.bulletCount > 0 ? _data.bulletCount : currentBullet;
+        currentBoom = _data.boomCount > 0 ? _data.boomCount : currentBoom;
+        money = _data.currency > 0 ? _data.currency : money;
 
         updateHPBar();
     }
-
 
     public void SaveData(GameData _data)
     {
@@ -474,5 +414,28 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         _data.boomCount = currentBoom;
         _data.currency = money;
     }
+    void UpdateLevelExpUI()
+    {
+        float currentExp = data.exp;
+        float expNeeded = Mathf.Pow(10, data.level);
+
+        if (levelText != null)
+            levelText.text = "Level " + data.level;
+
+        if (expText != null)
+            expText.text = Mathf.RoundToInt(data.exp) + " / " + expNeeded;
+
+        if (expBar != null)
+        {
+            float targetFill = currentExp / expNeeded;
+            expBar.fillAmount = Mathf.Lerp(expBar.fillAmount, targetFill, Time.deltaTime * 10f);
+        }
+    }
+    public void HealToFull()
+    {
+        currentHealth = maxHealth;
+        updateHPBar();
+    }
+
 
 }
