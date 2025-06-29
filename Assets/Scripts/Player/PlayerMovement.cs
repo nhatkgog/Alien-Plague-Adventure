@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
+using System.Threading;
 
 public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
@@ -29,6 +30,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     [SerializeField] private Image chargeBar;
     [SerializeField] private GameObject charging;
+    [SerializeField] private GameOverManager gameManager;
 
     [SerializeField] private AudioClip deathClip; 
     [SerializeField] private AudioClip hurtClip; 
@@ -246,6 +248,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         animator.SetTrigger("Dead");
         SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f); // Delay before destroying the player object
+        gameManager.ShowGameOver();
     }
     public void DestroyPlayer()
     {
