@@ -98,7 +98,7 @@ public class LobbyController : MonoBehaviour
 
     public void OnClickMission()
     {
-        if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayer == null)
+        if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayerOriginal == null)
         {
             Debug.Log("You must select a character before entering missions.");
             return;

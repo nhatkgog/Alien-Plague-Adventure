@@ -38,8 +38,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private AudioClip shotClip; 
     [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
-    private AudioClip lastClip;
-    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
