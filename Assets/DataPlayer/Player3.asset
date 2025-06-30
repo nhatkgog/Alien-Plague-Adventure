@@ -31,3 +31,4 @@ MonoBehaviour:
   knockbackForce: 4
   boomanimation: {fileID: 9100000, guid: 424004b68360b58419166c4a7546170b, type: 2}
   animatorController: {fileID: 9100000, guid: 688492c3cac08774984a5aeb83cd7cda, type: 2}
+  bulletPrefab: {fileID: 3464606000662888121, guid: 3ca8d66f4827f214181534d48917a3c3, type: 3}

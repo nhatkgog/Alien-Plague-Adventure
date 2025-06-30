@@ -20,7 +20,7 @@ MonoBehaviour:
   endurance: 100
   level: 1
   exp: 0
-  statPoints: 0
+  statPoints: 10
   money: 0
   damage: 22
   maxBulletQuantity: 25
@@ -31,3 +31,4 @@ MonoBehaviour:
   knockbackForce: 3
   boomanimation: {fileID: 9100000, guid: 424004b68360b58419166c4a7546170b, type: 2}
   animatorController: {fileID: 9100000, guid: 3227a9b098df8304a9debf781f32b95e, type: 2}
+  bulletPrefab: {fileID: 3464606000662888121, guid: 15c79b59451db08439e6742a71b3b359, type: 3}
