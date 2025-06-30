@@ -348,6 +348,12 @@ public class InputSystemMovement : MonoBehaviour
         return new Vector2(velocityX, velocityY);
     }
 
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+        updateHPBar();
+    }
 
     public void IncreaseMaxHealth(float amount)
     {
