@@ -120,6 +120,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             maxBullet = data.maxBulletQuantity;
             damage = data.damage;
             shootDelay = data.shootDelay;
+            bulletPrefab = data.bulletPrefab;
             //boom
             damageBoom = data.damageBoom;
             explosionRadius = data.explosionRadius;
@@ -207,38 +208,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
-    void PlayerExplosion() 
-    {
-        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
-        {
-            Debug.Log("🔹 Bắt đầu tạo boom...");
-
-            nextBombTime = Time.time + bombCooldown;
-
-            Transform nearestEnemy = FindNearestEnemy();
-            if (nearestEnemy != null)
-            {
-                Vector3 start = boomFirePoint.position;
-                Vector3 end = nearestEnemy.position;
-
-                // Tạo quả boom
-                GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
-
-                currentBoom--;
-                Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
-                    rb.linearVelocity = velocity;
-                }
-
-                // Gọi animation ném (nếu có)
-                //animator.SetTrigger("Throw");
-            }
-            Debug.Log("Boom đã được tạo!");
-
-        }
-    }
     void PlayerDead()
     {
         rb.isKinematic = true; // Disable physics
@@ -368,42 +337,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
-
-    Transform FindNearestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float minDist = Mathf.Infinity;
-        Transform nearest = null;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float dist = Vector2.Distance(transform.position, enemy.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                nearest = enemy.transform;
-            }
-        }
-
-        return nearest;
-    }
-
-    Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
-    {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
-        float displacementY = end.y - start.y;
-        Vector2 displacementX = new Vector2(end.x - start.x, 0f);
-
-        float timeUp = Mathf.Sqrt(2 * height / gravity);
-        float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
-        float totalTime = timeUp + timeDown;
-
-        float velocityY = Mathf.Sqrt(2 * gravity * height);
-        float velocityX = displacementX.x / totalTime;
-
-        return new Vector2(velocityX, velocityY);
-    }
-
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
