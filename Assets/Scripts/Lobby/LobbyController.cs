@@ -117,7 +117,7 @@ public class LobbyController : MonoBehaviour
     {
         if (PlayerSelector.Instance != null)
         {
-            bool isSelected = PlayerSelector.Instance.selectedPlayer != null;
+            bool isSelected = PlayerSelector.Instance.selectedPlayerOriginal != null;
             textBubbleCanvas.SetActive(isSelected);
         }
         else

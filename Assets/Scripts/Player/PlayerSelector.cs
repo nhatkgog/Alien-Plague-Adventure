@@ -4,12 +4,12 @@ public class PlayerSelector : MonoBehaviour
 {
     public static PlayerSelector Instance;
 
-    public PlayerStatus selectedPlayer;
+    //public PlayerStatus selectedPlayer;
 
     [Header("Gán ScriptableObject gốc ở đây")]
     public PlayerStatus selectedPlayerOriginal;
 
-    private PlayerStatus runtimePlayer;
+    public PlayerStatus runtimePlayer;
     void Awake()
     {
         if (Instance == null)
