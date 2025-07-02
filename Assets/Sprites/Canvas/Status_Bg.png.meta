@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bf02a7cce9eb9d748aea48e94b144004
+guid: ab853aee15411d5488266d9f9139010d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4870523353179305607
-    second: Pause Game Over Menu_0
+      213: -1013010238427786138
+    second: Status_Bg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pause Game Over Menu_0
+      name: Status_Bg_0
       rect:
         serializedVersion: 2
-        x: 85
-        y: 53
-        width: 445
-        height: 301
+        x: 82
+        y: 45
+        width: 448
+        height: 305
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 979c08fb0dc686cb0800000000000000
-      internalID: -4870523353179305607
+      spriteID: 6649da82e8011f1f0800000000000000
+      internalID: -1013010238427786138
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 02986a28ab76ba44a85557eed73aa170
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Pause Game Over Menu_0: -4870523353179305607
+      Status_Bg_0: -1013010238427786138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
