@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 using System.Threading;
+using System;
 
 public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
@@ -20,6 +21,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private Image expBar;
+    [SerializeField] private Image enduranceBar;
 
     [SerializeField] private float chargePower = 0f;
     [SerializeField] private float maxCharge = 2f;
@@ -180,12 +182,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     }
     void PlayerJump()
     {
+        isGrounded = IsGroundDetected();
+
         if (jumpAction.triggered && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
     }
+
     void PlayerShooting()
     {
         if (Input.GetKeyDown(KeyCode.J) && currentBullet > 0 && Time.time > nextshoot)
@@ -250,16 +255,39 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
+    private Boolean wantsToSprint = false;
     void FixedUpdate()
     {
-        float enduranceRecoveryRate = 2f; // tốc độ hồi
-        float enduranceDrainRate = 8f;   // tốc độ tụt
-        float minEnduranceToSprint = 1f;  // cần ít nhất 1 để chạy nhanh
+        float enduranceRecoveryRate = 2f;
+        float enduranceDrainRate = 8f;
 
-        bool isSprinting = sprintAction.ReadValue<float>() > 0 && endurance > minEnduranceToSprint;
+        // Xử lý phím
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            // Chỉ cho bắt đầu sprint khi endurance đầy
+            if (endurance >= data.endurance * 0.99f)
+            {
+                wantsToSprint = true;
+            }
+            else
+            {
+                wantsToSprint = false;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            wantsToSprint = false;
+        }
+
+        // Kiểm tra điều kiện sprint
+        bool isMoving = moveInput.x != 0;
+        bool isSprinting = wantsToSprint && isMoving && endurance > 0f;
+
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
-        if (moveInput.x != 0)
+        // Animation & SFX
+        if (isMoving)
         {
             animator.SetFloat("Speed", isSprinting ? 1f : 0.5f);
 
@@ -274,27 +302,30 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             SFXManager.Instance.StopLoop();
         }
 
+        // Di chuyển
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
 
-        if (isSprinting && moveInput.x != 0)
+        // Tính endurance
+        if (isSprinting)
         {
             endurance -= enduranceDrainRate * Time.fixedDeltaTime;
             endurance = Mathf.Max(0f, endurance);
+
+            //Nếu endurance cạn → dừng sprint cho tới khi hồi đầy và nhấn lại
+            if (endurance <= 0f)
+            {
+                wantsToSprint = false;
+            }
         }
         else
         {
             endurance += enduranceRecoveryRate * Time.fixedDeltaTime;
             endurance = Mathf.Min(data.endurance, endurance);
         }
-        //charging.gameObject.SetActive(true);
 
-        //chargeBar.fillAmount = endurance / data.endurance;
+        if (enduranceBar != null)
+            enduranceBar.fillAmount = endurance / data.endurance;
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        isGrounded = true;
     }
 
     void Flip()
