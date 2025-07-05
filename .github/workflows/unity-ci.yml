@@ -46,7 +46,7 @@ on:
 
 jobs:
   unity:
-    name: Unity: setup, activate, test & build
+    name: Unity setup, activate, test & build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
