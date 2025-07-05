@@ -57,7 +57,7 @@ jobs:
           key: Unity6-${{ runner.os }}-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
 
       - name: Setup Unity
-        uses: game-ci/unity-actions/setup@v2
+        uses: game-ci/unity-actions/setup@v4
         with:
           unityVersion: 6000.1.2f1
 
@@ -67,12 +67,12 @@ jobs:
           unityVersion: 6000.1.2f1
 
       - name: Run Unity Tests
-        uses: game-ci/unity-actions/test@v2
+        uses: game-ci/unity-actions/test@v4
         with:
           unityVersion: 6000.1.2f1
 
       - name: Build Standalone
-        uses: game-ci/unity-actions/build@v2
+        uses: game-ci/unity-actions/build@v4
         with:
           unityVersion: 6000.1.2f1
           targetPlatform: StandaloneWindows64
