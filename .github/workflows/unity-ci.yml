@@ -102,15 +102,17 @@ jobs:
           DOTNET_ROOT: /usr/share/dotnet
 
   mega_linter:
-    name: Mega-Linter (C#, YAML, MD)
-    runs-on: ubuntu-latest
     needs: roslyn_dotnet
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Run Mega-Linter
-         uses: oxsecurity/megalinter@v8
-         env:
+        uses: oxsecurity/megalinter@v8
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
-          linter: 'CSHARP,YAML,MARKDOWN'
+          args: |
+            --filters_extensions "cs,yaml,yml,md"
+            --disable_linters "js,php,py,rb"
