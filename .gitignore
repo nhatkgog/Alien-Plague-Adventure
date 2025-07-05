@@ -73,3 +73,7 @@ crashlytics-build.properties
 
 # Projects Version and Packages
 /[Pp]rojectSettings/[Pp]rojectVersion.txt
+
+# Ignore temporaries from GameCI
+/[Aa]rtifacts/
+/[Cc]odeCoverage/
