@@ -78,7 +78,7 @@ jobs:
           targetPlatform: StandaloneWindows64
 
   roslyn_dotnet:
-    name: C#: Roslyn + Format
+    name: C# Roslyn + Format
     runs-on: ubuntu-latest
     needs: unity
     steps:
