@@ -89,7 +89,7 @@ jobs:
           fi
       - name: Reset tracked media assets to avoid dirty build
         run: |
-           git checkout -- '*.png' '*.jpg' '*.gif' '*.mp3' '*.wav'
+           git checkout -- '*.png' '*.jpg' '*.gif' '*.mp3' '*.wav' || true
 
       # - name: Activate Unity License
       #   uses: game-ci/unity-actions/activate@v2
