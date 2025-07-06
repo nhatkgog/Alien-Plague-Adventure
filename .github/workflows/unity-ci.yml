@@ -138,3 +138,9 @@ jobs:
         with:
           args: |
             --filters_extensions "cs,yaml,yml,meta,unity,json,md"
+      - name: Upload Mega-Linter Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: megalinter-reports
+          path: megalinter-reports
