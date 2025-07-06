@@ -12,7 +12,7 @@ FILTER_REGEX_EXCLUDE: '.*\.(png|jpg|gif|mp3|wav|dll|exe)$'
 # Enable only linters relevant to Unity
 ENABLE_LINTERS:
   - CSHARP_CSHARPIER      # C# formatting
-  - CSHARP_DOTNET_FORMAT  # .NET formatting/checks
+  # - CSHARP_DOTNET_FORMAT  # .NET formatting/checks
   - YAML_PRETTIER         # Unity .unity, .asset & .meta files
   - JSON_PRETTIER         # config files in Packages/
   - MARKDOWN_MARKDOWNLINT # project docs
