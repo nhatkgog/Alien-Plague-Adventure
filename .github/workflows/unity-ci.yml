@@ -69,14 +69,24 @@ jobs:
           git lfs pull
           git add .
           git reset --hard
+          
+      - name: Ensure Library folder exists
+        run: mkdir -p Library
 
       # Cache
       - uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ hashFiles('Assets/**/*.cs', 'Assets/**/*.meta', 'Packages/**', 'ProjectSettings/**') }}
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
+      - name: Check if Library folder exists
+        run: |
+          if [ -d "Library" ]; then
+            echo "✅ Library folder exists."
+          else
+            echo "⚠️ Library folder does not exist."
+          fi
 
       # - name: Activate Unity License
       #   uses: game-ci/unity-actions/activate@v2
