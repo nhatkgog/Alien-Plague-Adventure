@@ -63,10 +63,10 @@ jobs:
           restore-keys: |
             Library-
 
-      - name: Activate Unity License
-        uses: game-ci/unity-actions/activate@v2
-        with:
-          unityVersion: 6000.1.2f1
+      # - name: Activate Unity License
+      #   uses: game-ci/unity-actions/activate@v2
+      #   with:
+      #     unityVersion: 6000.1.2f1
 
       # - name: Run Unity Tests
       #   uses: game-ci/unity-test-runner@v4
