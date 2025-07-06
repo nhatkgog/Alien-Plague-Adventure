@@ -52,9 +52,23 @@ jobs:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Git LFS
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        id: lfs-cache
         with:
-          lfs: true
-          fetch-depth: 0
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
 
       # Cache
       - uses: actions/cache@v3
@@ -84,18 +98,18 @@ jobs:
           unityVersion: 6000.1.2f1
           targetPlatform: StandaloneWindows64
           
-      - name: Detect and commit dirty files
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: 'chore: commit Unity-generated changes'
-          file_pattern: |
-            ProjectSettings/**
-            Assets/**/.meta
-          branch: ${{ github.ref_name }}
-          author_name: 'github-actions[bot]'
-          author_email: 'github-actions[bot]@users.noreply.github.com'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Detect and commit dirty files
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: 'chore: commit Unity-generated changes'
+      #     file_pattern: |
+      #       ProjectSettings/**
+      #       Assets/**/.meta
+      #     branch: ${{ github.ref_name }}
+      #     author_name: 'github-actions[bot]'
+      #     author_email: 'github-actions[bot]@users.noreply.github.com'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - uses: actions/upload-artifact@v4
         with:
