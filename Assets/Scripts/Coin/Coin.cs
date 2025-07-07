@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class Coin : Entity
 {
     public static float missionCoinAmount = 0f;
-    public TMP_Text missionCoinText;  
+    public TMP_Text missionCoinText;
 
     private float coinValue = 0f;
     private Animator animator;
@@ -38,26 +37,26 @@ public class Coin : Entity
 
 
     private void OnTriggerEnter2D(Collider2D collision)
-{
-    if (collision.CompareTag("Player"))
     {
-        missionCoinAmount += coinValue;
-
-        Debug.Log($"Gained coin: {coinValue}");
-        Debug.Log($"Total mission coins: {missionCoinAmount}");
-
-        if (missionCoinText != null)
+        if (collision.CompareTag("Player"))
         {
-           missionCoinText.text = missionCoinAmount.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("MissionCoinText is null");
-        }
+            missionCoinAmount += coinValue;
 
-        Destroy(gameObject);
+            Debug.Log($"Gained coin: {coinValue}");
+            Debug.Log($"Total mission coins: {missionCoinAmount}");
+
+            if (missionCoinText != null)
+            {
+                missionCoinText.text = missionCoinAmount.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("MissionCoinText is null");
+            }
+
+            Destroy(gameObject);
+        }
     }
-}
 
 
     public static float GetMissionTotal() => missionCoinAmount;

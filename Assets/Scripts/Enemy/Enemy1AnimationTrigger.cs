@@ -10,7 +10,7 @@ public class Enemy1AnimationTrigger : MonoBehaviour
     }
     private void AttackTrigger()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attckCheckRadius);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attackCheckRadius);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Player"))

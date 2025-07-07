@@ -23,15 +23,25 @@ public class MissionListHorizontalUI : MonoBehaviour
     {
         if (missions.Count == 0) return;
 
-        Transform firstChild = content.GetChild(0);
-        MissionEntry entry0 = firstChild.GetComponent<MissionEntry>();
-        entry0.Setup(missions[0].image, missions[0].title, missions[0].description, missions[0].sceneName);
-
-        for (int i = 1; i < missions.Count; i++)
+        for (int i = 0; i < missions.Count; i++)
         {
-            GameObject entryObj = Instantiate(missionEntryPrefab, content);
-            MissionEntry entry = entryObj.GetComponent<MissionEntry>();
+            GameObject entryObj;
+            MissionEntry entry;
+
+            if (i == 0)
+            {
+                Transform firstChild = content.GetChild(0);
+                entry = firstChild.GetComponent<MissionEntry>();
+            }
+            else
+            {
+                entryObj = Instantiate(missionEntryPrefab, content);
+                entry = entryObj.GetComponent<MissionEntry>();
+            }
+
             entry.Setup(missions[i].image, missions[i].title, missions[i].description, missions[i].sceneName);
+
         }
     }
+
 }
