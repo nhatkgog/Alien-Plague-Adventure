@@ -1,0 +1,160 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will build, test, sign and package a WPF or Windows Forms desktop application
+# built on .NET Core.
+# To learn how to migrate your existing application to .NET Core,
+# refer to https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+#
+# To configure this workflow:
+#
+# 1. Configure environment variables
+# GitHub sets default environment variables for every workflow run.
+# Replace the variables relative to your project in the "env" section below.
+#
+# 2. Signing
+# Generate a signing certificate in the Windows Application
+# Packaging Project or add an existing signing certificate to the project.
+# Next, use PowerShell to encode the .pfx file using Base64 encoding
+# by running the following Powershell script to generate the output string:
+#
+# $pfx_cert = Get-Content '.\SigningCertificate.pfx' -Encoding Byte
+# [System.Convert]::ToBase64String($pfx_cert) | Out-File 'SigningCertificate_Encoded.txt'
+#
+# Open the output file, SigningCertificate_Encoded.txt, and copy the
+# string inside. Then, add the string to the repo as a GitHub secret
+# and name it "Base64_Encoded_Pfx."
+# For more information on how to configure your signing certificate for
+# this workflow, refer to https://github.com/microsoft/github-actions-for-desktop-apps#signing
+#
+# Finally, add the signing certificate password to the repo as a secret and name it "Pfx_Key".
+# See "Build the Windows Application Packaging project" below to see how the secret is used.
+#
+# For more information on GitHub Actions, refer to https://github.com/features/actions
+# For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
+# refer to https://github.com/microsoft/github-actions-for-desktop-apps
+
+name: Actions 😎
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build my project ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout (without LFS)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # - name: Set up .NET SDK
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: '8.x'
+
+      # Git LFS
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
+      # Cache
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # # Test
+      # - name: Run tests
+      #   uses: game-ci/unity-test-runner@v4
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          allowDirtyBuild: true
+
+      # Output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Build
+          path: build
+
+  # roslyn_dotnet:
+  #   name: C# Roslyn + Format
+  #   runs-on: ubuntu-latest
+    # needs: build
+    # steps:
+    #   - uses: actions/checkout@v4
+
+    #   - name: Setup .NET 8 SDK
+    #     uses: actions/setup-dotnet@v4
+    #     with:
+    #       dotnet-version: '8.x'
+
+    #   - run: dotnet restore
+
+    #   - name: Run Roslyn analyzers
+    #     run: dotnet build --no-restore -warnaserror
+
+  #     - name: Check formatting
+  #       uses: xt0rted/dotnet-format@v1.2.0
+  #       with:
+  #         only-changed-files: true
+  #       env:
+  #         DOTNET_ROOT: /usr/share/dotnet
+
+  mega_linter:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Mega-Linter
+        uses: oxsecurity/megalinter@v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+        with:
+          args: |
+            --filters_extensions "cs,yaml,yml,meta,unity,json,md"
+      - name: Upload Mega-Linter Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: megalinter-reports
+          path: megalinter-reports
