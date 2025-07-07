@@ -44,6 +44,7 @@ on:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -53,6 +54,11 @@ jobs:
       # Checkout (without LFS)
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # - name: Set up .NET SDK
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: '8.x'
 
       # Git LFS
       - name: Create LFS file list
@@ -106,22 +112,22 @@ jobs:
           name: Build
           path: build
 
-  # roslyn_dotnet:
-  #   name: C# Roslyn + Format
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/checkout@v4
+  roslyn_dotnet:
+    name: C# Roslyn + Format
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Setup .NET 8 SDK
-  #       uses: actions/setup-dotnet@v4
-  #       with:
-  #         dotnet-version: '8.x'
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
 
-  #     - run: dotnet restore
+      - run: dotnet restore
 
-  #     - name: Run Roslyn analyzers
-  #       run: dotnet build --no-restore -warnaserror
+      - name: Run Roslyn analyzers
+        run: dotnet build --no-restore -warnaserror
 
   #     - name: Check formatting
   #       uses: xt0rted/dotnet-format@v1.2.0
