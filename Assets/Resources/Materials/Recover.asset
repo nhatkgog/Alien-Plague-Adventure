@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e768e5c62c05d7e47a4a038012be567a, type: 3}
-  m_Name: Shield
+  m_Script: {fileID: 11500000, guid: b3273760d2bd09844b0485cba7db76d3, type: 3}
+  m_Name: Recover
   m_EditorClassIdentifier: 
-  itemType: 1
-  itemName: Shield
-  itemIcon: {fileID: 281222209, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  equimentType: 2
-  bonusDamage: 1000
-  bonusHP: 30
-  crafting: []
+  itemType: 0
+  itemName: Recover
+  itemIcon: {fileID: 1508536180, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: e19bfa2c08bc4e940bd978b578ec10b2
+  dropChance: 43

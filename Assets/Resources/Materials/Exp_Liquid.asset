@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3273760d2bd09844b0485cba7db76d3, type: 3}
-  m_Name: Iron
+  m_Name: Exp_Liquid
   m_EditorClassIdentifier: 
   itemType: 0
-  itemName: Iron
-  itemIcon: {fileID: 1025795234, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemName: Exp_Liquid
+  itemIcon: {fileID: -2035442007, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: f937aa88fc41fe64e95b151319506cd0
+  dropChance: 50

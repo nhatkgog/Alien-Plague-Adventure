@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MissionEntry : MonoBehaviour
 {
@@ -19,14 +19,22 @@ public class MissionEntry : MonoBehaviour
         Button btn = GetComponent<Button>();
         if (btn != null)
         {
-            btn.onClick.RemoveAllListeners(); 
+            btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(OnClick);
         }
     }
-
+    public string GetSceneName()
+    {
+        return sceneToLoad;
+    }
     private void OnClick()
     {
         Debug.Log("Moving to game scene.....");
+
+
         SceneManager.LoadScene(sceneToLoad);
     }
+
+
+
 }

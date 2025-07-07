@@ -17,7 +17,7 @@ public class Enemy : Entity
     public float attackDistance;
     public float attackCooldown;
     public Transform attackCheck;
-    public float attckCheckRadius;
+    public float attackCheckRadius;
     public float attackDamage;
 
     [HideInInspector] public float lastTimeAttacked;
@@ -29,13 +29,23 @@ public class Enemy : Entity
     [SerializeField] private Image hpBar;
     public int health = 50;
     private float maxHP;
+    [Header("Level details")]
+    [SerializeField] private int level;
+    [Range(0f, 1f)]
+    [SerializeField] private float percentageModifier;
 
+    private ItemDrop myDropSystem;
 
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
         maxHP = health;
+
+        ModifyStat("health", health);
+        ModifyStat("moveSpeed", moveSpeed);
+        ModifyStat("attackDamage", attackDamage);
+        myDropSystem = GetComponent<ItemDrop>();
     }
 
     protected override void Update()
@@ -50,7 +60,30 @@ public class Enemy : Entity
         return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
     }
 
+    private void ModifyStat(string statName, float baseValue)
+    {
+        float modifiedValue = baseValue;
+        for (int i = 0; i < level; i++)
+        {
+            modifiedValue += Mathf.RoundToInt(modifiedValue * percentageModifier);
+        }
 
+        // Apply the modified value to the appropriate field
+        switch (statName)
+        {
+            case "health":
+                health = Mathf.RoundToInt(modifiedValue);
+                maxHP = health;
+                UpdateHealthBar();
+                break;
+            case "moveSpeed":
+                moveSpeed = modifiedValue;
+                break;
+            case "attackDamage":
+                attackDamage = modifiedValue;
+                break;
+        }
+    }
     public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
@@ -63,7 +96,7 @@ public class Enemy : Entity
         if (health <= 0)
         {
             Die();
-            float expEnemy = Random.Range(10,101);
+            float expEnemy = Random.Range(10, 101);
             PlayerSelector.Instance.SetLevelUp(expEnemy);
         }
     }
@@ -97,6 +130,7 @@ public class Enemy : Entity
         }
 
         Destroy(gameObject, 2f);
+        myDropSystem.GenerateDrop();
     }
 
 
@@ -113,7 +147,7 @@ public class Enemy : Entity
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDir, transform.position.y));
-        Gizmos.DrawWireSphere(attackCheck.position, attckCheckRadius);
+        Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
 
 }

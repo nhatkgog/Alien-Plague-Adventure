@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
@@ -98,13 +97,13 @@ public class LobbyController : MonoBehaviour
 
     public void OnClickMission()
     {
-        if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayer == null)
+        if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayerOriginal == null)
         {
             Debug.Log("You must select a character before entering missions.");
             return;
         }
 
-        textBubbleCanvas.SetActive(true); 
+        textBubbleCanvas.SetActive(true);
         topBarCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
         armorCanvas.SetActive(false);
