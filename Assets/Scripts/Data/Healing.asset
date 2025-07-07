@@ -15,4 +15,15 @@ MonoBehaviour:
   itemType: 1
   itemName: Healing
   itemIcon: {fileID: 497711233, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  equimentType: 1
+  dropChance: 50
+  equimentType: 0
+  itemEffect:
+  - {fileID: 11400000, guid: 0ef9d2fca4ad016408e1940e3b4feea5, type: 2}
+  itemCooldown: 4
+  heal: random heal from 1-100
+  exp: 
+  crafting:
+  - itemData: {fileID: 11400000, guid: e7b57ec3b44ead340802c22811f449f8, type: 2}
+    stackSize: 1
+  - itemData: {fileID: 11400000, guid: e19bfa2c08bc4e940bd978b578ec10b2, type: 2}
+    stackSize: 2

@@ -3,13 +3,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    [SerializeField] private TextMeshProUGUI itemText;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TextMeshProUGUI itemText;
 
+    protected UI ui;
     public InventoryItem item;
 
+    protected virtual void Start()
+    {
+        ui = GetComponentInParent<UI>();
+    }
     public void UpdateSlot(InventoryItem _newItem)
     {
         item = _newItem;
@@ -37,44 +42,24 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
     }
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (item == null || item.itemData.itemType != ItemType.Equipment) return;
-
-        var equipment = item.itemData as ItemData_Equiment;
-        if (equipment == null) return;
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-        var playerScript = player.GetComponent<InputSystemMovement>();
-        if (playerScript == null) return;
-
-        switch (equipment.equimentType)
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            case EquimentType.Weapon:
-                InputSystemMovement.damage += equipment.bonusDamage;
-                break;
-
-            case EquimentType.Armor:
-                playerScript.IncreaseMaxHealth(equipment.bonusHP);
-                break;
-
+            Inventory.instance.RemoveItem(item.itemData);
+            return;
         }
-
-        // Equip once — this will internally remove it from inventory
-        Inventory.instance.EquipItem(equipment);
-
-        Inventory.instance.UpdateSlotUI();
+        if (item.itemData.itemType == ItemType.Equipment)
+            Inventory.instance.EquipItem(item.itemData);
     }
 
-    public void TriggerClick()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        OnPointerDown(null);
+        if (item == null) return;
+        ui.itemToolTip.ShowToolTip(item.itemData as ItemData_Equiment);
     }
 
-
-
-
-
-
-
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null) return;
+        ui.itemToolTip.HideToolTip();
+    }
 }

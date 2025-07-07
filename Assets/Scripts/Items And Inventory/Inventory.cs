@@ -1,10 +1,13 @@
+﻿using Assets.Scripts.Save_and_Load;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISaveManager
 {
     public static Inventory instance;
+
+    public List<ItemData> startingEquipment;
 
     public List<InventoryItem> equiqment;
     public Dictionary<ItemData_Equiment, InventoryItem> equiqmentDictionary;
@@ -20,11 +23,21 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform stashSlotParent;
     [SerializeField] private Transform equiqmentSlotParent;
 
+    [Header("Items cooldown")]
+    private float itemCooldown;
+    private float lastTimeUsedItem;
+
     private UI_ItemSlot[] itemSlots;
     private UI_ItemSlot[] stashSlots;
-    private UI_EquiqmentSlot[] equiqmentSlots;
+    private UI_EquipmentSlot[] equiqmentSlots;
+
+    [Header("Database")]
+    public List<InventoryItem> loadedItems;
+
+
     private void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
@@ -47,8 +60,33 @@ public class Inventory : MonoBehaviour
 
         equiqment = new List<InventoryItem>();
         equiqmentDictionary = new Dictionary<ItemData_Equiment, InventoryItem>();
-        equiqmentSlots = equiqmentSlotParent.GetComponentsInChildren<UI_EquiqmentSlot>();
+        equiqmentSlots = equiqmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+
+        AddStartingItems();
     }
+
+    private void AddStartingItems()
+    {
+        //if (loadedItems.Count > 0)
+        //{
+        //    foreach (InventoryItem item in loadedItems)
+        //    {
+        //        for (int i = 0; i < item.stackSize; i++)
+        //        {
+        //            AddItem(item.itemData);
+        //        }
+        //    }
+        //    return;
+        //}
+        for (int i = 0; i < startingEquipment.Count; i++)
+        {
+
+
+            AddItem(startingEquipment[i]);
+
+        }
+    }
+
     public void EquipItem(ItemData _item)
     {
         ItemData_Equiment newEquipment = _item as ItemData_Equiment;
@@ -66,19 +104,32 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnEquipItem(oldEquipment);
+            AddItem(oldEquipment);
         }
         equiqment.Add(newItem);
         equiqmentDictionary.Add(newEquipment, newItem);
         RemoveItem(_item);
     }
 
-    private void UnEquipItem(ItemData_Equiment itemDelete)
+    public void UnEquipItem(ItemData_Equiment itemDelete)
     {
         if (equiqmentDictionary.TryGetValue(itemDelete, out InventoryItem existingItem))
         {
             equiqment.Remove(existingItem);
             equiqmentDictionary.Remove(itemDelete);
         }
+    }
+    public void UseEquippedItem(ItemData_Equiment equipment)
+    {
+        // Remove from equipment slot
+        if (equiqmentDictionary.TryGetValue(equipment, out InventoryItem existingItem))
+        {
+            equiqment.Remove(existingItem);
+            equiqmentDictionary.Remove(equipment);
+        }
+
+        // Update UI to reflect removal
+        UpdateSlotUI();
     }
 
     public void UpdateSlotUI()
@@ -137,7 +188,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData _item)
     {
-        if (_item.itemType == ItemType.Equipment)
+        if (_item.itemType == ItemType.Equipment && CanAddItem())
         {
             Debug.Log($"Adding item: {_item.name}, Type: {_item.itemType}");
 
@@ -209,41 +260,6 @@ public class Inventory : MonoBehaviour
         }
         UpdateSlotUI();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ItemData item = inventoryItems[inventoryItems.Count - 1].itemData;
-            RemoveItem(item);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            TryTriggerSlot(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            TryTriggerSlot(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            TryTriggerSlot(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            TryTriggerSlot(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            TryTriggerSlot(4);
-        }
-    }
-    private void TryTriggerSlot(int index)
-    {
-        if (index >= 0 && index < itemSlots.Length && itemSlots[index].item != null)
-        {
-            itemSlots[index].TriggerClick();
-        }
-    }
     public bool CanCraft(ItemData_Equiment itemToCraft, List<InventoryItem> requiredMaterials)
     {
         List<InventoryItem> materials = new List<InventoryItem>();
@@ -275,7 +291,149 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    public List<InventoryItem> GetEquiqmentList() => equiqment;
+    public List<InventoryItem> GetStashList() => stashItems;
+    public ItemData_Equiment GetEquippedItem(EquimentType _type)
+    {
+        ItemData_Equiment equipmentItem = null;
+        foreach (KeyValuePair<ItemData_Equiment, InventoryItem> item in equiqmentDictionary)
+        {
+            if (item.Key.equimentType == _type)
+            {
+                equipmentItem = item.Key;
+            }
+        }
+        return equipmentItem;
+    }
+    public void UseHeal()
+    {
+        ItemData_Equiment currentHeal = GetEquippedItem(EquimentType.Heal);
+        if (currentHeal == null)
+        {
+            Debug.LogWarning(" No healing item equipped!");
+            return;
+        }
 
+        bool canUse = Time.time >= lastTimeUsedItem + currentHeal.itemCooldown;
+        if (!canUse)
+        {
+            Debug.Log(" Healing item is on cooldown.");
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError(" No GameObject with tag 'Player' found!");
+            return;
+        }
+
+        Debug.Log(" Using healing item...");
+        currentHeal.ItemEffect(player.transform);
+        lastTimeUsedItem = Time.time;
+
+
+        UseEquippedItem(currentHeal);
+    }
+    public void UseExpItem()
+    {
+        ItemData_Equiment currentExpItem = GetEquippedItem(EquimentType.Exp);
+        if (currentExpItem == null)
+        {
+            Debug.LogWarning("No EXP item equipped!");
+            return;
+        }
+
+        bool canUse = Time.time >= lastTimeUsedItem + currentExpItem.itemCooldown;
+        if (!canUse)
+        {
+            Debug.Log("EXP item is on cooldown.");
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("No GameObject with tag 'Player' found!");
+            return;
+        }
+
+        Debug.Log("Using EXP item...");
+        currentExpItem.ItemEffect(player.transform);
+        lastTimeUsedItem = Time.time;
+
+        UseEquippedItem(currentExpItem); // Remove after use
+    }
+    public bool CanAddItem()
+    {
+        if (inventoryItems.Count >= itemSlots.Length)
+        {
+            Debug.Log("Inventory is full!");
+            return false;
+        }
+        return true;
+    }
+
+    public void LoadData(GameData _data)
+    {
+        loadedItems.Clear();
+        inventoryItems.Clear();
+        inventoryDictionary.Clear();
+        stashItems.Clear();
+        stashDictionary.Clear();
+
+        foreach (KeyValuePair<string, int> pair in _data.inventory)
+        {
+            foreach (var item in GetitemDataBase())
+            {
+                if (item != null && item.itemId == pair.Key)
+                {
+                    InventoryItem itemToLoad = new InventoryItem(item);
+                    itemToLoad.stackSize = pair.Value;
+
+                    loadedItems.Add(itemToLoad);
+
+                    if (item.itemType == ItemType.Material)
+                    {
+                        stashItems.Add(itemToLoad);
+                        stashDictionary.Add(item, itemToLoad);
+                    }
+                    else if (item.itemType == ItemType.Equipment)
+                    {
+                        inventoryItems.Add(itemToLoad);
+                        inventoryDictionary.Add(item, itemToLoad);
+                    }
+                }
+            }
+        }
+
+        UpdateSlotUI();
+    }
+
+
+    public void SaveData(GameData _data)
+    {
+        _data.inventory.Clear();
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in inventoryDictionary)
+        {
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
+        }
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in stashDictionary)
+        {
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
+        }
+    }
+    private List<ItemData> GetitemDataBase()
+    {
+        var equipmentItems = Resources.LoadAll<ItemData>("ItemEquipment");
+        var baseItems = Resources.LoadAll<ItemData>("Materials");
+
+        List<ItemData> allItems = new List<ItemData>();
+        allItems.AddRange(equipmentItems);
+        allItems.AddRange(baseItems);
+
+        return allItems;
+    }
 
 
 }

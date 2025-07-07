@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
@@ -104,7 +103,7 @@ public class LobbyController : MonoBehaviour
             return;
         }
 
-        textBubbleCanvas.SetActive(true); 
+        textBubbleCanvas.SetActive(true);
         topBarCanvas.SetActive(true);
         lobbyCanvas.SetActive(false);
         armorCanvas.SetActive(false);
