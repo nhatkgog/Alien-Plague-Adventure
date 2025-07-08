@@ -112,10 +112,10 @@ jobs:
           name: Build
           path: build
           
-      - uses: actions/upload-artifact@v4
-        with:
-          name: checkout
-          path: ./
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: project
+      #     path: "Assembly_CSharp.csproj"
 
   # roslyn_dotnet:
   #   name: C# Roslyn + Format
@@ -141,75 +141,65 @@ jobs:
   #       env:
   #         DOTNET_ROOT: /usr/share/dotnet
   
-  codeql:
-    name: CodeQL Security Scan 🛡️
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'csharp' ]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
-
-      - name: Manual Build (dotnet build)
-        run: |
-          echo "Running manual build step..."
-          dotnet build "Alien Plague Adventure.sln" -c Release --no-restore
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-        
-  super_linter:
-    name: Super-Linter 🧹
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Run Super-Linter
-        uses: super-linter/super-linter@v6
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-  # mega_linter:
+  # codeql:
+  #   name: CodeQL Security Scan 🛡️
   #   runs-on: ubuntu-latest
+  #   needs: build
   #   permissions:
-  #     issues: write
-  #     pull-requests: write
-  #   steps:
-  #     - uses: actions/checkout@v4
+  #     actions: read
+  #     contents: read
+  #     security-events: write
 
-  #     - name: Run Mega-Linter
-  #       uses: oxsecurity/megalinter@v8
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         VALIDATE_ALL_CODEBASE: true
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       language: [ 'csharp' ]
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - uses: actions/download-artifact@v4
   #       with:
-  #         args: |
-  #           --filters_extensions "cs,yaml,yml,meta,unity,json,md"
-  #     - name: Upload Mega-Linter Reports
-  #       if: always()
-  #       uses: actions/upload-artifact@v4
+  #          name: project
+
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql-action/init@v3
   #       with:
-  #         name: megalinter-reports
-  #         path: megalinter-reports
+  #         languages: ${{ matrix.language }}
+
+  #     - name: Setup .NET SDK
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: '8.x'
+
+  #     - name: Manual Build (dotnet build)
+  #       run: |
+  #         echo "Running manual build step..."
+  #         dotnet build "Assembly_CSharp.csproj" -c Release --no-restore
+
+  #     - name: Perform CodeQL Analysis
+  #       uses: github/codeql-action/analyze@v3
+        
+  mega_linter:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Mega-Linter
+        uses: oxsecurity/megalinter@v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+        with:
+          args: |
+            --filters_extensions "cs,yaml,yml,meta,unity,json,md"
+      - name: Upload Mega-Linter Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: megalinter-reports
+          path: megalinter-reports
