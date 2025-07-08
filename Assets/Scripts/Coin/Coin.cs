@@ -11,6 +11,9 @@ public class Coin : Entity
     private Rigidbody2D rb;
     private bool hasLanded = false;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip collectClip;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -40,22 +43,32 @@ public class Coin : Entity
     {
         if (collision.CompareTag("Player"))
         {
-            missionCoinAmount += coinValue;
+// <<<<<<< HEAD
+//             missionCoinAmount += coinValue;
 
-            Debug.Log($"Gained coin: {coinValue}");
-            Debug.Log($"Total mission coins: {missionCoinAmount}");
+//             Debug.Log($"Gained coin: {coinValue}");
+//             Debug.Log($"Total mission coins: {missionCoinAmount}");
 
-            if (missionCoinText != null)
-            {
-                missionCoinText.text = missionCoinAmount.ToString();
-            }
-            else
-            {
-                Debug.LogWarning("MissionCoinText is null");
-            }
+//             if (missionCoinText != null)
+//             {
+//                 missionCoinText.text = missionCoinAmount.ToString();
+//             }
+//             else
+//             {
+//                 Debug.LogWarning("MissionCoinText is null");
+//             }
 
-            Destroy(gameObject);
+//             Destroy(gameObject);
+//         }
+// =======
+           missionCoinText.text = missionCoinAmount.ToString();
         }
+        else
+        {
+            Debug.LogWarning("MissionCoinText is null");
+        }
+            SFXManager.Instance.PlayOneShot(collectClip);
+            Destroy(gameObject);
     }
 
 

@@ -34,12 +34,23 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject charging;
     [SerializeField] private GameOverManager gameManager;
 
-    [SerializeField] private AudioClip deathClip;
-    [SerializeField] private AudioClip hurtClip;
-    [SerializeField] private AudioClip reloadClip;
-    [SerializeField] private AudioClip shotClip;
-    [SerializeField] private AudioClip walkClip;
+// <<<<<<< HEAD
+//     [SerializeField] private AudioClip deathClip;
+//     [SerializeField] private AudioClip hurtClip;
+//     [SerializeField] private AudioClip reloadClip;
+//     [SerializeField] private AudioClip shotClip;
+//     [SerializeField] private AudioClip walkClip;
+//     [SerializeField] private AudioClip runningClip;
+// =======
+    [Header("SFX")]
+    [SerializeField] private AudioClip deathClip; 
+    [SerializeField] private AudioClip hurtClip; 
+    [SerializeField] private AudioClip reloadClip; 
+    [SerializeField] private AudioClip shotClip; 
+    [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
+    [SerializeField] private AudioClip sniffingClip;
+    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -385,6 +396,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
+
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;

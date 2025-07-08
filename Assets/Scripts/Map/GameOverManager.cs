@@ -12,6 +12,9 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private Button quitButton;
     [SerializeField] private TextMeshProUGUI scoreText; // If you want to show final score
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip gaveOverClip;
+
     private void Start()
     {
         // Initialize button listeners
@@ -26,6 +29,10 @@ public class GameOverManager : MonoBehaviour
     public void ShowGameOver(int finalScore = 0)
     {
         gameOverUI.SetActive(true);
+
+        if (gaveOverClip != null)
+            SFXManager.Instance.PlayOneShot(gaveOverClip);
+
         if (scoreText != null)
         {
             scoreText.text = $"Final Score: {finalScore}";
