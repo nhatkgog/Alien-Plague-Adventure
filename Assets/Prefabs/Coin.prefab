@@ -134,6 +134,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   missionCoinText: {fileID: 0}
+  collectClip: {fileID: 8300000, guid: 666bd06b680c841448d7a5a4142bcb5d, type: 3}
 --- !u!50 &2317504377119259623
 Rigidbody2D:
   serializedVersion: 5

@@ -10,6 +10,8 @@ public class Boom : MonoBehaviour
     private Animator animator;
     private bool hasExploded = false;
 
+    [SerializeField] private AudioClip explosionClip;
+
     private Rigidbody2D r;
     void Start()
     {
@@ -50,6 +52,7 @@ public class Boom : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("Explosion");
+            SFXManager.Instance.PlayOneShot(explosionClip);
             Debug.Log("co animation");
         }
 

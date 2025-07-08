@@ -5,6 +5,9 @@ public class ItemObject : MonoBehaviour
 
     [SerializeField] private ItemData itemData;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip collectClip;
+
     private void OnValidate()
     {
         GetComponent<SpriteRenderer>().sprite = itemData.itemIcon;
@@ -15,6 +18,7 @@ public class ItemObject : MonoBehaviour
         if (collider.CompareTag("Player") && collider.GetComponent<InputSystemMovement>() != null != null)
         {
             Inventory.instance.AddItem(itemData);
+            SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
         }
 

@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerSelector : MonoBehaviour
 {
     public static PlayerSelector Instance;
 
-    public PlayerStatus selectedPlayer;
+    //public PlayerStatus selectedPlayer;
 
     [Header("Gán ScriptableObject gốc ở đây")]
     public PlayerStatus selectedPlayerOriginal;
 
-    private PlayerStatus runtimePlayer;
+    public PlayerStatus runtimePlayer;
+
+    [Header("List of all characters")]
+    public List<PlayerStatus> allCharacters;
     void Awake()
     {
         if (Instance == null)
@@ -96,5 +100,20 @@ public class PlayerSelector : MonoBehaviour
             }
         }
     }
+
+
+    public void SetSelectedPlayerByName(string name)
+    {
+        foreach (var character in allCharacters)
+        {
+            if (character.characterName == name)
+            {
+                SetSelectedPlayer(character);
+                return;
+            }
+        }
+        Debug.LogWarning("Selected character not found: " + name);
+    }
+
 
 }

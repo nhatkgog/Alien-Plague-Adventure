@@ -22,6 +22,11 @@ public class Enemy : Entity
 
     [HideInInspector] public float lastTimeAttacked;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip deathClip;
+
+
     public EnemyStateMachine stateMachine { get; private set; }
 
     [SerializeField] public GameObject coinPrefab;
@@ -60,6 +65,9 @@ public class Enemy : Entity
         if (entityFX != null)
             entityFX.PlayHitFX();
 
+        if (hurtClip != null)
+            SFXManager.Instance.PlayOneShot(hurtClip);
+
         if (health <= 0)
         {
             Die();
@@ -77,6 +85,9 @@ public class Enemy : Entity
             rb.linearVelocity = Vector2.zero;
             rb.isKinematic = true;
         }
+
+        if (deathClip != null)
+            SFXManager.Instance.PlayOneShot(deathClip);
 
         if (coinPrefab != null)
         {

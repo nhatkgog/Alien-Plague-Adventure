@@ -30,13 +30,14 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private Image chargeBar;
     [SerializeField] private GameObject charging;
 
+    [Header("SFX")]
     [SerializeField] private AudioClip deathClip; 
     [SerializeField] private AudioClip hurtClip; 
     [SerializeField] private AudioClip reloadClip; 
     [SerializeField] private AudioClip shotClip; 
     [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
-    private AudioClip lastClip;
+    [SerializeField] private AudioClip sniffingClip;
     private AudioSource audioSource;
 
     //ground
@@ -384,6 +385,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
 
+        if (sniffingClip != null)
+            SFXManager.Instance.PlayOneShot(sniffingClip);
         return nearest;
     }
 
