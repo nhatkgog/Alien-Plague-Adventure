@@ -135,26 +135,68 @@ jobs:
   #         only-changed-files: true
   #       env:
   #         DOTNET_ROOT: /usr/share/dotnet
-
-  mega_linter:
+  
+  codeql:
+    name: CodeQL Security Scan 🛡️
     runs-on: ubuntu-latest
     permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
+      actions: read
+      contents: read
+      security-events: write
 
-      - name: Run Mega-Linter
-        uses: oxsecurity/megalinter@v8
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp' ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        
+  super_linter:
+    name: Super-Linter 🧹
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@v6
         env:
+          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
-        with:
-          args: |
-            --filters_extensions "cs,yaml,yml,meta,unity,json,md"
-      - name: Upload Mega-Linter Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: megalinter-reports
-          path: megalinter-reports
+        
+  # mega_linter:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     issues: write
+  #     pull-requests: write
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Run Mega-Linter
+  #       uses: oxsecurity/megalinter@v8
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         VALIDATE_ALL_CODEBASE: true
+  #       with:
+  #         args: |
+  #           --filters_extensions "cs,yaml,yml,meta,unity,json,md"
+  #     - name: Upload Mega-Linter Reports
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: megalinter-reports
+  #         path: megalinter-reports
