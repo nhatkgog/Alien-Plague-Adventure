@@ -11,6 +11,9 @@ public class Coin : Entity
     private Rigidbody2D rb;
     private bool hasLanded = false;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip collectClip;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -47,15 +50,16 @@ public class Coin : Entity
 
             if (missionCoinText != null)
             {
-                missionCoinText.text = missionCoinAmount.ToString();
+               missionCoinText.text = missionCoinAmount.ToString();
             }
             else
             {
                 Debug.LogWarning("MissionCoinText is null");
             }
-
+            SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
         }
+        
     }
 
 

@@ -17,9 +17,15 @@ public class VictoryManager : MonoBehaviour
     public static float MissionCoinReward = 0f;
     public static bool OpenMissionTab = false;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip victoryClip;
+
     private void Start()
     {
         victoryUI.SetActive(false);
+
+        if (victoryClip != null)
+            SFXManager.Instance.PlayOneShot(victoryClip);
 
         continueButton.onClick.AddListener(OnContinue);
         lobbyButton.onClick.AddListener(OnReturnToLobby);
