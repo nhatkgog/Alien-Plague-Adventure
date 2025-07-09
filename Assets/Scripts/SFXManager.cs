@@ -5,7 +5,7 @@ public class SFXManager : MonoBehaviour
     public static SFXManager Instance;
 
     private AudioSource sfxSource; // One-shot and looping
-    private AudioSource loopSource; // Only for loops like walk/run
+    private AudioSource loopSource; // Only for loops walk/run
 
     void Awake()
     {
