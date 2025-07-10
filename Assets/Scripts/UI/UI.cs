@@ -14,6 +14,9 @@ public class UI : MonoBehaviour
 
     void Update()
     {
+        if (GameStateManager.Instance.IsGameOver() || GameStateManager.Instance.IsVictory() || GameStateManager.Instance.IsPaused())
+            return;
+
         if (Input.GetKeyDown(KeyCode.C))
             SwitchWithKeyToo(characterUI);
 

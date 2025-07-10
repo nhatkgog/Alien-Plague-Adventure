@@ -28,7 +28,13 @@ public class GameOverManager : MonoBehaviour
 
     public void ShowGameOver(int finalScore = 0)
     {
+        GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
+        foreach (GameObject canva in canvases)
+        {
+            canva.SetActive(false);
+        }
         gameOverUI.SetActive(true);
+        GameStateManager.Instance.SetState(GameState.GameOver);
 
         if (gaveOverClip != null)
             SFXManager.Instance.PlayOneShot(gaveOverClip);
@@ -44,6 +50,10 @@ public class GameOverManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
     private void ReturnToMainMenu()

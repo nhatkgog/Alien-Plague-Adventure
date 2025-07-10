@@ -35,6 +35,10 @@ public class MissionEntry : MonoBehaviour
     {
         Debug.Log("Moving to game scene.....");
         fadeController.FadeToScene(sceneToLoad);
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
 }
