@@ -50,7 +50,7 @@ public class Coin : Entity
 
             if (missionCoinText != null)
             {
-               missionCoinText.text = missionCoinAmount.ToString();
+                missionCoinText.text = missionCoinAmount.ToString();
             }
             else
             {
@@ -59,7 +59,7 @@ public class Coin : Entity
             SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
         }
-        
+
     }
 
 

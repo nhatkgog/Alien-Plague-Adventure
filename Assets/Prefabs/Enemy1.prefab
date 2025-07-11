@@ -166,6 +166,8 @@ MonoBehaviour:
   attackCheckRadius: 0
   attackDamage: 10
   lastTimeAttacked: 0
+  hurtClip: {fileID: 0}
+  deathClip: {fileID: 0}
   coinPrefab: {fileID: 3319084786358014660, guid: 5c6f0cf85d4d9f6499c7d7e47150386c, type: 3}
   hpBar: {fileID: 6585777503498774780}
   health: 50
