@@ -43,32 +43,23 @@ public class Coin : Entity
     {
         if (collision.CompareTag("Player"))
         {
-// <<<<<<< HEAD
-//             missionCoinAmount += coinValue;
+            missionCoinAmount += coinValue;
 
-//             Debug.Log($"Gained coin: {coinValue}");
-//             Debug.Log($"Total mission coins: {missionCoinAmount}");
+            Debug.Log($"Gained coin: {coinValue}");
+            Debug.Log($"Total mission coins: {missionCoinAmount}");
 
-//             if (missionCoinText != null)
-//             {
-//                 missionCoinText.text = missionCoinAmount.ToString();
-//             }
-//             else
-//             {
-//                 Debug.LogWarning("MissionCoinText is null");
-//             }
-
-//             Destroy(gameObject);
-//         }
-// =======
-           missionCoinText.text = missionCoinAmount.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("MissionCoinText is null");
-        }
+            if (missionCoinText != null)
+            {
+                missionCoinText.text = missionCoinAmount.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("MissionCoinText is null");
+            }
             SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
+        }
+
     }
 
 

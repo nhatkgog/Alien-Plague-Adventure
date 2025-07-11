@@ -7,7 +7,7 @@ public class ItemObject : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip collectClip;
-    
+
     private void SetUpVisual()
     {
         if (itemData == null)
