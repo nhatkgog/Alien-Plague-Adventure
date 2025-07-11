@@ -5390,6 +5390,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 121625152}
     - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: sniffingClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229214182485044278, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: boomFirePoint
       value: 
       objectReference: {fileID: 2077993276}
@@ -5514,6 +5518,10 @@ PrefabInstance:
       value: 2.7407668
       objectReference: {fileID: 0}
     - target: {fileID: 4950686749380896284, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4950686749380896284, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: m_Offset.x
       value: -0.14329876
       objectReference: {fileID: 0}
@@ -5564,6 +5572,10 @@ PrefabInstance:
     - target: {fileID: 8664236585735435890, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: m_Size.y
       value: 4.2050133
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664236585735435890, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8664236585735435890, guid: 6d68e1397e4e0c34ea952cac175e4ac6, type: 3}
       propertyPath: m_Offset.x
