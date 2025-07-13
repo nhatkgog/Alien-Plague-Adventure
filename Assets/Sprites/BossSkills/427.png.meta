@@ -1,0 +1,691 @@
+fileFormatVersion: 2
+guid: f8af821478baae14c8009ad438a8304d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3446214985327676468
+    second: 427_0
+  - first:
+      213: -933016308069549415
+    second: 427_1
+  - first:
+      213: 5250054522238393037
+    second: 427_2
+  - first:
+      213: -3516476870301145005
+    second: 427_3
+  - first:
+      213: -9209251055708386492
+    second: 427_4
+  - first:
+      213: 3766819802632476744
+    second: 427_5
+  - first:
+      213: -7481671933264515944
+    second: 427_6
+  - first:
+      213: -3440909102011084839
+    second: 427_7
+  - first:
+      213: -8122739207084714844
+    second: 427_8
+  - first:
+      213: -4233175112130405662
+    second: 427_9
+  - first:
+      213: 1611809518875958648
+    second: 427_10
+  - first:
+      213: -419669466860997863
+    second: 427_11
+  - first:
+      213: 9193589036736749866
+    second: 427_12
+  - first:
+      213: 1532141355345686496
+    second: 427_13
+  - first:
+      213: -3908886733426263193
+    second: 427_14
+  - first:
+      213: -6448420657702073507
+    second: 427_15
+  - first:
+      213: -4136334616576776548
+    second: 427_16
+  - first:
+      213: -4071841571374891162
+    second: 427_17
+  - first:
+      213: -7805463712285694714
+    second: 427_18
+  - first:
+      213: 685717702756493632
+    second: 427_19
+  - first:
+      213: 6194688810056958600
+    second: 427_20
+  - first:
+      213: -2776835670440806338
+    second: 427_21
+  - first:
+      213: 5845323280161429126
+    second: 427_22
+  - first:
+      213: 6494493519951647611
+    second: 427_23
+  - first:
+      213: -1630024893976655236
+    second: 427_24
+  - first:
+      213: 279757127898975136
+    second: 427_25
+  - first:
+      213: -1478533507125206833
+    second: 427_26
+  - first:
+      213: 7055491561326368822
+    second: 427_27
+  - first:
+      213: 5034995605356437430
+    second: 427_28
+  - first:
+      213: 7914959710348529269
+    second: 427_29
+  - first:
+      213: 2093510986659893484
+    second: 427_30
+  - first:
+      213: 9080904033590716344
+    second: 427_31
+  - first:
+      213: 6906844082431120272
+    second: 427_32
+  - first:
+      213: -7601922349370325799
+    second: 427_33
+  - first:
+      213: -9196101011401030236
+    second: 427_34
+  - first:
+      213: 5314672232038458586
+    second: 427_35
+  - first:
+      213: 252103774086932773
+    second: 427_36
+  - first:
+      213: -1959963845511766034
+    second: 427_37
+  - first:
+      213: 2034023231262736667
+    second: 427_38
+  - first:
+      213: 5839524100956001571
+    second: 427_39
+  - first:
+      213: 8672508393390039076
+    second: 427_40
+  - first:
+      213: 2014253371759864389
+    second: 427_41
+  - first:
+      213: 7921505963061897737
+    second: 427_42
+  - first:
+      213: 4607024735822651341
+    second: 427_43
+  - first:
+      213: -1253753679879225660
+    second: 427_44
+  - first:
+      213: -886709807465354663
+    second: 427_45
+  - first:
+      213: 3447756510103932203
+    second: 427_46
+  - first:
+      213: -6399737093643393477
+    second: 427_47
+  - first:
+      213: -2779390741949222051
+    second: 427_48
+  - first:
+      213: -5783866302031776781
+    second: 427_49
+  - first:
+      213: 6252306769610174187
+    second: 427_50
+  - first:
+      213: -8246930669449601746
+    second: 427_51
+  - first:
+      213: 8518390330768178129
+    second: 427_52
+  - first:
+      213: 5112524662908008661
+    second: 427_53
+  - first:
+      213: -4685336601518336297
+    second: 427_54
+  - first:
+      213: 2796561469944906206
+    second: 427_55
+  - first:
+      213: 595162270437684105
+    second: 427_56
+  - first:
+      213: -6441687264509166519
+    second: 427_57
+  - first:
+      213: 3374203162686098150
+    second: 427_58
+  - first:
+      213: -4854733415579277778
+    second: 427_59
+  - first:
+      213: 6783136941100255589
+    second: 427_60
+  - first:
+      213: -1222997726500119816
+    second: 427_61
+  - first:
+      213: 8365770793854279857
+    second: 427_62
+  - first:
+      213: 8578463897518632499
+    second: 427_63
+  - first:
+      213: -4025494846673576643
+    second: 427_64
+  - first:
+      213: -4282125057307639273
+    second: 427_65
+  - first:
+      213: -1743677510308051996
+    second: 427_66
+  - first:
+      213: 7058365844334257205
+    second: 427_67
+  - first:
+      213: 4392346273233159848
+    second: 427_68
+  - first:
+      213: 3582446145129601685
+    second: 427_69
+  - first:
+      213: 1746153855143859735
+    second: 427_70
+  - first:
+      213: 8471294177887121458
+    second: 427_71
+  - first:
+      213: -10616561259569848
+    second: 427_72
+  - first:
+      213: 2549486623427218138
+    second: 427_73
+  - first:
+      213: -1333701221496418099
+    second: 427_74
+  - first:
+      213: -6091897976940942688
+    second: 427_75
+  - first:
+      213: -9163788485209322887
+    second: 427_76
+  - first:
+      213: -2434296270231738743
+    second: 427_77
+  - first:
+      213: 1071212312316884161
+    second: 427_78
+  - first:
+      213: -7938477268367809330
+    second: 427_79
+  - first:
+      213: -3915669226077756861
+    second: 427_80
+  - first:
+      213: 5654149762888393792
+    second: 427_81
+  - first:
+      213: 8894967968512188441
+    second: 427_82
+  - first:
+      213: 1732412870641623762
+    second: 427_83
+  - first:
+      213: 4575103336838688310
+    second: 427_84
+  - first:
+      213: 761582181236700863
+    second: 427_85
+  - first:
+      213: 1942231965121578248
+    second: 427_86
+  - first:
+      213: 415707458891780282
+    second: 427_87
+  - first:
+      213: 2593503379851497009
+    second: 427_88
+  - first:
+      213: 4554858601299322866
+    second: 427_89
+  - first:
+      213: -8284230171732881825
+    second: 427_90
+  - first:
+      213: -2094476276828033783
+    second: 427_91
+  - first:
+      213: -8542145365020645076
+    second: 427_92
+  - first:
+      213: 6809435895066585286
+    second: 427_93
+  - first:
+      213: 7434436682905399678
+    second: 427_94
+  - first:
+      213: 7238695496798238147
+    second: 427_95
+  - first:
+      213: -1264548387120383265
+    second: 427_96
+  - first:
+      213: -2047429883204145199
+    second: 427_97
+  - first:
+      213: 4313802793366912719
+    second: 427_98
+  - first:
+      213: 2816517485408322277
+    second: 427_99
+  - first:
+      213: -876079409137829037
+    second: 427_100
+  - first:
+      213: -6439032696810947451
+    second: 427_101
+  - first:
+      213: -6476069611951197612
+    second: 427_102
+  - first:
+      213: 5555762596553951356
+    second: 427_103
+  - first:
+      213: -8005570360298728397
+    second: 427_104
+  - first:
+      213: -1998485944063231111
+    second: 427_105
+  - first:
+      213: -1033688977152469302
+    second: 427_106
+  - first:
+      213: 2252324109134091565
+    second: 427_107
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 427_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98337218ee0724800800000000000000
+      internalID: 595162270437684105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_57
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94cf5ccff878a96a0800000000000000
+      internalID: -6441687264509166519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_58
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ea87ef26e393de20800000000000000
+      internalID: 3374203162686098150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_59
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e26ad251ea580acb0800000000000000
+      internalID: -4854733415579277778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_60
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5694c1dfb1b822e50800000000000000
+      internalID: 6783136941100255589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_61
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fa99d62c0a070fe0800000000000000
+      internalID: -1222997726500119816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_62
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b0a5089630391470800000000000000
+      internalID: 8365770793854279857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 427_63
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33e6c12d673dc0770800000000000000
+      internalID: 8578463897518632499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8bdd7a2ad2601c342abd9093485559ec
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      427_0: 3446214985327676468
+      427_1: -933016308069549415
+      427_10: 1611809518875958648
+      427_11: -419669466860997863
+      427_12: 9193589036736749866
+      427_13: 1532141355345686496
+      427_14: -3908886733426263193
+      427_15: -6448420657702073507
+      427_16: -4136334616576776548
+      427_17: -4071841571374891162
+      427_18: -7805463712285694714
+      427_19: 685717702756493632
+      427_2: 5250054522238393037
+      427_20: 6194688810056958600
+      427_21: -2776835670440806338
+      427_22: 5845323280161429126
+      427_23: 6494493519951647611
+      427_24: -1630024893976655236
+      427_25: 279757127898975136
+      427_26: -1478533507125206833
+      427_27: 7055491561326368822
+      427_28: 5034995605356437430
+      427_29: 7914959710348529269
+      427_3: -3516476870301145005
+      427_30: 2093510986659893484
+      427_31: 9080904033590716344
+      427_32: 6906844082431120272
+      427_33: -7601922349370325799
+      427_34: -9196101011401030236
+      427_35: 5314672232038458586
+      427_36: 252103774086932773
+      427_37: -1959963845511766034
+      427_38: 2034023231262736667
+      427_39: 5839524100956001571
+      427_4: -9209251055708386492
+      427_40: 8672508393390039076
+      427_41: 2014253371759864389
+      427_42: 7921505963061897737
+      427_43: 4607024735822651341
+      427_44: -1253753679879225660
+      427_45: -886709807465354663
+      427_46: 3447756510103932203
+      427_47: -6399737093643393477
+      427_48: -2779390741949222051
+      427_49: -5783866302031776781
+      427_5: 3766819802632476744
+      427_50: 6252306769610174187
+      427_51: -8246930669449601746
+      427_52: 8518390330768178129
+      427_53: 5112524662908008661
+      427_54: -4685336601518336297
+      427_55: 2796561469944906206
+      427_56: 595162270437684105
+      427_57: -6441687264509166519
+      427_58: 3374203162686098150
+      427_59: -4854733415579277778
+      427_6: -7481671933264515944
+      427_60: 6783136941100255589
+      427_61: -1222997726500119816
+      427_62: 8365770793854279857
+      427_63: 8578463897518632499
+      427_64: -4025494846673576643
+      427_65: -4282125057307639273
+      427_66: -1743677510308051996
+      427_67: 7058365844334257205
+      427_68: 4392346273233159848
+      427_69: 3582446145129601685
+      427_7: -3440909102011084839
+      427_70: 1746153855143859735
+      427_71: 8471294177887121458
+      427_8: -8122739207084714844
+      427_9: -4233175112130405662
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

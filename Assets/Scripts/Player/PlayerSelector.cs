@@ -66,6 +66,11 @@ public class PlayerSelector : MonoBehaviour
         runtimePlayer.statPoints = statpoint;
     }
 
+    public void SetMoney(float money)
+    {
+        runtimePlayer.money = money;
+    }
+
     public void SetSelectedPlayer(PlayerStatus player)
     {
         selectedPlayerOriginal = player;
