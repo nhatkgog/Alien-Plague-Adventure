@@ -1480,6 +1480,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+
 --- !u!224 &201296765
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2542,7 +2543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &390879398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2911,7 +2912,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.057750005, y: 0.04537037}
   m_AnchorMax: {x: 0.46464586, y: 0.149}
-  m_AnchoredPosition: {x: 458.58002, y: 435.01993}
+  m_AnchoredPosition: {x: 458.58002, y: 435.01996}
   m_SizeDelta: {x: 1138.8, y: 968.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &410888754
@@ -9260,7 +9261,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 981060386}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999964
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11630,7 +11631,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2037919203}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: changeScene
+        m_MethodName: ConfirmSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
