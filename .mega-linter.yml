@@ -1,0 +1,36 @@
+# .mega-linter.yml (place at repo root)
+
+# Apply fixes automatically where possible
+APPLY_FIXES: all
+APPLY_FIXES_EVENT: pull_request
+APPLY_FIXES_MODE: commit
+
+# Only lint important file types
+FILTER_REGEX_INCLUDE: '^(Assets/|Packages/|ProjectSettings/).*'
+FILTER_REGEX_EXCLUDE: '.*\.(png|jpg|gif|mp3|wav|dll|exe)$'
+
+# Enable only linters relevant to Unity
+ENABLE_LINTERS:
+  - CSHARP_CSHARPIER      # C# formatting
+  # - CSHARP_DOTNET_FORMAT  # .NET formatting/checks
+  - YAML_PRETTIER         # Unity .unity, .asset & .meta files
+  - JSON_PRETTIER         # config files in Packages/
+  - MARKDOWN_MARKDOWNLINT # project docs
+  - MARKDOWN_MARKDOWN_LINK_CHECK
+  - SPELL_CSPELL          # common English spelling
+
+# Suppress noisy linters
+DISABLE_LINTERS:
+  - COPYPASTE_JSCPD
+  - JAVASCRIPT
+  - PHP
+  - PYTHON
+  - RUBY
+
+# Output info and reports cleanly
+LOG_LEVEL: INFO
+REPORT_OUTPUT_FOLDER: megalinter-reports
+SHOW_ELAPSED_TIME: true
+SHOW_SKIPPED_LINTERS: false
+PRINT_ALPACA: false
+VALIDATE_ALL_CODEBASE: true

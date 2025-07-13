@@ -163,13 +163,16 @@ MonoBehaviour:
   attackDistance: 0.84
   attackCooldown: 0.4
   attackCheck: {fileID: 5833133441985848704}
-  attckCheckRadius: 1.01
+  attackCheckRadius: 0
   attackDamage: 10
   lastTimeAttacked: 0
+  hurtClip: {fileID: 0}
+  deathClip: {fileID: 0}
   coinPrefab: {fileID: 3319084786358014660, guid: 5c6f0cf85d4d9f6499c7d7e47150386c, type: 3}
-  missionCoinText: {fileID: 0}
   hpBar: {fileID: 6585777503498774780}
   health: 50
+  level: 2
+  percentageModifier: 0.14
 --- !u!50 &1466740882743781203
 Rigidbody2D:
   serializedVersion: 5

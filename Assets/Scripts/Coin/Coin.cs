@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class Coin : Entity
@@ -11,6 +10,9 @@ public class Coin : Entity
     private Animator animator;
     private Rigidbody2D rb;
     private bool hasLanded = false;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip collectClip;
 
     void Start()
     {
@@ -55,6 +57,7 @@ public class Coin : Entity
                 Debug.LogWarning("MissionCoinText is null");
             }
             PlayerSelector.Instance.SetMoney(missionCoinAmount);
+            SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
         }
     }

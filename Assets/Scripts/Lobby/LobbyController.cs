@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class LobbyController : MonoBehaviour
     [SerializeField] public GameObject enterNameCanvas;
     [SerializeField] public GameObject topBarCanvas;
     [SerializeField] public GameObject textBubbleCanvas;
+    [SerializeField] public GameObject settingPopupCanvas;
 
     [SerializeField] private TMP_Text playerName;
     [SerializeField] private TMP_Text playerMoney;
@@ -19,7 +19,7 @@ public class LobbyController : MonoBehaviour
     void Awake()
     {
         topBarCanvas.SetActive(true);
-        textBubbleCanvas.SetActive(true);
+        //textBubbleCanvas.SetActive(true);
         playerChoose.text = "Hello";
     }
     void Start()
@@ -74,6 +74,17 @@ public class LobbyController : MonoBehaviour
         armorCanvas.SetActive(false);
         weaponCanvas.SetActive(false);
         missionCanvas.SetActive(false);
+        settingPopupCanvas.SetActive(false);
+    }
+
+    public void OnClickSettingsPopUp()
+    {
+        topBarCanvas.SetActive(true);
+        lobbyCanvas.SetActive(true);
+        settingPopupCanvas.SetActive(true);
+        armorCanvas.SetActive(false);
+        weaponCanvas.SetActive(false);
+        missionCanvas.SetActive(false);
     }
 
     public void OnClickArmor()
@@ -84,6 +95,7 @@ public class LobbyController : MonoBehaviour
         armorCanvas.SetActive(true);
         weaponCanvas.SetActive(false);
         missionCanvas.SetActive(false);
+        settingPopupCanvas.SetActive(false);
     }
 
     public void OnClickWeapon()
@@ -94,6 +106,7 @@ public class LobbyController : MonoBehaviour
         armorCanvas.SetActive(false);
         weaponCanvas.SetActive(true);
         missionCanvas.SetActive(false);
+        settingPopupCanvas.SetActive(false);
     }
 
     public void OnClickMission()
@@ -104,13 +117,15 @@ public class LobbyController : MonoBehaviour
             return;
         }
 
-        textBubbleCanvas.SetActive(true); 
-        topBarCanvas.SetActive(true);
+        textBubbleCanvas.SetActive(true);
+        topBarCanvas.SetActive(false);
         lobbyCanvas.SetActive(false);
         armorCanvas.SetActive(false);
         weaponCanvas.SetActive(false);
         missionCanvas.SetActive(true);
+        settingPopupCanvas.SetActive(false);
     }
+
 
 
     private void UpdateTextBubbleVisibility()
