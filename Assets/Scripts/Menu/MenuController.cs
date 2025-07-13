@@ -1,6 +1,5 @@
+using Assets.Scripts.Save_and_Load;
 using UnityEngine;
-using UnityEngine.Advertisements;
-using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -21,6 +20,7 @@ public class MenuController : MonoBehaviour
 
     public void OnClickNewGame()
     {
+        SaveManager.IsNewGame = true;
         fadeController.FadeToScene("StoryLine");
     }
 
@@ -43,6 +43,18 @@ public class MenuController : MonoBehaviour
         mainMenuCanvas.SetActive(false);
         loadGameCanvas.SetActive(true);
         settingsCanvas.SetActive(false);
+        SaveManager.IsNewGame = false; // mark as continuing
+        string savedScene = SaveManager.instance.GetLastSavedScene(); // custom method you'll add next
+
+        if (!string.IsNullOrEmpty(savedScene))
+        {
+            fadeController.FadeToScene(savedScene); // fade to the scene saved in GameData
+        }
+        else
+        {
+            Debug.LogWarning("No saved scene found. Loading default game scene.");
+            fadeController.FadeToScene("DefaultGameScene"); // fallback scene
+        }
     }
 
     public void OnClickExit()

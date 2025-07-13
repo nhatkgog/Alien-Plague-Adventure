@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerSelector : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerSelector : MonoBehaviour
     public PlayerStatus selectedPlayerOriginal;
 
     public PlayerStatus runtimePlayer;
+
+    [Header("List of all characters")]
+    public List<PlayerStatus> allCharacters;
     void Awake()
     {
         if (Instance == null)
@@ -100,6 +104,20 @@ public class PlayerSelector : MonoBehaviour
                 break;
             }
         }
+    }
+
+
+    public void SetSelectedPlayerByName(string name)
+    {
+        foreach (var character in allCharacters)
+        {
+            if (character.characterName == name)
+            {
+                SetSelectedPlayer(character);
+                return;
+            }
+        }
+        Debug.LogWarning("Selected character not found: " + name);
     }
 
 }

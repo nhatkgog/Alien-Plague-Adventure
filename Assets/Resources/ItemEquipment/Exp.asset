@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e768e5c62c05d7e47a4a038012be567a, type: 3}
+  m_Name: Exp
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Exp
+  itemIcon: {fileID: 1864297879, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: 3ea27969b1c700b4dbfbf21ca73fb406
+  dropChance: 20
+  equimentType: 1
+  itemEffect:
+  - {fileID: 11400000, guid: 6ab7f94fe99384a4f885dca49c484f57, type: 2}
+  itemCooldown: 4
+  heal: 
+  exp: '"random exp from 1-100"'
+  crafting:
+  - itemData: {fileID: 11400000, guid: f937aa88fc41fe64e95b151319506cd0, type: 2}
+    stackSize: 1
+  - itemData: {fileID: 11400000, guid: 8978740fbea168c4587d5643fb00387b, type: 2}
+    stackSize: 1

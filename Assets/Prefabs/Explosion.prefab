@@ -191,3 +191,4 @@ MonoBehaviour:
   damageLayer:
     serializedVersion: 2
     m_Bits: 136
+  explosionClip: {fileID: 8300000, guid: aeab575dfab91f74e9f3e157846d346b, type: 3}

@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Overlays;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NameInputManager : MonoBehaviour
 {

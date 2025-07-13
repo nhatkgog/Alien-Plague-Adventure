@@ -33,12 +33,23 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject charging;
     [SerializeField] private GameOverManager gameManager;
 
+// <<<<<<< HEAD
+//     [SerializeField] private AudioClip deathClip;
+//     [SerializeField] private AudioClip hurtClip;
+//     [SerializeField] private AudioClip reloadClip;
+//     [SerializeField] private AudioClip shotClip;
+//     [SerializeField] private AudioClip walkClip;
+//     [SerializeField] private AudioClip runningClip;
+// =======
+    [Header("SFX")]
     [SerializeField] private AudioClip deathClip; 
     [SerializeField] private AudioClip hurtClip; 
     [SerializeField] private AudioClip reloadClip; 
     [SerializeField] private AudioClip shotClip; 
     [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
+    [SerializeField] private AudioClip sniffingClip;
+    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -163,6 +174,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         UpdateLevelExpUI();
         FixedUpdate();
         #endregion
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Inventory.instance.UseHeal();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Inventory.instance.UseExpItem();
+        }
     }
 
     void PlayerMove()
@@ -212,17 +232,25 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
-    void PlayerDead()
+    public bool isDead = false;
+
+    public bool PlayerDead()
     {
-        rb.isKinematic = true; // Disable physics
-        rb.linearVelocity = Vector2.zero; // Stop movement
+        if (isDead) return true; // prevent multiple calls
+
+        isDead = true;
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector2.zero;
         animator.SetTrigger("Dead");
         Debug.Log("kill");
 
         SFXManager.Instance.PlayOneShot(deathClip);
-        Invoke(nameof(DestroyPlayer), 2f); // Delay before destroying the player object
+        Invoke(nameof(DestroyPlayer), 2f);
+        GetComponent<PlayerItemDrop>().GenerateDrop();
         gameManager.ShowGameOver();
+        return true;
     }
+
     public void DestroyPlayer()
     {
         Destroy(gameObject);
@@ -371,6 +399,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
+
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
@@ -452,11 +481,18 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     public void LoadData(GameData _data)
     {
+        if (!string.IsNullOrEmpty(_data.selectedCharacterName))
+        {
+            PlayerSelector.Instance.SetSelectedPlayerByName(_data.selectedCharacterName);
+            data = PlayerSelector.Instance.GetSelectedPlayer();
+        }
         currentHealth = _data.health > 0 ? _data.health : currentHealth;
         currentBullet = _data.bulletCount > 0 ? _data.bulletCount : currentBullet;
         currentBoom = _data.boomCount > 0 ? _data.boomCount : currentBoom;
         money = _data.currency > 0 ? _data.currency : money;
 
+        data.level = _data.level;
+        data.exp = _data.exp;
         updateHPBar();
     }
 
@@ -466,6 +502,11 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         _data.bulletCount = currentBullet;
         _data.boomCount = currentBoom;
         _data.currency = money;
+        _data.level = data.level;
+        _data.exp = data.exp;
+        _data.selectedCharacterName = PlayerSelector.Instance.selectedPlayerOriginal.characterName;
+
+
     }
     void UpdateLevelExpUI()
     {
@@ -484,11 +525,52 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             expBar.fillAmount = Mathf.Lerp(expBar.fillAmount, targetFill, Time.deltaTime * 10f);
         }
     }
+
     public void HealToFull()
     {
         currentHealth = maxHealth;
         updateHPBar();
     }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        updateHPBar();
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    public float GetCurrentExp()
+    {
+        return data.exp;
+    }
+
+    public float GetExpToLevelUp()
+    {
+        return Mathf.Pow(10, data.level);
+    }
+
+    public void AddExp(float amount)
+    {
+        data.exp += amount;
+
+        float expNeeded = GetExpToLevelUp();
+        while (data.exp >= expNeeded)
+        {
+            data.exp -= expNeeded;
+            data.level++;
+            Debug.Log($"🎉 Leveled up! New level: {data.level}");
+            expNeeded = GetExpToLevelUp();
+        }
+
+        UpdateLevelExpUI();
+    }
+
+
 
 
 }

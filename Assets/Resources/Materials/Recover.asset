@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3273760d2bd09844b0485cba7db76d3, type: 3}
+  m_Name: Recover
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemName: Recover
+  itemIcon: {fileID: 1508536180, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: e19bfa2c08bc4e940bd978b578ec10b2
+  dropChance: 43
