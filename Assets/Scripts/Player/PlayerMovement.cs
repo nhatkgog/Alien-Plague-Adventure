@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 using System.Threading;
@@ -63,8 +62,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     public EntityFX fx { get; private set; }
 
     //Player Status
-    private float speed;
-    private float maxHealth;
+    public float speed;
+    public float maxHealth;
     private float def;
     private float endurance;
     private float exp;
@@ -90,7 +89,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     public static float knockbackForce;
 
     //reduce
-    private float currentHealth;
+    public float currentHealth;
     private int currentBullet;
     private int currentExp;
     private int currentBoom;
@@ -243,6 +242,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         rb.isKinematic = true;
         rb.linearVelocity = Vector2.zero;
         animator.SetTrigger("Dead");
+        Debug.Log("kill");
+
         SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f);
         GetComponent<PlayerItemDrop>().GenerateDrop();
@@ -279,6 +280,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         else if (currentHealth <= 0)
         {
             currentHealth = 0;
+            updateHPBar();
+
             PlayerDead();
         }
 
