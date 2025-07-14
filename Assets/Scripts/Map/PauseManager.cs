@@ -27,6 +27,8 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.Instance.IsGameOver() || GameStateManager.Instance.IsVictory())
+            return;
         // Toggle pause with Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -39,7 +41,13 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
+        GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
+        foreach (GameObject canva in canvases)
+        {
+            canva.SetActive(false);
+        }
         pauseMenuUI.SetActive(true);
+        GameStateManager.Instance.SetState(GameState.Paused);
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -47,20 +55,30 @@ public class PauseManager : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenuUI.SetActive(false);
+        GameStateManager.Instance.SetState(GameState.Playing);
         Time.timeScale = 1f;
         isPaused = false;
     }
 
     public void PauseUnPauseGame()
     {
+        if (GameStateManager.Instance.IsGameOver() || GameStateManager.Instance.IsVictory())
+            return;
         if (isPaused)
         {
             pauseMenuUI.SetActive(false);
+            GameStateManager.Instance.SetState(GameState.Playing);
             Time.timeScale = 1f;
             isPaused = false;
         } else
         {
+            GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
+            foreach (GameObject canva in canvases)
+            {
+                canva.SetActive(false);
+            }
             pauseMenuUI.SetActive(true);
+            GameStateManager.Instance.SetState(GameState.Paused);
             Time.timeScale = 0f;
             isPaused = true;
         }
