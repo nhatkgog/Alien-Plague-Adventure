@@ -111,7 +111,6 @@ public class Enemy : Entity
     protected virtual void Die()
     {
         stateMachine.ChangeState(enemy.dieState);
-
         if (TryGetComponent(out Collider2D col)) col.enabled = false;
         if (TryGetComponent(out Rigidbody2D rb))
         {
