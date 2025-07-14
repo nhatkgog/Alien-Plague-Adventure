@@ -60,12 +60,9 @@ public class Coin : Entity
             PlayerSelector.Instance.SetMoney(missionCoinAmount);
             Destroy(gameObject);
         }
-            SFXManager.Instance.PlayOneShot(collectClip);
-            Destroy(gameObject);
-        }
-
+        SFXManager.Instance.PlayOneShot(collectClip);
+        Destroy(gameObject);
     }
-
 
     public static float GetMissionTotal() => missionCoinAmount;
     public static void ResetMissionTotal() => missionCoinAmount = 0f;

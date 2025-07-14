@@ -68,6 +68,16 @@ public class Boom : MonoBehaviour
                 {
                     enemy.TakeDamage(Mathf.RoundToInt(damage));
                 }
+                var boss1 = hit.GetComponent<Boss1>();
+                if (boss1 != null)
+                {
+                    boss1.TakeDamage(Mathf.RoundToInt(damage));
+                }
+                var boss2 = hit.GetComponent<Boss2>();
+                if (boss2 != null)
+                {
+                    boss2.TakeDamage(Mathf.RoundToInt(damage));
+                }
 
                 // Knockback
                 Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
