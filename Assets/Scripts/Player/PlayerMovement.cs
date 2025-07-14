@@ -161,7 +161,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     // Update is called once per frame
     void Update()
     {
-
+        if (GameStateManager.Instance.IsGameOver() || GameStateManager.Instance.IsVictory() || GameStateManager.Instance.IsPaused())
+            return;
         #region Jump
         PlayerMove();
         PlayerJump();
