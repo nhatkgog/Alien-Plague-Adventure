@@ -236,7 +236,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     public bool PlayerDead()
     {
-        if (isDead) return true; // prevent multiple calls
+        //if (isDead) return true; // prevent multiple calls
 
         isDead = true;
         rb.isKinematic = true;

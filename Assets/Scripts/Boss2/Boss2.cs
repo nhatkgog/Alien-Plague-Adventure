@@ -57,11 +57,12 @@ public class Boss2 : SampleEnemy
             UseRandomAttackSkill();
             lastSkillTime = Time.time;
         }
-
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    WolfExplosion();
+        //}
         FlipEnemy();
-
     }
-
 
     public void ComboAttack()
     {
@@ -75,14 +76,14 @@ public class Boss2 : SampleEnemy
 
     public void Claw()
     {
-        float distance = Vector2.Distance(transform.position, player1.transform.position);
+        float distance = Vector2.Distance(transform.position, player.transform.position);
         float clawRange = 6f;
 
         if (distance <= clawRange)
         {
             animator.SetTrigger("Claw");
 
-            Vector3 dashDir = (player1.transform.position - transform.position).normalized;
+            Vector3 dashDir = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = new Vector2(dashDir.x * 8f, rb.linearVelocity.y);
 
         }
@@ -91,7 +92,7 @@ public class Boss2 : SampleEnemy
     }
     public void Bite()
     {
-        float distance = Vector2.Distance(transform.position, player1.transform.position);
+        float distance = Vector2.Distance(transform.position, player.transform.position);
         float biteRange = 3f;
 
         if (distance <= biteRange)
@@ -109,7 +110,7 @@ public class Boss2 : SampleEnemy
         if (hasRevived)
         {
 
-            Vector3 directionToPlayer = (player1.transform.position - firePoint.position).normalized;
+            Vector3 directionToPlayer = (player.transform.position - firePoint.position).normalized;
 
             float offsetStep = 1.3f;
             int middleIndex = bulletCount / 2;
@@ -148,7 +149,7 @@ public class Boss2 : SampleEnemy
             wolf.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
             // Xoay hướng đúng theo vị trí player
-            if (player1.transform.position.x < spawnPos.x)
+            if (player.transform.position.x < spawnPos.x)
                 wolf.transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
         }
 
@@ -161,7 +162,7 @@ public class Boss2 : SampleEnemy
         float verticalOffset = Random.Range(4f, 8f);    // Random độ cao
 
         Vector3 spawnOffset = new Vector3(horizontalOffset, verticalOffset, 0);
-        Vector3 spawnPos = player1.transform.position + spawnOffset;
+        Vector3 spawnPos = player.transform.position + spawnOffset;
 
         Instantiate(meteorPrefab, spawnPos, Quaternion.identity);
     }
@@ -173,6 +174,8 @@ public class Boss2 : SampleEnemy
             hasRevived = true;
             currentHp = maxHp;
             UpdateHpBar();
+            var effect = Instantiate(revivedPrefab, revivedPoint.position, Quaternion.identity);
+            Destroy(effect,2f);
             spriteRenderer.material = revivedOutlineMaterial;
             return; // Không Destroy
         }
@@ -249,13 +252,13 @@ public class Boss2 : SampleEnemy
 
     private void MoveToPlayer()
     {
-        if (player1 == null) return;
+        if (player == null) return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, player1.transform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
         if (distanceToPlayer > attackDistance) // Chỉ di chuyển nếu chưa tới khoảng cách đánh
         {
-            Vector2 direction = (player1.transform.position - transform.position).normalized;
+            Vector2 direction = (player.transform.position - transform.position).normalized;
             rb.linearVelocity = new Vector2(direction.x * enemyMoveSpeed, rb.linearVelocity.y);
 
             // Lật hướng
