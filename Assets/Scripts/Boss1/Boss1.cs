@@ -158,8 +158,6 @@ public class Boss1 : SampleEnemy
 
     }
 
-
-
     public void RagnarokAwakening()
     {
         if (hasAwakened) return; 

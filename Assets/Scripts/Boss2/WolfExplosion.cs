@@ -70,6 +70,7 @@ public class WolfExplosion : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InputSystemMovement>()?.PlayerHurt(damage);
+            Debug.Log("No");
             Explode();
         }
     }
@@ -81,7 +82,7 @@ public class WolfExplosion : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
         GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        Destroy(explosion, 1f);
+        Destroy(explosion, 2f);
 
         Destroy(gameObject); // Remove the wolf
     }

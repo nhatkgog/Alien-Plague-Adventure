@@ -1,35 +1,39 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private ShopItemData[] shopItems;
-    [SerializeField] private Transform contentParent;
-    [SerializeField] private GameObject shopItemPrefab;
-    [SerializeField] private TMP_Text goldText;
+    public List<ShopItemData> shopItems;
+    public GameObject shopSlotPrefab;
+    public Transform shopPanel;
 
-    private float playerGold;
+    [SerializeField] private float playerGold;
 
     private void Start()
     {
         playerGold = PlayerSelector.Instance.GetSelectedPlayer().money;
-        UpdateGoldUI();
+        GenerateShop();
+    }
 
-        foreach (var item in shopItems)
+    void GenerateShop()
+    {
+        foreach (ShopItemData item in shopItems)
         {
-            GameObject go = Instantiate(shopItemPrefab, contentParent);
-            go.GetComponent<ShopItemUI>().Setup(item, this);
+            GameObject slot = Instantiate(shopSlotPrefab, shopPanel);
+            ShopItemUI shopSlot = slot.GetComponent<ShopItemUI>();
+            shopSlot.SetUp(item, () => TryBuyItem(item));
         }
     }
 
-    public void TryBuyItem(ShopItemData itemData)
+    void TryBuyItem(ShopItemData item)
     {
-        if (playerGold >= itemData.price)
+        if (playerGold >= item.price)
         {
-            playerGold -= itemData.price;
-            Inventory.instance.AddItem(itemData.itemToSell);
-            UpdateGoldUI();
-            Debug.Log($"Đã mua {itemData.itemToSell.itemName}");
+            playerGold -= item.price;
+            PlayerSelector.Instance.SetMoney(playerGold);
+            Inventory.instance.AddItem(item.itemData);
+            Debug.Log("Đã mua: " + item.itemData.itemName);
         }
         else
         {
@@ -37,8 +41,6 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    private void UpdateGoldUI()
-    {
-        goldText.text = $"Gold: {playerGold}";
-    }
+    public float GetGold() => playerGold;
+
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class Tornado : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class Tornado : MonoBehaviour
     [SerializeField] GameObject hitPrefab;
     void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 3f);
+        Invoke(nameof(Explosion), 3f);
     }
 
     // Update is called once per frame
@@ -38,12 +40,17 @@ public class Tornado : MonoBehaviour
                 if (player != null)
                 {
                     player.PlayerHurt(damage * Boss1.damageBonus);
+                    Debug.Log("Dinh dame");
                 }
             }
-            GameObject hit = Instantiate(hitPrefab, transform.position, Quaternion.identity);
-            Destroy(hit, 1f);
+            Explosion();
             // Nếu không cần xuyên qua thì destroy
             Destroy(gameObject);
         }
+    }
+    public void Explosion()
+    {
+        GameObject hit = Instantiate(hitPrefab, transform.position, Quaternion.identity);
+        Destroy(hit, 1f);
     }
 }

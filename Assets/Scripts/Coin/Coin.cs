@@ -62,7 +62,6 @@ public class Coin : Entity
         }
     }
 
-
     public static float GetMissionTotal() => missionCoinAmount;
     public static void ResetMissionTotal() => missionCoinAmount = 0f;
 }
