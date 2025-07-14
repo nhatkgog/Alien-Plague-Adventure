@@ -33,6 +33,14 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject charging;
     [SerializeField] private GameOverManager gameManager;
 
+// <<<<<<< HEAD
+//     [SerializeField] private AudioClip deathClip;
+//     [SerializeField] private AudioClip hurtClip;
+//     [SerializeField] private AudioClip reloadClip;
+//     [SerializeField] private AudioClip shotClip;
+//     [SerializeField] private AudioClip walkClip;
+//     [SerializeField] private AudioClip runningClip;
+// =======
     [Header("SFX")]
     [SerializeField] private AudioClip deathClip; 
     [SerializeField] private AudioClip hurtClip; 
@@ -40,6 +48,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private AudioClip shotClip; 
     [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
+    [SerializeField] private AudioClip sniffingClip;
     private AudioSource audioSource;
 
     //ground
@@ -224,47 +233,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
-
-    void PlayerExplosion() 
-    {
-        if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
-        {
-            Debug.Log("🔹 Bắt đầu tạo boom...");
-
-            nextBombTime = Time.time + bombCooldown;
-
-            Transform nearestEnemy = FindNearestEnemy();
-            if (nearestEnemy != null)
-            {
-                Vector3 start = boomFirePoint.position;
-                Vector3 end = nearestEnemy.position;
-
-                // Tạo quả boom
-                GameObject bomb = Instantiate(bombPrefab, start, Quaternion.identity);
-
-                currentBoom--;
-                Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    Vector2 velocity = CalculateParabolaVelocity(start, end, bombThrowHeight);
-                    rb.linearVelocity = velocity;
-                }
-
-                // Gọi animation ném (nếu có)
-                //animator.SetTrigger("Throw");
-            }
-            Debug.Log("Boom đã được tạo!");
-
-        }
-    }
-     public bool isDead = false;
+    public bool isDead = false;
 
     public bool PlayerDead()
     {
         //if (isDead) return true; // prevent multiple calls
+
         isDead = true;
-        rb.isKinematic = true; // Disable physics
-        rb.linearVelocity = Vector2.zero; // Stop movement
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector2.zero;
         animator.SetTrigger("Dead");
         Debug.Log("kill");
 
@@ -279,7 +256,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     {
         Destroy(gameObject);
     }
-
     void PlayerRecharge()
     {
         if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet)
@@ -291,7 +267,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
-
     public void PlayerHurt(float takeDamage)
     {
         currentHealth -= takeDamage;
@@ -312,9 +287,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
-
     private Boolean wantsToSprint = false;
-
     void FixedUpdate()
     {
         float enduranceRecoveryRate = 2f;
@@ -392,7 +365,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
     }
-
     void updateHPBar()
     {
         if (hpBar != null)
@@ -400,7 +372,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             hpBar.fillAmount = currentHealth / maxHealth;
         }
     }
-
     private void updateAmmoText()
     {
         if (ammoText != null)
@@ -415,7 +386,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
-    
     private void updateBoomText()
     {
         if (boomText != null)
