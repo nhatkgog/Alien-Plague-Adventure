@@ -1104,7 +1104,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.3
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2741,7 +2741,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 4.3
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3349,6 +3349,14 @@ PrefabInstance:
       propertyPath: howlClip
       value: 
       objectReference: {fileID: 8300000, guid: 72d72f8d1f76c874b98d280370bc1175, type: 3}
+    - target: {fileID: 294767771986363231, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
+      propertyPath: hurtClip
+      value: 
+      objectReference: {fileID: 8300000, guid: aac762467ad457d45b6b69f38494db77, type: 3}
+    - target: {fileID: 294767771986363231, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
+      propertyPath: deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e76892f4edfc7424293237949d6d8dc0, type: 3}
     - target: {fileID: 294767771986363231, guid: 70c97f9537b961743884daf91bcd6380, type: 3}
       propertyPath: coinPrefab
       value: 
@@ -5013,6 +5021,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fenrir
       objectReference: {fileID: 0}
+    - target: {fileID: 9198010384764354508, guid: cde0a4f343baf724bac79f0d11dc6842, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5046,8 +5058,8 @@ Transform:
   m_GameObject: {fileID: 730834517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.98, y: -2.08, z: 0}
-  m_LocalScale: {x: 1.9787977, y: 2.9281757, z: 1}
+  m_LocalPosition: {x: 29.6, y: 8, z: 0}
+  m_LocalScale: {x: 8.583755, y: 9.45024, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2018898591}
@@ -22582,7 +22594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4805758721253291548, guid: 82386495670c0994d9b09d36c260f921, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28033,10 +28045,10 @@ RectTransform:
   - {fileID: 2130769302}
   m_Father: {fileID: 1518794237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25552085, y: 0.8831482}
-  m_AnchorMax: {x: 0.5144584, y: 0.95466673}
-  m_AnchoredPosition: {x: 507, y: 27}
-  m_SizeDelta: {x: -10.639603, y: -5.004799}
+  m_AnchorMin: {x: 0.55327094, y: 0.84700006}
+  m_AnchorMax: {x: 0.808, y: 0.9177408}
+  m_AnchoredPosition: {x: 1.3200073, y: 0}
+  m_SizeDelta: {x: -2.6395874, y: -4.004799}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2030690462
 MonoBehaviour:

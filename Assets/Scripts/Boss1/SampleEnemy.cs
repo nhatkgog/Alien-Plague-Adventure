@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SampleEnemy : Entity
+public class SampleEnemy : Entity 
 {
     [Header("Base Stats")]
     [SerializeField] protected float maxHp;
@@ -26,6 +26,10 @@ public class SampleEnemy : Entity
     [SerializeField] private Image hpBar;
     [SerializeField] public GameObject coinPrefab;
     [SerializeField] public EntityFX entityFX;
+
+    //[Header("SFX")]
+    //[SerializeField] private AudioClip hurtClip;
+    //[SerializeField] private AudioClip deathClip;
 
     private float lastAttackTime;
 
@@ -85,6 +89,7 @@ public class SampleEnemy : Entity
 
         if (entityFX != null)
             entityFX.PlayHitFX();
+        //SFXManager.Instance.PlayOneShot(hurtClip);
 
         if (currentHp <= 0)
         {
@@ -99,7 +104,7 @@ public class SampleEnemy : Entity
         if (TryGetComponent(out Collider2D col)) col.enabled = false;
         //rb.linearVelocity = Vector2.zero;
         //rb.isKinematic = true;
-
+        //SFXManager.Instance.PlayOneShot(deathClip);
         if (coinPrefab != null)
         {
             GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);

@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
-        SceneManager.LoadScene("Scence1"); 
+        SceneManager.LoadScene("GameLobby"); 
     }
 
 }
