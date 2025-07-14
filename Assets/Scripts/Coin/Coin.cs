@@ -56,7 +56,6 @@ public class Coin : Entity
             {
                 Debug.LogWarning("MissionCoinText is null");
             }
-
             PlayerSelector.Instance.SetMoney(missionCoinAmount);
             SFXManager.Instance.PlayOneShot(collectClip);
             Destroy(gameObject);
