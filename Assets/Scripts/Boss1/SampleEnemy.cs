@@ -13,8 +13,6 @@ public class SampleEnemy : Entity
     [SerializeField] protected float detectionRange = 3f;
     protected bool isPlayerInRange = false;
     protected InputSystemMovement player;
-    protected Player player1;
-
 
     [Header("Attack Info")]
     [SerializeField] protected float attackDistance = 3f;
@@ -41,7 +39,6 @@ public class SampleEnemy : Entity
     {
         base.Start();
         player = FindAnyObjectByType<InputSystemMovement>();
-        player1 = FindAnyObjectByType<Player>();
 
         UpdateHpBar();
     }
@@ -53,13 +50,11 @@ public class SampleEnemy : Entity
 
     }
 
-
-
     protected void FlipEnemy()
     {
-        if (player1 != null)
+        if (player != null)
         {
-            float dirToPlayer = player1.transform.position.x - transform.position.x;
+            float dirToPlayer = player.transform.position.x - transform.position.x;
 
             if ((dirToPlayer < 0 && facingRight) || (dirToPlayer > 0 && !facingRight))
             {
