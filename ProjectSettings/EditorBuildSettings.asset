@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MissionsMap/Scene2.unity
     guid: 9ca0c622609fe614c9bd6f204878b388
   - enabled: 1
+    path: Assets/Scenes/MissionsMap/Scene3.unity
+    guid: 7182fcba16b0f9c45a65601e6de997fa
+  - enabled: 1
+    path: Assets/Scenes/MissionsMap/Scene4.unity
+    guid: 95d81f9564794424a8ac47487748d4ed
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: c4a6366f99a00864cb82ae6f7535a4d2
   - enabled: 1

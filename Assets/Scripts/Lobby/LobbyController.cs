@@ -19,7 +19,7 @@ public class LobbyController : MonoBehaviour
     void Awake()
     {
         topBarCanvas.SetActive(true);
-        //textBubbleCanvas.SetActive(true);
+        textBubbleCanvas.SetActive(true);
         playerChoose.text = "Hello";
     }
     void Start()
@@ -68,13 +68,13 @@ public class LobbyController : MonoBehaviour
 
     public void OnClickBack()
     {
-        UpdateTextBubbleVisibility();
         topBarCanvas.SetActive(true);
         lobbyCanvas.SetActive(true);
         armorCanvas.SetActive(false);
         weaponCanvas.SetActive(false);
         missionCanvas.SetActive(false);
         settingPopupCanvas.SetActive(false);
+        UpdateTextBubbleVisibility();
     }
 
     public void OnClickSettingsPopUp()
@@ -113,6 +113,7 @@ public class LobbyController : MonoBehaviour
     {
         if (PlayerSelector.Instance == null || PlayerSelector.Instance.selectedPlayerOriginal == null)
         {
+            UpdateTextBubbleVisibility();
             Debug.Log("You must select a character before entering missions.");
             return;
         }
@@ -130,16 +131,17 @@ public class LobbyController : MonoBehaviour
 
     private void UpdateTextBubbleVisibility()
     {
-        if (PlayerSelector.Instance != null)
+        textBubbleCanvas.SetActive(true); 
+
+        if (PlayerSelector.Instance != null && PlayerSelector.Instance.selectedPlayerOriginal != null)
         {
-            bool isSelected = PlayerSelector.Instance.selectedPlayerOriginal != null;
-            textBubbleCanvas.SetActive(isSelected);
+            playerChoose.text = "Hello";
         }
         else
         {
-            textBubbleCanvas.SetActive(true);
             playerChoose.text = "Select first!";
         }
     }
+
 
 }

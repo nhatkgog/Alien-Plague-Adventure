@@ -257,6 +257,7 @@ MonoBehaviour:
   image: {fileID: 1345595688751830455}
   titleText: {fileID: 277436159517575005}
   descriptionText: {fileID: 4706117766128283929}
+  fadeController: {fileID: 0}
 --- !u!114 &9029561040320399751
 MonoBehaviour:
   m_ObjectHideFlags: 0
