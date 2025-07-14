@@ -31,6 +31,16 @@ public class Bullet : MonoBehaviour
                 {
                     enemy.TakeDamage(Mathf.RoundToInt(damage));
                 }
+                var boss1 = other.GetComponent<Boss1>();
+                if (boss1 != null)
+                {
+                    boss1.TakeDamage(Mathf.RoundToInt(damage));
+                }
+                var boss2 = other.GetComponent<Boss2>();
+                if (boss2 != null)
+                {
+                    boss2.TakeDamage(Mathf.RoundToInt(damage));
+                }
             }
 
             if (rb != null)
