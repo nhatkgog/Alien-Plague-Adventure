@@ -28,4 +28,6 @@ public class PlayerStatus : ScriptableObject
     public RuntimeAnimatorController boomanimation;
 
     public RuntimeAnimatorController animatorController;
+
+    public GameObject bulletPrefab;
 }

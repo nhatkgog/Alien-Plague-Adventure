@@ -3,6 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.Audio;
+using System.Threading;
+using System;
 
 public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
@@ -16,6 +21,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private Image expBar;
+    [SerializeField] private Image enduranceBar;
 
     [SerializeField] private float chargePower = 0f;
     [SerializeField] private float maxCharge = 2f;
@@ -34,8 +40,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private AudioClip shotClip;
     [SerializeField] private AudioClip walkClip;
     [SerializeField] private AudioClip runningClip;
-    private AudioClip lastClip;
-    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -118,6 +122,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             maxBullet = data.maxBulletQuantity;
             damage = data.damage;
             shootDelay = data.shootDelay;
+            bulletPrefab = data.bulletPrefab;
             //boom
             damageBoom = data.damageBoom;
             explosionRadius = data.explosionRadius;
@@ -186,12 +191,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     }
     void PlayerJump()
     {
+        isGrounded = IsGroundDetected();
+
         if (jumpAction.triggered && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
     }
+
     void PlayerShooting()
     {
         if (Input.GetKeyDown(KeyCode.J) && currentBullet > 0 && Time.time > nextshoot)
@@ -214,7 +222,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
     }
 
-    void PlayerExplosion()
+
+    void PlayerExplosion() 
     {
         if (Input.GetKeyDown(KeyCode.K) && currentBoom > 0 && Time.time >= nextBombTime)
         {
@@ -246,15 +255,14 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
         }
     }
-    public bool isDead = false;
+     public bool isDead = false;
 
     public bool PlayerDead()
     {
         if (isDead) return true; // prevent multiple calls
-
         isDead = true;
-        rb.isKinematic = true;
-        rb.linearVelocity = Vector2.zero;
+        rb.isKinematic = true; // Disable physics
+        rb.linearVelocity = Vector2.zero; // Stop movement
         animator.SetTrigger("Dead");
         SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f);
@@ -262,7 +270,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         gameManager.ShowGameOver();
         return true;
     }
-
     public void DestroyPlayer()
     {
         Destroy(gameObject);
@@ -296,16 +303,39 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
+    private Boolean wantsToSprint = false;
     void FixedUpdate()
     {
-        float enduranceRecoveryRate = 2f; // tốc độ hồi
-        float enduranceDrainRate = 8f;   // tốc độ tụt
-        float minEnduranceToSprint = 1f;  // cần ít nhất 1 để chạy nhanh
+        float enduranceRecoveryRate = 2f;
+        float enduranceDrainRate = 8f;
 
-        bool isSprinting = sprintAction.ReadValue<float>() > 0 && endurance > minEnduranceToSprint;
+        // Xử lý phím
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            // Chỉ cho bắt đầu sprint khi endurance đầy
+            if (endurance >= data.endurance * 0.99f)
+            {
+                wantsToSprint = true;
+            }
+            else
+            {
+                wantsToSprint = false;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            wantsToSprint = false;
+        }
+
+        // Kiểm tra điều kiện sprint
+        bool isMoving = moveInput.x != 0;
+        bool isSprinting = wantsToSprint && isMoving && endurance > 0f;
+
         float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
 
-        if (moveInput.x != 0)
+        // Animation & SFX
+        if (isMoving)
         {
             animator.SetFloat("Speed", isSprinting ? 1f : 0.5f);
 
@@ -320,27 +350,30 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             SFXManager.Instance.StopLoop();
         }
 
+        // Di chuyển
         rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
 
-        if (isSprinting && moveInput.x != 0)
+        // Tính endurance
+        if (isSprinting)
         {
             endurance -= enduranceDrainRate * Time.fixedDeltaTime;
             endurance = Mathf.Max(0f, endurance);
+
+            //Nếu endurance cạn → dừng sprint cho tới khi hồi đầy và nhấn lại
+            if (endurance <= 0f)
+            {
+                wantsToSprint = false;
+            }
         }
         else
         {
             endurance += enduranceRecoveryRate * Time.fixedDeltaTime;
             endurance = Mathf.Min(data.endurance, endurance);
         }
-        //charging.gameObject.SetActive(true);
 
-        //chargeBar.fillAmount = endurance / data.endurance;
+        if (enduranceBar != null)
+            enduranceBar.fillAmount = endurance / data.endurance;
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        isGrounded = true;
     }
 
     void Flip()
@@ -383,42 +416,6 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
-
-    Transform FindNearestEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float minDist = Mathf.Infinity;
-        Transform nearest = null;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float dist = Vector2.Distance(transform.position, enemy.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                nearest = enemy.transform;
-            }
-        }
-
-        return nearest;
-    }
-
-    Vector2 CalculateParabolaVelocity(Vector3 start, Vector3 end, float height)
-    {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
-        float displacementY = end.y - start.y;
-        Vector2 displacementX = new Vector2(end.x - start.x, 0f);
-
-        float timeUp = Mathf.Sqrt(2 * height / gravity);
-        float timeDown = Mathf.Sqrt(2 * (height - displacementY) / gravity);
-        float totalTime = timeUp + timeDown;
-
-        float velocityY = Mathf.Sqrt(2 * gravity * height);
-        float velocityX = displacementX.x / totalTime;
-
-        return new Vector2(velocityX, velocityY);
-    }
-
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;
