@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button settingsButton;
-    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button lobbyButton;
     [SerializeField] private Button quitButton;
 
     private bool isPaused = false;
@@ -18,7 +18,7 @@ public class PauseManager : MonoBehaviour
         // Initialize button listeners
         if (resumeButton) resumeButton.onClick.AddListener(ResumeGame);
         if (settingsButton) settingsButton.onClick.AddListener(OpenSettings);
-        if (mainMenuButton) mainMenuButton.onClick.AddListener(ReturnToMainMenu);
+        if (lobbyButton) lobbyButton.onClick.AddListener(ReturnToLobby);
         if (quitButton) quitButton.onClick.AddListener(QuitGame);
 
         // Ensure pause menu is hidden at start
@@ -90,10 +90,10 @@ public class PauseManager : MonoBehaviour
         Debug.Log("Settings menu not implemented yet");
     }
 
-    private void ReturnToMainMenu()
+    private void ReturnToLobby()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameLobby");
     }
 
     private void QuitGame()
