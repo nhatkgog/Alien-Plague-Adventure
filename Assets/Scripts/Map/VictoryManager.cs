@@ -17,9 +17,15 @@ public class VictoryManager : MonoBehaviour
     public static float MissionCoinReward = 0f;
     public static bool OpenMissionTab = false;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip victoryClip;
+
     private void Start()
     {
         victoryUI.SetActive(false);
+
+        if (victoryClip != null)
+            SFXManager.Instance.PlayOneShot(victoryClip);
 
         continueButton.onClick.AddListener(OnContinue);
         lobbyButton.onClick.AddListener(OnReturnToLobby);
@@ -28,12 +34,18 @@ public class VictoryManager : MonoBehaviour
 
     public void ShowVictory()
     {
+        GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
+        foreach (GameObject canva in canvases)
+        {
+            canva.SetActive(false);
+        }
         float missionEarned = Coin.GetMissionTotal();
         Debug.Log($"Victory! Total mission coin earned: {missionEarned}");
 
         MissionCoinReward = missionEarned;
         missionCoinsText.text = $"You earned: {missionEarned}";
         victoryUI.SetActive(true);
+        GameStateManager.Instance.SetState(GameState.Victory);
         Time.timeScale = 0f;
     }
 

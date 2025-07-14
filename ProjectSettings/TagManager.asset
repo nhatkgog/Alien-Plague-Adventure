@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Bullet
   - Coin
+  - Ice
+  - WolfExplosion
   - Menu
   layers:
   - Default
@@ -19,8 +21,8 @@ TagManager:
   - Enemy
   - Coin
   - Button
+  - WolfExplosion
   - Item
-  - 
   - 
   - 
   - 
@@ -57,14 +59,17 @@ TagManager:
   - name: Enemy
     uniqueID: 1413464153
     locked: 0
+  - name: WolfExplosion
+    uniqueID: 2239875735
+    locked: 0
   - name: Player
     uniqueID: 2106231877
     locked: 0
   - name: HpBar
     uniqueID: 1962185761
     locked: 0
-  - name: 
-    uniqueID: 2239875735
+  - name: UI
+    uniqueID: 2018957607
     locked: 0
   m_RenderingLayers:
   - Default

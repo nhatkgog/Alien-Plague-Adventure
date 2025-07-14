@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 using System.Threading;
@@ -34,12 +33,14 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject charging;
     [SerializeField] private GameOverManager gameManager;
 
-    [SerializeField] private AudioClip deathClip;
-    [SerializeField] private AudioClip hurtClip;
-    [SerializeField] private AudioClip reloadClip;
-    [SerializeField] private AudioClip shotClip;
-    [SerializeField] private AudioClip walkClip;
+    [Header("SFX")]
+    [SerializeField] private AudioClip deathClip; 
+    [SerializeField] private AudioClip hurtClip; 
+    [SerializeField] private AudioClip reloadClip; 
+    [SerializeField] private AudioClip shotClip; 
+    [SerializeField] private AudioClip walkClip; 
     [SerializeField] private AudioClip runningClip;
+    private AudioSource audioSource;
 
     //ground
     public Transform groundCheck;
@@ -52,8 +53,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     public EntityFX fx { get; private set; }
 
     //Player Status
-    private float speed;
-    private float maxHealth;
+    public float speed;
+    public float maxHealth;
     private float def;
     private float endurance;
     private float exp;
@@ -79,7 +80,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     public static float knockbackForce;
 
     //reduce
-    private float currentHealth;
+    public float currentHealth;
     private int currentBullet;
     private int currentExp;
     private int currentBoom;
@@ -151,7 +152,8 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     // Update is called once per frame
     void Update()
     {
-
+        if (GameStateManager.Instance.IsGameOver() || GameStateManager.Instance.IsVictory() || GameStateManager.Instance.IsPaused())
+            return;
         #region Jump
         PlayerMove();
         PlayerJump();
@@ -259,21 +261,25 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
 
     public bool PlayerDead()
     {
-        if (isDead) return true; // prevent multiple calls
+        //if (isDead) return true; // prevent multiple calls
         isDead = true;
         rb.isKinematic = true; // Disable physics
         rb.linearVelocity = Vector2.zero; // Stop movement
         animator.SetTrigger("Dead");
+        Debug.Log("kill");
+
         SFXManager.Instance.PlayOneShot(deathClip);
         Invoke(nameof(DestroyPlayer), 2f);
         GetComponent<PlayerItemDrop>().GenerateDrop();
         gameManager.ShowGameOver();
         return true;
     }
+
     public void DestroyPlayer()
     {
         Destroy(gameObject);
     }
+
     void PlayerRecharge()
     {
         if (Input.GetKeyDown(KeyCode.R) && currentBullet < maxBullet)
@@ -285,6 +291,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         }
 
     }
+
     public void PlayerHurt(float takeDamage)
     {
         currentHealth -= takeDamage;
@@ -299,11 +306,15 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         else if (currentHealth <= 0)
         {
             currentHealth = 0;
+            updateHPBar();
+
             PlayerDead();
         }
 
     }
+
     private Boolean wantsToSprint = false;
+
     void FixedUpdate()
     {
         float enduranceRecoveryRate = 2f;
@@ -381,6 +392,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
     }
+
     void updateHPBar()
     {
         if (hpBar != null)
@@ -388,6 +400,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             hpBar.fillAmount = currentHealth / maxHealth;
         }
     }
+
     private void updateAmmoText()
     {
         if (ammoText != null)
@@ -402,6 +415,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
+    
     private void updateBoomText()
     {
         if (boomText != null)
@@ -416,6 +430,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
             }
         }
     }
+
     public void IncreaseMaxHealth(float amount)
     {
         maxHealth += amount;

@@ -30,11 +30,21 @@ public class MainMenuMusic : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Scence1")
+        if (audioSource == null) return;
+
+        if (scene.name == "Scence1" || scene.name == "Scene2")
         {
-            audioSource.Stop(); 
+            audioSource.Stop();
+        }
+        else
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
     }
+
 
     void OnDestroy()
     {

@@ -8,15 +8,18 @@ public class GameOverManager : MonoBehaviour
     [Header("Game Over Menu")]
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private Button retryButton;
-    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button lobbyButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private TextMeshProUGUI scoreText; // If you want to show final score
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip gaveOverClip;
 
     private void Start()
     {
         // Initialize button listeners
         if (retryButton) retryButton.onClick.AddListener(RetryLevel);
-        if (mainMenuButton) mainMenuButton.onClick.AddListener(ReturnToMainMenu);
+        if (lobbyButton) lobbyButton.onClick.AddListener(ReturnToLobby);
         if (quitButton) quitButton.onClick.AddListener(QuitGame);
 
         // Ensure game over menu is hidden at start
@@ -25,7 +28,17 @@ public class GameOverManager : MonoBehaviour
 
     public void ShowGameOver(int finalScore = 0)
     {
+        GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
+        foreach (GameObject canva in canvases)
+        {
+            canva.SetActive(false);
+        }
         gameOverUI.SetActive(true);
+        GameStateManager.Instance.SetState(GameState.GameOver);
+
+        if (gaveOverClip != null)
+            SFXManager.Instance.PlayOneShot(gaveOverClip);
+
         if (scoreText != null)
         {
             scoreText.text = $"Final Score: {finalScore}";
@@ -37,12 +50,16 @@ public class GameOverManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
-    private void ReturnToMainMenu()
+    private void ReturnToLobby()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameLobby");
     }
 
     private void QuitGame()

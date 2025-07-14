@@ -9,6 +9,8 @@ public class MissionEntry : MonoBehaviour
     public TMP_Text titleText;
     public TMP_Text descriptionText;
     private string sceneToLoad;
+    [SerializeField] private FadeController fadeController;
+    
     public void Setup(Sprite image, string title, string description, string sceneName)
     {
         this.image.sprite = image;
@@ -23,18 +25,20 @@ public class MissionEntry : MonoBehaviour
             btn.onClick.AddListener(OnClick);
         }
     }
+
     public string GetSceneName()
     {
         return sceneToLoad;
     }
+
     private void OnClick()
     {
         Debug.Log("Moving to game scene.....");
-
-
-        SceneManager.LoadScene(sceneToLoad);
+        fadeController.FadeToScene(sceneToLoad);
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
-
-
 
 }
