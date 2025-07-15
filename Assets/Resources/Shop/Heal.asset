@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 227574b0022ee11488da8c0b4e8b0cb3, type: 3}
-  m_Name: Heal_Liquid
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: e7b57ec3b44ead340802c22811f449f8, type: 2}
-  price: 20
+  itemData: {fileID: 11400000, guid: e3e5e3f8b424478418a960ef9c47fb73, type: 2}
+  price: 30
