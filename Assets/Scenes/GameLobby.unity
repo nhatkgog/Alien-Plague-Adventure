@@ -1625,11 +1625,20 @@ MonoBehaviour:
     description: This is your first mission of your Earth saving journey, you have
       to go through the factory to go outside
     sceneName: Scence1
-  - image: {fileID: -5099292496197868168, guid: d280c83bb5a0f8149af7b3c11a699b9b, type: 3}
+  - image: {fileID: 7028616704906629411, guid: 035c23651c73e774e925a61216f42bef, type: 3}
     title: Old Street
     description: After leaving the factory, you will face with a serious fight with
       a huge number of monsters
     sceneName: Scene2
+  - image: {fileID: -1955448553306655712, guid: a6da8ad19238e1d438efd4ed983ba269, type: 3}
+    title: Seaport
+    description: The third mission of game, our soldier has to pass through the seaport
+      to accross other land.
+    sceneName: Scene3
+  - image: {fileID: -2622733931582019122, guid: d5ea41ca46481824488322df497b8e5c, type: 3}
+    title: Newine Town
+    description: Come to the NT studio of Dr.Josh to gain new feature
+    sceneName: Scene4
 --- !u!1 &250629079
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,7 +2586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &390879398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2639,7 +2648,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &390879401
 RectTransform:
@@ -3296,7 +3305,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &521114251
 RectTransform:
@@ -6256,8 +6265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -1.5354004, y: 0.24379921}
+  m_SizeDelta: {x: -0.1573, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &981060387
 MonoBehaviour:
@@ -9481,10 +9490,10 @@ RectTransform:
   - {fileID: 1539827731}
   m_Father: {fileID: 360767034}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_AnchorMin: {x: 0.036000002, y: 0.026250001}
+  m_AnchorMax: {x: 0.96400005, y: 0.072500005}
+  m_AnchoredPosition: {x: -54, y: -21}
+  m_SizeDelta: {x: -1392, y: -17}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1339544099
 MonoBehaviour:
@@ -9499,7 +9508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 1
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -10916,7 +10925,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1446005212
 RectTransform:
@@ -10934,8 +10943,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15710409, y: 0.642}
   m_AnchorMax: {x: 0.41779166, y: 0.71925914}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -32.9825, y: -16}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_SizeDelta: {x: -0.00024414, y: -16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1446005213
 MonoBehaviour:
@@ -10957,7 +10966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Player Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c3b28a5a495268845a8a21fd37d08094, type: 2}
   m_sharedMaterial: {fileID: -5156230602782148981, guid: c3b28a5a495268845a8a21fd37d08094, type: 2}
@@ -11022,7 +11031,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 2.047943, y: 0, z: 0, w: -4.124756}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11093,14 +11102,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.627451, g: 0.3215686, b: 0.1764706, a: 1}
+  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1013010238427786138, guid: ab853aee15411d5488266d9f9139010d, type: 3}
+  m_Sprite: {fileID: -3504384509910555479, guid: 9d0946aac78ad4345a4eb6bac9485362, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11805,7 +11814,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1503089999
 RectTransform:
@@ -12155,10 +12164,10 @@ RectTransform:
   - {fileID: 981060386}
   m_Father: {fileID: 1339544098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0.25}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchoredPosition: {x: 770, y: 16.0698}
+  m_SizeDelta: {x: 425.3748, y: 2.267}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1614739111
 GameObject:
@@ -14070,7 +14079,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1964572973
 RectTransform:
@@ -14150,7 +14159,7 @@ Canvas:
   m_GameObject: {fileID: 1964572972}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -14162,7 +14171,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1966460230
 GameObject:
@@ -14271,7 +14280,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1966460236
 RectTransform:
@@ -15084,7 +15093,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &2069073286
 RectTransform:
@@ -15809,6 +15818,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 1957632155475281791, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2356539146008473389, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15930,6 +15943,10 @@ PrefabInstance:
       value: MissionEntryPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 3855743546426178416, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855743546426178416, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -15973,6 +15990,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 7543989769082961660, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910360549993442958, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9029561040320399751, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -16000,6 +16025,10 @@ PrefabInstance:
     - target: {fileID: 9092284042326403826, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -475
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213448106856043243, guid: dcf19991e1210f8419ea40b93ff0404b, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
