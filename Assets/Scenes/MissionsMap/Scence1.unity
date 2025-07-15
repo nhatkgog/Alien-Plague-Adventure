@@ -3707,7 +3707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 68582710}
   retryButton: {fileID: 1464090816}
-  lobbyButton: {fileID: 0}
+  lobbyButton: {fileID: 1086151411}
   quitButton: {fileID: 1290286839}
   scoreText: {fileID: 2125687059}
   gaveOverClip: {fileID: 8300000, guid: b2802989b50aac94590cc800cf30a60a, type: 3}

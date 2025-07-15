@@ -3,7 +3,7 @@
 public class IceBullet : MonoBehaviour
 {
     private Vector3 movementDirection;
-    [SerializeField] private float damage = 15f;
+    [SerializeField] private float damage = 10f;
     [SerializeField] private LayerMask hitLayers;
     [SerializeField] GameObject hitPrefab;
 

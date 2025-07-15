@@ -41,6 +41,14 @@ public class VictoryManager : MonoBehaviour
         float missionEarned = Coin.GetMissionTotal();
         Debug.Log($"Victory! Total mission coin earned: {missionEarned}");
 
+        int currentMissionIndex = SceneManager.GetActiveScene().buildIndex;
+        PlayerManager playermanager = FindObjectOfType<PlayerManager>();
+        if (playermanager != null)
+        {
+            Debug.Log("Mission saved!");
+            playermanager.SaveCompletedMission(currentMissionIndex);
+        }
+
         MissionCoinReward = missionEarned;
         missionCoinsText.text = $"You earned: {missionEarned}";
         victoryUI.SetActive(true);

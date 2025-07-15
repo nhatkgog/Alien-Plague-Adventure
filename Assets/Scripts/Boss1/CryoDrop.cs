@@ -6,7 +6,7 @@ public class CryoDrop : MonoBehaviour
     [SerializeField] private float fallSpeed = 10f;
 
     [Header("Thuộc tính sát thương")]
-    [SerializeField] private float damage = 20f;
+    [SerializeField] private float damage = 10f;
     [SerializeField] private LayerMask hitLayers;
     [SerializeField] GameObject hitPrefab;
 

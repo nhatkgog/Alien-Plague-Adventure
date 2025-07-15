@@ -5,7 +5,7 @@ public class WolfExplosion : MonoBehaviour
 {
     [Header("Explosion")]
     [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private float damage = 40f;
+    [SerializeField] private float damage = 30f;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;

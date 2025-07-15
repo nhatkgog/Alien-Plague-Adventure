@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 1628129939920854237, guid: bee822c9a70f9994d8d92c3ff790b415, type: 3}
-  damage: 50
+  damage: 40
   hitLayers:
     serializedVersion: 2
     m_Bits: 72
-  fallSpeed: 8
+  moveSpeed: 10

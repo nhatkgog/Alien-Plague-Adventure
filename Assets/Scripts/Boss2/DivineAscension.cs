@@ -5,7 +5,7 @@ public class DivineAscension : MonoBehaviour
 {
     [Header("Explosion Settings")]
     [SerializeField] private GameObject explosionEffect;
-    [SerializeField] private float damage = 50f;
+    [SerializeField] private float damage = 40f;
     [SerializeField] private LayerMask hitLayers;
     [SerializeField] private float moveSpeed = 10f;
 
