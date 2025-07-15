@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
@@ -26,6 +26,23 @@ public class ItemObject : MonoBehaviour
 
     public void PickupItem()
     {
+        if (itemData is ItemData_Equiment equipItem && equipItem.equimentType == EquimentType.Boom)
+        {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null)
+            {
+                InputSystemMovement player = playerObj.GetComponent<InputSystemMovement>();
+                if (player != null)
+                {
+                    player.AddBoom();
+                    Debug.Log($"🔥 Đã nhặt Boom! ");
+                }
+            }
+            SFXManager.Instance.PlayOneShot(collectClip);
+            Destroy(gameObject);
+            return;
+        }
+
         if (!Inventory.instance.CanAddItem() && itemData.itemType == ItemType.Equipment)
             return;
         Inventory.instance.AddItem(itemData);

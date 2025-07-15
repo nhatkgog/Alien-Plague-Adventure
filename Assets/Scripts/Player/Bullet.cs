@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -40,6 +40,8 @@ public class Bullet : MonoBehaviour
                 if (boss2 != null)
                 {
                     boss2.TakeDamage(Mathf.RoundToInt(damage));
+                    Debug.Log("ban sung");
+
                 }
             }
 

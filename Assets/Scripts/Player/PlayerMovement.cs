@@ -571,7 +571,11 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         UpdateLevelExpUI();
     }
 
-
+    public void AddBoom()
+    {
+        currentBoom++;
+        updateBoomText();
+    }
 
 
 }
