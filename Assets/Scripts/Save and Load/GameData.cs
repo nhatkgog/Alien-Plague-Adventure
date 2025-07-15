@@ -16,6 +16,7 @@ namespace Assets.Scripts.Save_and_Load
         public float exp;
 
         public string selectedCharacterName;
+        public int completedMissionIndex;
 
         public float missionCoinAmount;
 
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Save_and_Load
         {
             this.currency = 0;
             inventory = new SerializableDictionary<string, int>();
+            completedMissionIndex = -1;
         }
 
     }
