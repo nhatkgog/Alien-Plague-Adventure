@@ -7,6 +7,7 @@ public enum EquimentType
 
     Heal,
     Exp,
+    Boom
 }
 
 

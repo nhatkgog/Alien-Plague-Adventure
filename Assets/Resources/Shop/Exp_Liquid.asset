@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Exp_Liquid
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: f937aa88fc41fe64e95b151319506cd0, type: 2}
-  price: 10
+  price: 20
