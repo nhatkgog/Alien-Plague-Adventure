@@ -60,12 +60,20 @@ public class GameOverManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameLobby");
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
     private void QuitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
