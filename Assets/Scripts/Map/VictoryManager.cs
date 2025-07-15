@@ -24,9 +24,6 @@ public class VictoryManager : MonoBehaviour
     {
         victoryUI.SetActive(false);
 
-        if (victoryClip != null)
-            SFXManager.Instance.PlayOneShot(victoryClip);
-
         continueButton.onClick.AddListener(OnContinue);
         lobbyButton.onClick.AddListener(OnReturnToLobby);
         quitButton.onClick.AddListener(OnQuit);
@@ -34,6 +31,8 @@ public class VictoryManager : MonoBehaviour
 
     public void ShowVictory()
     {
+        if (victoryClip != null)
+            SFXManager.Instance.PlayOneShot(victoryClip);
         GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
         foreach (GameObject canva in canvases)
         {
@@ -73,10 +72,18 @@ public class VictoryManager : MonoBehaviour
         Time.timeScale = 1f;
         Coin.ResetMissionTotal();
         SceneManager.LoadScene("GameLobby");
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
     private void OnQuit()
     {
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

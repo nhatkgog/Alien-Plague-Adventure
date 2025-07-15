@@ -102,10 +102,6 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
-        if (GameStateManager.Instance != null)
-        {
-            GameStateManager.Instance.SetState(GameState.Playing);
-        }
     }
 
 
