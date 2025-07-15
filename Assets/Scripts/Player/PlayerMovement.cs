@@ -1,12 +1,9 @@
 ﻿using Assets.Scripts.Save_and_Load;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Unity.VisualScripting;
-using UnityEngine.Audio;
-using System.Threading;
-using System;
 
 public class InputSystemMovement : MonoBehaviour, ISaveManager
 {
@@ -33,20 +30,20 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject charging;
     [SerializeField] private GameOverManager gameManager;
 
-// <<<<<<< HEAD
-//     [SerializeField] private AudioClip deathClip;
-//     [SerializeField] private AudioClip hurtClip;
-//     [SerializeField] private AudioClip reloadClip;
-//     [SerializeField] private AudioClip shotClip;
-//     [SerializeField] private AudioClip walkClip;
-//     [SerializeField] private AudioClip runningClip;
-// =======
+    // <<<<<<< HEAD
+    //     [SerializeField] private AudioClip deathClip;
+    //     [SerializeField] private AudioClip hurtClip;
+    //     [SerializeField] private AudioClip reloadClip;
+    //     [SerializeField] private AudioClip shotClip;
+    //     [SerializeField] private AudioClip walkClip;
+    //     [SerializeField] private AudioClip runningClip;
+    // =======
     [Header("SFX")]
-    [SerializeField] private AudioClip deathClip; 
-    [SerializeField] private AudioClip hurtClip; 
-    [SerializeField] private AudioClip reloadClip; 
-    [SerializeField] private AudioClip shotClip; 
-    [SerializeField] private AudioClip walkClip; 
+    [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip reloadClip;
+    [SerializeField] private AudioClip shotClip;
+    [SerializeField] private AudioClip walkClip;
     [SerializeField] private AudioClip runningClip;
     [SerializeField] private AudioClip sniffingClip;
     private AudioSource audioSource;

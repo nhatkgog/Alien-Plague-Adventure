@@ -8,7 +8,7 @@ public class GameOverManager : MonoBehaviour
     [Header("Game Over Menu")]
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private Button retryButton;
-    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button lobbyButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private TextMeshProUGUI scoreText; // If you want to show final score
 
@@ -19,7 +19,7 @@ public class GameOverManager : MonoBehaviour
     {
         // Initialize button listeners
         if (retryButton) retryButton.onClick.AddListener(RetryLevel);
-        if (mainMenuButton) mainMenuButton.onClick.AddListener(ReturnToMainMenu);
+        if (lobbyButton) lobbyButton.onClick.AddListener(ReturnToLobby);
         if (quitButton) quitButton.onClick.AddListener(QuitGame);
 
         // Ensure game over menu is hidden at start
@@ -56,10 +56,10 @@ public class GameOverManager : MonoBehaviour
         }
     }
 
-    private void ReturnToMainMenu()
+    private void ReturnToLobby()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameLobby");
     }
 
     private void QuitGame()

@@ -24,6 +24,8 @@ public class PlayerSelector : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        allCharacters = new List<PlayerStatus>(Resources.LoadAll<PlayerStatus>("DataPlayer"));
+
     }
 
     public PlayerStatus GetSelectedPlayer()
@@ -109,9 +111,12 @@ public class PlayerSelector : MonoBehaviour
 
     public void SetSelectedPlayerByName(string name)
     {
+        Debug.Log("Looking for character: " + name);
+        Debug.Log("Character list count: " + allCharacters.Count);
         foreach (var character in allCharacters)
         {
-            if (character.characterName == name)
+            Debug.Log("Checking character: " + character.characterName);
+            if (character.characterName.Trim().Equals(name.Trim(), System.StringComparison.OrdinalIgnoreCase))
             {
                 SetSelectedPlayer(character);
                 return;
@@ -119,5 +124,6 @@ public class PlayerSelector : MonoBehaviour
         }
         Debug.LogWarning("Selected character not found: " + name);
     }
+
 
 }

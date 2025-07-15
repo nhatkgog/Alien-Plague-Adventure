@@ -30,7 +30,6 @@ public class Boss1 : SampleEnemy
     public static float damageBonus = 1f;
     private bool hasAwakened = false;
 
-
     [Header("Fenrir's Devour")]
     [SerializeField] private GameObject fenrirHitbox;
 

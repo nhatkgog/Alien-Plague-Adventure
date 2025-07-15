@@ -7,23 +7,26 @@ namespace Assets.Scripts.Save_and_Load
 {
     public class SaveManager : MonoBehaviour
     {
-        private GameData gameData;
+        public GameData gameData;
         public static SaveManager instance;
         private List<ISaveManager> saveManager;
         private FileDataHandler fileDataHandler;
         [SerializeField] private string fileName;
         public static bool IsNewGame = false;
+        public bool HasLoadedData => gameData != null;
 
         private void Awake()
         {
             if (instance != null)
+            {
                 Destroy(instance.gameObject);
+            }
             else
             {
                 instance = this;
-
             }
         }
+
         private void Start()
         {
             fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
@@ -45,6 +48,8 @@ namespace Assets.Scripts.Save_and_Load
         {
             return gameData != null ? gameData.lastSceneName : null;
         }
+
+
 
 
         public void LoadGame()

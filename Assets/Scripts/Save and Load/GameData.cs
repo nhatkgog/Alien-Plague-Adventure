@@ -10,7 +10,7 @@ namespace Assets.Scripts.Save_and_Load
         public int bulletCount;
         public int boomCount;
 
-        public string lastSceneName = "DefaultGameScene";
+        public string lastSceneName = "GameLobby";
 
         public int level;
         public float exp;
