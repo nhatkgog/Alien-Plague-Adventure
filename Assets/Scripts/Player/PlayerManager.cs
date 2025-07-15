@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
-
     public PlayerDatabase PlayerDB;
 
     public TMP_Text namePlayer;
@@ -17,7 +16,6 @@ public class PlayerManager : MonoBehaviour
     private FileDataHandler fileDataHandler;
     [SerializeField] private string fileName = "saving.json";
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
@@ -45,10 +43,6 @@ public class PlayerManager : MonoBehaviour
             updatePlayer(selectOption);
         }
     }
-
-
-
-
 
     // Update is called once per frame
     void Update()
@@ -87,12 +81,13 @@ public class PlayerManager : MonoBehaviour
         PlayerStatus status = PlayerDB.GetPlayer(selectOption);
         artworkSprite.sprite = status.characterIcon;
         namePlayer.text = status.name;
-
     }
+
     private void Load()
     {
         selectOption = PlayerPrefs.GetInt("selectOption");
     }
+
     private void Save()
     {
         PlayerPrefs.SetInt("selectOption", selectOption);
@@ -108,13 +103,26 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     public void changeScene()
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
         SceneManager.LoadScene("Scence1");
-
     }
 
+    public void SaveCompletedMission(int missionIndex)
+    {
+        gameData = fileDataHandler.Load();
+        if (gameData == null)
+        {
+            gameData = new GameData();
+        }
+
+        if (missionIndex > gameData.completedMissionIndex)
+        {
+            gameData.completedMissionIndex = missionIndex;
+            fileDataHandler.Save(gameData);
+            Debug.Log($"Saved completed mission index: {missionIndex}");
+        }
+    }
 }
