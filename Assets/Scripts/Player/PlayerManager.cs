@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -13,20 +12,43 @@ public class PlayerManager : MonoBehaviour
     public SpriteRenderer artworkSprite;
 
     private int selectOption = 0;
+
+    private GameData gameData;
+    private FileDataHandler fileDataHandler;
+    [SerializeField] private string fileName = "saving.json";
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!PlayerPrefs.HasKey("selectOption"))
+        fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        gameData = fileDataHandler.Load();
+
+        if (!SaveManager.IsNewGame &&
+            PlayerSelector.Instance != null &&
+            gameData != null &&
+            !string.IsNullOrEmpty(gameData.selectedCharacterName))
         {
-            selectOption = 0;
+            string loadedName = gameData.selectedCharacterName;
+            PlayerSelector.Instance.SetSelectedPlayerByName(loadedName);
+            selectOption = PlayerDB.GetIndexByName(loadedName);
+            updatePlayer(selectOption);
+            Save(); // Save PlayerPrefs
+        }
+        else if (PlayerPrefs.HasKey("selectOption"))
+        {
+            Load();
+            updatePlayer(selectOption);
         }
         else
         {
-            Load();
+            selectOption = 0;
+            updatePlayer(selectOption);
         }
-
-        updatePlayer(selectOption);
     }
+
+
+
+
 
     // Update is called once per frame
     void Update()
@@ -80,6 +102,10 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
+        if (GameStateManager.Instance != null)
+        {
+            GameStateManager.Instance.SetState(GameState.Playing);
+        }
     }
 
 
@@ -87,7 +113,8 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
         PlayerSelector.Instance.SetSelectedPlayer(selected);
-        SceneManager.LoadScene("GameLobby"); 
+        SceneManager.LoadScene("Scence1");
+
     }
 
 }

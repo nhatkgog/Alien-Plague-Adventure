@@ -53,7 +53,7 @@ public class MenuController : MonoBehaviour
         else
         {
             Debug.LogWarning("No saved scene found. Loading default game scene.");
-            fadeController.FadeToScene("DefaultGameScene"); // fallback scene
+            fadeController.FadeToScene("GameLobby"); // fallback scene
         }
     }
 
