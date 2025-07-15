@@ -423,7 +423,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00057812314, y: -66.5}
-  m_SizeDelta: {x: 0, y: -134}
+  m_SizeDelta: {x: -1025, y: -134}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &87546925
 MonoBehaviour:
@@ -6254,7 +6254,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1539827731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000007987022, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -9530,7 +9530,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 981060386}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.999992
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10355,6 +10355,7 @@ GameObject:
   - component: {fileID: 1391220293}
   - component: {fileID: 1391220292}
   - component: {fileID: 1391220291}
+  - component: {fileID: 1391220294}
   m_Layer: 5
   m_Name: CoinPanel
   m_TagString: Untagged
@@ -10447,6 +10448,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391220289}
   m_CullTransparentMesh: 1
+--- !u!114 &1391220294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391220289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467ffa73c70509e48ba3a57a038e1078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionCoinText: {fileID: 1818781388}
 --- !u!1 &1393610908
 GameObject:
   m_ObjectHideFlags: 0
@@ -11900,7 +11914,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2037919203}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: changeScene
+        m_MethodName: ConfirmSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14673,6 +14687,7 @@ MonoBehaviour:
   PlayerDB: {fileID: 11400000, guid: f560349d3241f0248bb937f8084e54b4, type: 2}
   namePlayer: {fileID: 1446005213}
   artworkSprite: {fileID: 2037919204}
+  fileName: saving.json
 --- !u!212 &2037919204
 SpriteRenderer:
   m_ObjectHideFlags: 0

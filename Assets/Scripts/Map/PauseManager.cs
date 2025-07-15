@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button lobbyButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button mainMenuButton;
+
 
     private bool isPaused = false;
 
@@ -20,6 +22,7 @@ public class PauseManager : MonoBehaviour
         if (settingsButton) settingsButton.onClick.AddListener(OpenSettings);
         if (lobbyButton) lobbyButton.onClick.AddListener(ReturnToLobby);
         if (quitButton) quitButton.onClick.AddListener(QuitGame);
+        if (mainMenuButton) mainMenuButton.onClick.AddListener(ReturnToMainMenu);
 
         // Ensure pause menu is hidden at start
         if (pauseMenuUI) pauseMenuUI.SetActive(false);
@@ -70,7 +73,8 @@ public class PauseManager : MonoBehaviour
             GameStateManager.Instance.SetState(GameState.Playing);
             Time.timeScale = 1f;
             isPaused = false;
-        } else
+        }
+        else
         {
             GameObject[] canvases = GameObject.FindGameObjectsWithTag("Menu");
             foreach (GameObject canva in canvases)
@@ -95,13 +99,17 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameLobby");
     }
-
+    private void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Mainmenu");
+    }
     private void QuitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
-        #endif
+#endif
     }
-} 
+}
