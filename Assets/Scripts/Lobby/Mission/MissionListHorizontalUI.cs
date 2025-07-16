@@ -9,6 +9,12 @@ public class MissionListHorizontalUI : MonoBehaviour
     public GameObject missionEntryPrefab;
     public Transform content;
 
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     [System.Serializable]
     public class MissionData
     {

@@ -9,6 +9,7 @@ namespace Assets.Scripts.Save_and_Load
         public float health;
         public int bulletCount;
         public int boomCount;
+        public int statPoint;
 
         public string lastSceneName = "GameLobby";
 
