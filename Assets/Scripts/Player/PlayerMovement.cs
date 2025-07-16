@@ -502,6 +502,7 @@ public class InputSystemMovement : MonoBehaviour, ISaveManager
         _data.currency = money;
         _data.level = data.level;
         _data.exp = data.exp;
+        _data.statPoint = data.statPoints;
         _data.selectedCharacterName = PlayerSelector.Instance.selectedPlayerOriginal.characterName;
 
 

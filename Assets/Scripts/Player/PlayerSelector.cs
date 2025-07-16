@@ -73,6 +73,11 @@ public class PlayerSelector : MonoBehaviour
         runtimePlayer.money = money;
     }
 
+    public void SetBoomCount(int boom)
+    {
+        runtimePlayer.maxBoomQuatity = boom;
+    }
+
     public void SetSelectedPlayer(PlayerStatus player)
     {
         selectedPlayerOriginal = player;

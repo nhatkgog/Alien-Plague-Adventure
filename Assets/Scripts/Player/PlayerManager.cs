@@ -31,6 +31,12 @@ public class PlayerManager : MonoBehaviour
             selectOption = PlayerDB.GetIndexByName(loadedName);
             updatePlayer(selectOption);
             Save(); // Save PlayerPrefs
+            PlayerStatus selected = PlayerDB.GetPlayer(selectOption);
+            PlayerSelector.Instance.SetSelectedPlayer(selected);
+            PlayerSelector.Instance.SetBoomCount(gameData.boomCount);
+            PlayerSelector.Instance.SetUpdateLevel(gameData.level, gameData.exp);
+            PlayerSelector.Instance.SetMoney(gameData.currency);
+            PlayerSelector.Instance.SetStatPoint(gameData.statPoint);
         }
         else if (PlayerPrefs.HasKey("selectOption"))
         {

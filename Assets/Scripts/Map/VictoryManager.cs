@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Save_and_Load;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,13 +13,14 @@ public class VictoryManager : MonoBehaviour
     [SerializeField] private Button lobbyButton;
     [SerializeField] private Button quitButton;
 
-    [SerializeField] private TMP_Text missionCoinsText;
+    [SerializeField] private TMP_Text endCoinText;
 
     public static float MissionCoinReward = 0f;
     public static bool OpenMissionTab = false;
 
     [Header("SFX")]
     [SerializeField] private AudioClip victoryClip;
+
 
     private void Start()
     {
@@ -42,23 +44,48 @@ public class VictoryManager : MonoBehaviour
         Debug.Log($"Victory! Total mission coin earned: {missionEarned}");
 
         MissionCoinReward = missionEarned;
-        missionCoinsText.text = $"You earned: {missionEarned}";
+        endCoinText.text = $"You earned: {missionEarned}";
         victoryUI.SetActive(true);
         GameStateManager.Instance.SetState(GameState.Victory);
         Time.timeScale = 0f;
     }
 
+    private int SceneToMissionIndex(string sceneName)
+    {
+        for (int i = 0; i < MissionListHorizontalUI.Instance.missions.Count; i++)
+        {
+            if (MissionListHorizontalUI.Instance.missions[i].sceneName == sceneName)
+                return i;
+        }
+        return -1;
+    }
 
     private void OnContinue()
     {
         Time.timeScale = 1f;
         OpenMissionTab = true;
 
-        // Save to PlayerPrefs
         float savedCoins = PlayerPrefs.GetFloat("TotalCoins", 0f);
         savedCoins += MissionCoinReward;
         PlayerPrefs.SetFloat("TotalCoins", savedCoins);
         PlayerPrefs.Save();
+
+        // Save mission progress to JSON
+        var fileHandler = new FileDataHandler(Application.persistentDataPath, "saving.json");
+        GameData gameData = fileHandler.Load();
+
+        if (gameData == null)
+        {
+            gameData = new GameData();
+        }
+
+        // 🚀 Update mission index only if it's progressing forward
+        int currentMissionIndex = SceneToMissionIndex(SceneManager.GetActiveScene().name);
+        if (currentMissionIndex > gameData.completedMissionIndex)
+        {
+            gameData.completedMissionIndex = currentMissionIndex;
+            fileHandler.Save(gameData);
+        }
 
         // Reset for next mission
         Coin.ResetMissionTotal();
@@ -66,6 +93,7 @@ public class VictoryManager : MonoBehaviour
 
         SceneManager.LoadScene("GameLobby");
     }
+
 
     private void OnReturnToLobby()
     {
